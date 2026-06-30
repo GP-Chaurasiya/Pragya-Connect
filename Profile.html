@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pragya Connect - Profile</title>
+    <!-- Google Fonts: Plus Jakarta Sans for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            /* Palette Design Tokens */
+            --primary: #0B525B;
+            --primary-light: #EAF3F4;
+            --primary-hover: #083E45;
+            --accent: #EBA036;
+            --accent-light: #FEF6EC;
+            --bg-body: #FAFAF8;
+            --bg-card: #FFFFFF;
+            --text-main: #1D2D30;
+            --text-muted: #6B7280;
+            --border: #ECECEC;
+            
+            /* Status Colors */
+            --red-light: #FEECEB;
+            --red-dark: #EB5757;
+            --green-light: #ECFDF3;
+            --green-dark: #039855;
+            --orange-light: #FFF5EC;
+            --orange-dark: #E47A22;
+            
+            /* Typography & Shadows */
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Layout Structure */
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 272px;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px 32px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto; /* make side bar scrollable */
+            scrollbar-width: none; /* hide Firefox scrollbar */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            display: none; /* hide Chrome/Safari scrollbar */
+        }
+
+        /* Logo Area */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 0 12px 8px;
+        }
+
+        .logo-img {
+            max-width: 140px; /* reduced logo size */
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Nav Links */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .nav-item a i, .nav-item a svg {
+            width: 22px;
+            height: 22px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--bg-body);
+            color: var(--primary);
+        }
+
+        .nav-item a:hover i, .nav-item a:hover svg {
+            transform: translateX(2px);
+        }
+
+        /* Active Link Styling */
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: #FFFFFF;
+        }
+
+        .nav-item.active a:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Badges */
+        .badge {
+            margin-left: auto;
+            background-color: var(--accent);
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 99px;
+            box-shadow: 0 2px 6px rgba(235, 160, 54, 0.3);
+        }
+
+        /* Logout Container */
+        .nav-logout {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+
+        .nav-logout a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .nav-logout a:hover {
+            background-color: #FFF5F5;
+            color: var(--red-dark);
+        }
+
+        /* Main Workspace Wrapper */
+        .main-wrapper {
+            margin-left: 272px;
+            width: calc(100% - 272px);
+            min-width: 0;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 32px 32px;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Topbar Header styling */
+        .topbar {
+            display: grid;
+            grid-template-columns: minmax(0, 2.1fr) minmax(410px, 1fr);
+            align-items: center;
+            margin-bottom: 32px;
+            gap: 24px;
+        }
+
+        .topbar-main {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            min-width: 0;
+        }
+
+        /* Sidebar Toggle Button */
+        .sidebar-toggle-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .sidebar-toggle-btn i, .sidebar-toggle-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Collapsed States */
+        .sidebar-collapsed .sidebar {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-collapsed .main-wrapper {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar-collapsed .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar-collapsed .main-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            min-width: 0;
+            max-width: none;
+        }
+
+        .search-container i, .search-container svg {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            width: 20px;
+            height: 20px;
+            z-index: 2; /* ensure it stays visible on top of input bg */
+        }
+
+        .search-input {
+            width: 100%;
+            height: 48px;
+            padding: 12px 20px 12px 52px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background-color: var(--bg-card);
+            font-family: var(--font-family);
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(11, 82, 91, 0.08);
+        }
+
+        /* Topbar actions (badges, user info) */
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            justify-content: flex-start;
+            min-width: 0;
+            position: relative;
+        }
+
+        .icon-btn-badge {
+            position: relative;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .icon-btn-badge:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .icon-btn-badge .badge-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: var(--accent);
+            color: #FFFFFF;
+            font-size: 10px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-card);
+            box-shadow: 0 2px 4px rgba(235, 160, 54, 0.3);
+            flex-shrink: 0;
+        }
+
+        .user-menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 6px 18px 6px 8px;
+            border-radius: 99px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .user-menu-trigger:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar-circle {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .user-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--accent);
+            line-height: 1.2;
+            margin-top: 1px;
+        }
+
+        .user-menu-trigger i, .user-menu-trigger svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        /* User Dropdown Menu */
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: 280px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+        }
+
+        .user-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 24px;
+        }
+
+        .dropdown-avatar {
+            width: 48px;
+            height: 48px;
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .dropdown-user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .dropdown-role {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 0 0;
+        }
+
+        .dropdown-menu {
+            list-style: none;
+            padding: 8px 0;
+            margin: 0;
+        }
+
+        .dropdown-menu li {
+            margin: 0;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: var(--font-family);
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .dropdown-item i, .dropdown-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .logout-item {
+            color: var(--red-dark);
+        }
+
+        .logout-item:hover {
+            background-color: var(--red-light);
+            color: var(--red-dark);
+        }
+
+        /* Profile Cover Section */
+        .profile-cover {
+            position: relative;
+            height: 280px;
+            border-radius: 20px;
+            margin-bottom: 32px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary) 35%, #165F58 60%, var(--accent) 100%);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            z-index: 10;
+            text-align: left;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid var(--bg-card);
+            object-fit: cover;
+            box-shadow: var(--shadow-md);
+        }
+
+        .avatar-fallback {
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 32px;
+        }
+
+        .camera-btn {
+            position: absolute;
+            bottom: -8px;
+            right: -8px;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            z-index: 5;
+        }
+
+        .camera-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(235, 160, 54, 0.4);
+        }
+
+        .camera-btn i, .camera-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .profile-info {
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .profile-info h1 {
+            color: #FFFFFF;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .profile-info p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .edit-profile-btn {
+            background: #EBA036;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .edit-profile-btn:hover {
+            background: #D69030;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(235, 160, 54, 0.3);
+        }
+
+        .edit-profile-btn i, .edit-profile-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Profile Grid Layout */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2.1fr) minmax(320px, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .left-side, .right-side {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Profile Card Styling */
+        .profile-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .profile-card h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .profile-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .info-grid div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-grid label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .info-grid span {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        /* Chip Container */
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chip {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .chip:hover {
+            background-color: var(--primary);
+            color: #FFFFFF;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            gap: 16px;
+        }
+
+        .stats div {
+            flex: 1;
+        }
+
+        .stats h2 {
+            color: var(--primary);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stats p {
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Achievement & Activity Lists */
+        .achievement-list,
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .achievement-list li,
+        .activity-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-main);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .achievement-list li:last-child,
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Timeline Styling */
+        .timeline {
+            padding: 0;
+            margin: 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-date {
+            min-width: 80px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .timeline-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .timeline-icon i, .timeline-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .timeline-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        /* Streak Counter Styling */
+        .streak-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .streak-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+
+        .streak-icon i, .streak-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .streak-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .streak-count {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        .streak-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .streak-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .streak-day {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--bg-body);
+            transition: var(--transition);
+        }
+
+        .streak-day.active {
+            background: linear-gradient(135deg, #FF6B35 0%, #FF8C42 100%);
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+        }
+
+        .streak-day.today {
+            border: 2px solid var(--primary);
+        }
+
+        .streak-day-label {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .avatar-container {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-info {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+            .topbar-main {
+                gap: 10px;
+            }
+            .sidebar-toggle-btn {
+                width: 42px;
+                height: 42px;
+            }
+            .sidebar-toggle-btn i, .sidebar-toggle-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+            .search-input {
+                height: 42px;
+                padding: 10px 14px 10px 42px;
+                border-radius: 13px;
+                font-size: 13px;
+            }
+            .search-container i, .search-container svg {
+                left: 14px;
+                width: 17px;
+                height: 17px;
+            }
+            .topbar-actions {
+                justify-content: flex-start;
+                gap: 8px;
+                flex-wrap: nowrap;
+                width: 100%;
+                overflow: hidden;
+            }
+            .icon-btn-badge {
+                width: 42px;
+                height: 42px;
+                flex: 0 0 42px;
+            }
+            .icon-btn-badge .badge-dot {
+                width: 16px;
+                height: 16px;
+                font-size: 9px;
+            }
+            .user-menu-trigger {
+                flex: 1 1 auto;
+                min-width: 0;
+                height: 42px;
+                gap: 8px;
+                padding: 4px 10px 4px 6px;
+            }
+            .user-avatar-circle {
+                width: 34px;
+                height: 34px;
+                font-size: 12px;
+            }
+            .user-details {
+                min-width: 0;
+            }
+            .user-name {
+                font-size: 12.5px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .user-role {
+                display: none;
+            }
+            .user-menu-trigger i, .user-menu-trigger svg {
+                width: 14px;
+                height: 14px;
+                margin-left: 0;
+                flex-shrink: 0;
+            }
+            .user-dropdown {
+                width: 260px;
+                right: -8px;
+            }
+            .dropdown-header {
+                padding: 16px 20px;
+            }
+            .dropdown-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 14px;
+            }
+            .dropdown-name {
+                font-size: 13px;
+            }
+            .dropdown-role {
+                font-size: 11px;
+            }
+            .dropdown-item {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+            .dropdown-item i, .dropdown-item svg {
+                width: 16px;
+                height: 16px;
+            }
+            .profile-cover {
+                height: 240px;
+                border-radius: 16px;
+            }
+            .profile-header {
+                bottom: -50px;
+                gap: 16px;
+            }
+            .avatar-container {
+                width: 100px;
+                height: 100px;
+            }
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+                border-width: 4px;
+            }
+            .camera-btn {
+                width: 36px;
+                height: 36px;
+                bottom: -6px;
+                right: -6px;
+            }
+            .profile-info h1 {
+                font-size: 20px;
+            }
+            .profile-info p {
+                font-size: 13px;
+            }
+            .edit-profile-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            .modal-box {
+                width: 90%;
+                max-height: 85vh;
+                padding: 24px;
+            }
+            .modal-box h2 {
+                font-size: 18px;
+            }
+            .modal-box input,
+            .modal-box textarea {
+                font-size: 13px;
+                padding: 10px 14px;
+            }
+            .profile-card {
+                padding: 20px;
+            }
+            .profile-card h3 {
+                font-size: 16px;
+            }
+            .info-item label {
+                font-size: 12px;
+            }
+            .info-item span {
+                font-size: 13px;
+            }
+            .chip {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .topbar-main {
+                gap: 8px;
+            }
+            .sidebar-toggle-btn,
+            .icon-btn-badge {
+                width: 38px;
+                height: 38px;
+            }
+            .icon-btn-badge {
+                flex-basis: 38px;
+            }
+            .search-input {
+                height: 38px;
+                padding-left: 38px;
+                font-size: 12px;
+            }
+            .user-menu-trigger {
+                height: 38px;
+                padding-right: 8px;
+            }
+            .user-avatar-circle {
+                width: 30px;
+                height: 30px;
+                font-size: 11px;
+            }
+            .user-name {
+                font-size: 12px;
+            }
+            .profile-cover {
+                height: 200px;
+                border-radius: 12px;
+            }
+            .profile-header {
+                bottom: -40px;
+                gap: 12px;
+            }
+            .avatar-container {
+                width: 80px;
+                height: 80px;
+            }
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                border-width: 3px;
+            }
+            .camera-btn {
+                width: 32px;
+                height: 32px;
+                bottom: -4px;
+                right: -4px;
+            }
+            .profile-info h1 {
+                font-size: 18px;
+            }
+            .profile-info p {
+                font-size: 12px;
+            }
+            .edit-profile-btn {
+                padding: 6px 14px;
+                font-size: 11px;
+            }
+            .modal-box {
+                padding: 20px;
+            }
+            .modal-box h2 {
+                font-size: 16px;
+            }
+            .profile-card {
+                padding: 16px;
+            }
+            .profile-card h3 {
+                font-size: 15px;
+            }
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            width: 500px;
+            max-width: 90%;
+            max-height: 90vh;
+            padding: 32px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            overflow-y: auto;
+        }
+
+        .modal-box h2 {
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-completion {
+            margin-bottom: 16px;
+        }
+
+        .completion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .completion-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .completion-percentage {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .completion-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--bg-body);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .completion-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .modal-box input,
+        .modal-box textarea {
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-family: var(--font-family);
+            font-size: 14px;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+            background-color: var(--bg-body);
+        }
+
+        .modal-box input:focus,
+        .modal-box textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(11, 82, 91, 0.08);
+            background-color: #FFFFFF;
+        }
+
+        .modal-box textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .buttons button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .buttons button:first-child {
+            background: var(--primary);
+            color: #FFFFFF;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .buttons button:first-child:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(11, 82, 91, 0.15);
+        }
+
+        .buttons button:last-child {
+            background: var(--bg-body);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .buttons button:last-child:hover {
+            background: var(--border);
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="assets/logo.png" alt="Pragya Logo" class="logo-img">
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="Dashboard.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i data-lucide="calendar"></i> <span>Events</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i data-lucide="message-square"></i> <span>Messages</span><span class="badge">3</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a href="Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="#"><i data-lucide="settings"></i> <span>Settings</span></a>
+                </li>
+            </ul>
+
+            <div class="nav-logout">
+                <a href="#"><i data-lucide="log-out"></i> <span>Logout</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <div class="main-wrapper">
+            
+            <!-- Topbar Header -->
+            <header class="topbar">
+                <div class="topbar-main">
+                    <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle Sidebar">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    
+                    <div class="search-container">
+                        <i data-lucide="search"></i>
+                        <input type="text" class="search-input" placeholder="Search mentors, events...">
+                    </div>
+                </div>
+                
+                <div class="topbar-actions">
+                    <!-- Notification Bell Button -->
+                    <button class="icon-btn-badge" aria-label="Notifications">
+                        <i data-lucide="bell"></i>
+                        <span class="badge-dot">5</span>
+                    </button>
+                    
+                    <!-- Messages Bubble Button -->
+                    <button class="icon-btn-badge" aria-label="Messages">
+                        <i data-lucide="message-square"></i>
+                        <span class="badge-dot">3</span>
+                    </button>
+                    
+                    <!-- User Avatar trigger -->
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar-circle">GP</div>
+                        <div class="user-details">
+                            <span class="user-name">Gyan Prakash</span>
+                            <span class="user-role">Student</span>
+                        </div>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar">GP</div>
+                            <div class="dropdown-user-info">
+                                <span class="dropdown-name">Gyan Prakash</span>
+                                <span class="dropdown-role">Student</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="Profile.html" class="dropdown-item">
+                                    <i data-lucide="user"></i>
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <i data-lucide="settings"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <i data-lucide="moon"></i>
+                                    <span>Dark Mode</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-item">
+                                    <i data-lucide="help-circle"></i>
+                                    <span>Help & Support</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="dropdown-divider"></div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#" class="dropdown-item logout-item">
+                                    <i data-lucide="log-out"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+<section class="profile-cover">
+    <div class="profile-header">
+        <div class="avatar-container">
+            <img src="assets/profile.jpg"
+                 id="profileImage"
+                 class="profile-avatar"
+                 alt="Profile Avatar">
+            <label class="camera-btn">
+                <i data-lucide="camera"></i>
+                <input
+                    type="file"
+                    id="imageUpload"
+                    accept="image/*"
+                    hidden>
+            </label>
+        </div>
+        <div class="profile-info">
+            <h1 id="profileName">Gyan Prakash</h1>
+            <p id="profileRole">Student • Pragya Yog School</p>
+            <button class="edit-profile-btn" onclick="openModal()">
+                <i data-lucide="edit"></i> Edit Profile
+            </button>
+        </div>
+    </div>
+</section>
+
+<div class="profile-grid">
+
+    <!-- LEFT COLUMN -->
+
+    <div class="left-side">
+
+        <div class="profile-card">
+
+            <h3>Personal Information</h3>
+
+            <div class="info-grid">
+
+                <div>
+                    <label>Email</label>
+                    <span id="profileEmail">gyan@gmail.com</span>
+                </div>
+
+                <div>
+                    <label>Phone</label>
+                    <span id="profilePhone">+91 9876543210</span>
+                </div>
+
+                <div>
+                    <label>Location</label>
+                    <span id="profileLocation">Haridwar</span>
+                </div>
+
+                <div>
+                    <label>Joined</label>
+                    <span>June 2026</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profile-card">
+            <h3>Bio</h3>
+            <p id="profileBio">Passionate about Yoga...</p>
+        </div>
+
+        <div class="profile-card">
+            <h3>Daily Streak</h3>
+            <div class="streak-container">
+                <div class="streak-icon">
+                    <i data-lucide="flame"></i>
+                </div>
+                <div class="streak-info">
+                    <div class="streak-count" id="streakCount">0</div>
+                    <div class="streak-label">day streak</div>
+                </div>
+            </div>
+            <div class="streak-calendar" id="streakCalendar">
+                <!-- Streak days will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <h3>Skills</h3>
+            <div class="chip-container" id="skillsContainer"></div>
+        </div>
+
+        <div class="profile-card">
+            <h3>Interests</h3>
+            <div class="chip-container" id="interestsContainer"></div>
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+
+    <div class="right-side">
+
+        <div class="profile-card">
+
+            <h3>Statistics</h3>
+
+            <div class="stats">
+
+                <div>
+                    <h2>24</h2>
+                    <p>Posts</p>
+                </div>
+
+                <div>
+                    <h2>45</h2>
+                    <p>Connections</p>
+                </div>
+
+                <div>
+                    <h2>12</h2>
+                    <p>Events</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="profile-card">
+
+            <h3>Achievements</h3>
+
+            <ul class="achievement-list" id="achievementList">
+
+                <li>Camp Volunteer</li>
+                <li>Meditation Badge</li>
+                <li>Completed 5-Day Challenge</li>
+
+            </ul>
+
+        </div>
+
+        <div class="profile-card">
+
+            <h3>Recent Activity</h3>
+
+            <div class="timeline" id="activityTimeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Today</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i data-lucide="check-circle"></i>
+                        </div>
+                        <div class="timeline-text">Completed Yoga Workshop</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Yesterday</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <div class="timeline-text">Joined Meditation Group</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">2 days ago</div>
+                    <div class="timeline-content">
+                        <div class="timeline-icon">
+                            <i data-lucide="image"></i>
+                        </div>
+                        <div class="timeline-text">Uploaded Workshop Photos</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="modal" id="profileModal">
+
+    <div class="modal-box">
+
+        <h2>Edit Profile</h2>
+
+        <div class="profile-completion">
+            <div class="completion-header">
+                <span class="completion-label">Profile Completion</span>
+                <span class="completion-percentage" id="completionPercentage">0%</span>
+            </div>
+            <div class="completion-bar">
+                <div class="completion-fill" id="completionFill"></div>
+            </div>
+        </div>
+
+        <input type="text" id="nameInput" placeholder="Full Name">
+
+        <input type="text" id="roleInput" placeholder="Role">
+
+        <input type="email" id="emailInput" placeholder="Email">
+
+        <input type="text" id="phoneInput" placeholder="Phone">
+
+        <input type="text" id="locationInput" placeholder="Location">
+
+        <textarea id="bioInput" rows="4" placeholder="Bio"></textarea>
+
+        <input type="text" id="skillsInput" placeholder="HTML,CSS,JavaScript">
+
+        <input type="text" id="interestsInput" placeholder="Yoga,Reading,Nature">
+
+        <textarea id="achievementsInput" rows="3" placeholder="Achievements (comma-separated)"></textarea>
+
+        <textarea id="activitiesInput" rows="3" placeholder="Recent Activities (comma-separated)"></textarea>
+
+        <div class="buttons">
+
+            <button onclick="saveProfile()">Save</button>
+
+            <button onclick="closeModal()">Cancel</button>
+
+        </div>
+
+    </div>
+
+</div>
+            
+            <script>
+        // Initialize Lucide Icons
+        window.onload = function () {
+            lucide.createIcons();
+            
+            // Load user name from localStorage and update top bar
+            const savedUserName = localStorage.getItem("userName");
+            if (savedUserName) {
+                updateTopBarName(savedUserName);
+            }
+            
+            // Load initials from localStorage and update avatars
+            const savedInitials = localStorage.getItem("userInitials");
+            if (savedInitials) {
+                const topBarAvatar = document.querySelector('.user-avatar-circle');
+                const dropdownAvatar = document.querySelector('.dropdown-avatar');
+                if (topBarAvatar) {
+                    topBarAvatar.textContent = savedInitials;
+                }
+                if (dropdownAvatar) {
+                    dropdownAvatar.textContent = savedInitials;
+                }
+            }
+            
+            // Load profile image to top bar avatars
+            loadProfileImageToTopBar();
+            
+            // Load profile image from localStorage
+            const img = localStorage.getItem("profileImage");
+            if (img) {
+                profileImage.src = img;
+                // Show fallback if image fails to load
+                profileImage.onerror = function() {
+                    this.style.display = 'none';
+                    const savedUserName = localStorage.getItem("userName");
+                    const initials = getInitials(savedUserName);
+                    const fallback = document.createElement('span');
+                    fallback.className = 'avatar-fallback';
+                    fallback.textContent = initials;
+                    document.querySelector('.avatar-container').appendChild(fallback);
+                };
+            } else {
+                // Show fallback if no image
+                profileImage.style.display = 'none';
+                const savedUserName = localStorage.getItem("userName");
+                const initials = getInitials(savedUserName);
+                const fallback = document.createElement('span');
+                fallback.className = 'avatar-fallback';
+                fallback.textContent = initials;
+                document.querySelector('.avatar-container').appendChild(fallback);
+            }
+
+            // Load profile data from localStorage
+            const saved = JSON.parse(localStorage.getItem("profile"));
+            if (saved) {
+                displayProfile(saved);
+            } else {
+                displayProfile({
+                    name: "Gyan Prakash",
+                    role: "Student • Pragya Yog School",
+                    email: "gyan@gmail.com",
+                    phone: "+91 9876543210",
+                    location: "Haridwar",
+                    bio: "Passionate about Yoga and Community Development.",
+                    skills: ["HTML", "CSS", "JavaScript", "Leadership"],
+                    interests: ["Yoga", "Meditation", "Reading", "Nature"],
+                    achievements: ["Camp Volunteer", "Meditation Badge", "Completed 5-Day Challenge"],
+                    activities: ["Completed Yoga Workshop", "Joined Meditation Group", "Uploaded Workshop Photos"]
+                });
+            }
+
+            // Initialize streak tracking
+            initStreakTracking();
+        }
+
+        // Streak Tracking Functions
+        function initStreakTracking() {
+            updateStreakDisplay();
+            generateStreakCalendar();
+            checkDailyActivity();
+        }
+
+        function getStreakData() {
+            const streakData = localStorage.getItem("streakData");
+            return streakData ? JSON.parse(streakData) : {
+                currentStreak: 0,
+                lastActiveDate: null,
+                activeDays: []
+            };
+        }
+
+        function saveStreakData(data) {
+            localStorage.setItem("streakData", JSON.stringify(data));
+        }
+
+        function updateStreakDisplay() {
+            const streakData = getStreakData();
+            const streakCount = document.getElementById('streakCount');
+            if (streakCount) {
+                streakCount.textContent = streakData.currentStreak;
+            }
+        }
+
+        function generateStreakCalendar() {
+            const streakCalendar = document.getElementById('streakCalendar');
+            if (!streakCalendar) return;
+
+            const streakData = getStreakData();
+            const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            const today = new Date();
+            const activeDays = streakData.activeDays || [];
+
+            let html = '';
+            
+            // Generate last 7 days
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(today.getDate() - i);
+                const dateStr = date.toISOString().split('T')[0];
+                const dayIndex = date.getDay();
+                const isToday = i === 0;
+                const isActive = activeDays.includes(dateStr);
+
+                html += `
+                    <div class="streak-day ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}">
+                        ${days[dayIndex]}
+                    </div>
+                `;
+            }
+
+            streakCalendar.innerHTML = html;
+        }
+
+        function checkDailyActivity() {
+            const today = new Date().toISOString().split('T')[0];
+            const streakData = getStreakData();
+            
+            if (streakData.lastActiveDate !== today) {
+                // Check if streak should continue or reset
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                
+                if (streakData.lastActiveDate === yesterdayStr) {
+                    // Continue streak
+                    streakData.currentStreak++;
+                } else if (streakData.lastActiveDate !== today) {
+                    // Reset streak
+                    streakData.currentStreak = 1;
+                }
+                
+                streakData.lastActiveDate = today;
+                
+                if (!streakData.activeDays.includes(today)) {
+                    streakData.activeDays.push(today);
+                }
+                
+                // Keep only last 30 days
+                if (streakData.activeDays.length > 30) {
+                    streakData.activeDays = streakData.activeDays.slice(-30);
+                }
+                
+                saveStreakData(streakData);
+                updateStreakDisplay();
+                generateStreakCalendar();
+            }
+        }
+
+        function recordActivity() {
+            const today = new Date().toISOString().split('T')[0];
+            const streakData = getStreakData();
+            
+            if (!streakData.activeDays.includes(today)) {
+                streakData.activeDays.push(today);
+                
+                // Check if this continues the streak
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                
+                if (streakData.lastActiveDate === yesterdayStr) {
+                    streakData.currentStreak++;
+                } else if (streakData.lastActiveDate !== today) {
+                    streakData.currentStreak = 1;
+                }
+                
+                streakData.lastActiveDate = today;
+                saveStreakData(streakData);
+                updateStreakDisplay();
+                generateStreakCalendar();
+            }
+        }
+
+        // Sidebar Toggle Handler
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', () => {
+                document.body.classList.toggle('sidebar-collapsed');
+            });
+        }
+
+        // Modal Functions
+        function openModal() {
+            document.getElementById("profileModal").style.display = "flex";
+            loadProfile();
+            updateProfileCompletion();
+        }
+
+        function closeModal() {
+            document.getElementById("profileModal").style.display = "none";
+        }
+
+        function updateProfileCompletion() {
+            const fields = [
+                nameInput,
+                roleInput,
+                emailInput,
+                phoneInput,
+                locationInput,
+                bioInput,
+                skillsInput,
+                interestsInput,
+                achievementsInput,
+                activitiesInput
+            ];
+
+            let filledFields = 0;
+            fields.forEach(field => {
+                if (field && field.value.trim() !== '') {
+                    filledFields++;
+                }
+            });
+
+            const percentage = Math.round((filledFields / fields.length) * 100);
+            
+            const completionFill = document.getElementById('completionFill');
+            const completionPercentage = document.getElementById('completionPercentage');
+            
+            if (completionFill) {
+                completionFill.style.width = percentage + '%';
+            }
+            if (completionPercentage) {
+                completionPercentage.textContent = percentage + '%';
+            }
+        }
+
+        // Add event listeners to update completion bar on input
+        const inputFields = ['nameInput', 'roleInput', 'emailInput', 'phoneInput', 'locationInput', 'bioInput', 'skillsInput', 'interestsInput', 'achievementsInput', 'activitiesInput'];
+        inputFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.addEventListener('input', updateProfileCompletion);
+            }
+        });
+
+        function saveProfile() {
+            const profile = {
+                name: nameInput.value,
+                role: roleInput.value,
+                email: emailInput.value,
+                phone: phoneInput.value,
+                location: locationInput.value,
+                bio: bioInput.value,
+                skills: skillsInput.value.split(",").map(s => s.trim()).filter(s => s),
+                interests: interestsInput.value.split(",").map(s => s.trim()).filter(s => s),
+                achievements: achievementsInput.value.split(",").map(s => s.trim()).filter(s => s),
+                activities: activitiesInput.value.split(",").map(s => s.trim()).filter(s => s)
+            };
+
+            localStorage.setItem("profile", JSON.stringify(profile));
+            localStorage.setItem("userName", profile.name);
+            displayProfile(profile);
+            updateTopBarName(profile.name);
+            updateAvatarInitials(profile.name);
+            closeModal();
+        }
+
+        function displayProfile(profile) {
+            profileName.innerText = profile.name;
+            profileRole.innerText = profile.role;
+            profileEmail.innerText = profile.email;
+            profilePhone.innerText = profile.phone;
+            profileLocation.innerText = profile.location;
+            profileBio.innerText = profile.bio;
+
+            skillsContainer.innerHTML = "";
+            profile.skills.forEach(skill => {
+                skillsContainer.innerHTML += `<span class="chip">${skill}</span>`;
+            });
+
+            interestsContainer.innerHTML = "";
+            profile.interests.forEach(item => {
+                interestsContainer.innerHTML += `<span class="chip">${item}</span>`;
+            });
+
+            // Update achievements list
+            const achievementList = document.getElementById('achievementList');
+            if (achievementList && profile.achievements) {
+                achievementList.innerHTML = "";
+                profile.achievements.forEach(achievement => {
+                    achievementList.innerHTML += `<li>${achievement}</li>`;
+                });
+            }
+
+            // Update activities list
+            const activityList = document.getElementById('activityList');
+            if (activityList && profile.activities) {
+                activityList.innerHTML = "";
+                profile.activities.forEach(activity => {
+                    activityList.innerHTML += `<li>${activity}</li>`;
+                });
+            }
+        }
+
+        function updateTopBarName(name) {
+            const topBarName = document.querySelector('.user-name');
+            const dropdownName = document.querySelector('.dropdown-name');
+            if (topBarName) {
+                topBarName.innerText = name;
+            }
+            if (dropdownName) {
+                dropdownName.innerText = name;
+            }
+        }
+
+        function getInitials(name) {
+            if (!name) return 'GP';
+            const words = name.trim().split(' ');
+            if (words.length === 0) return 'GP';
+            if (words.length === 1) return words[0].charAt(0).toUpperCase();
+            return (words[0].charAt(0) + words[words.length - 1].charAt(0)).toUpperCase();
+        }
+
+        function updateAvatarInitials(name) {
+            const initials = getInitials(name);
+            
+            // Update hero banner avatar
+            const heroAvatar = document.querySelector('.avatar-fallback');
+            if (heroAvatar) {
+                heroAvatar.textContent = initials;
+            }
+            
+            // Update top bar avatar
+            const topBarAvatar = document.querySelector('.user-avatar-circle');
+            if (topBarAvatar) {
+                topBarAvatar.textContent = initials;
+                topBarAvatar.style.backgroundImage = 'none';
+                topBarAvatar.style.background = 'var(--primary)';
+            }
+            
+            // Update dropdown avatar
+            const dropdownAvatar = document.querySelector('.dropdown-avatar');
+            if (dropdownAvatar) {
+                dropdownAvatar.textContent = initials;
+                dropdownAvatar.style.backgroundImage = 'none';
+                dropdownAvatar.style.background = 'var(--primary)';
+            }
+            
+            // Save initials to localStorage
+            localStorage.setItem("userInitials", initials);
+        }
+
+        function updateTopBarAvatars(imageUrl) {
+            const topBarAvatar = document.querySelector('.user-avatar-circle');
+            const dropdownAvatar = document.querySelector('.dropdown-avatar');
+            
+            if (topBarAvatar) {
+                topBarAvatar.style.backgroundImage = `url(${imageUrl})`;
+                topBarAvatar.style.backgroundSize = 'cover';
+                topBarAvatar.style.backgroundPosition = 'center';
+                topBarAvatar.style.backgroundRepeat = 'no-repeat';
+                topBarAvatar.textContent = '';
+            }
+            
+            if (dropdownAvatar) {
+                dropdownAvatar.style.backgroundImage = `url(${imageUrl})`;
+                dropdownAvatar.style.backgroundSize = 'cover';
+                dropdownAvatar.style.backgroundPosition = 'center';
+                dropdownAvatar.style.backgroundRepeat = 'no-repeat';
+                dropdownAvatar.textContent = '';
+            }
+        }
+
+        function loadProfileImageToTopBar() {
+            const savedImage = localStorage.getItem("profileImage");
+            if (savedImage) {
+                updateTopBarAvatars(savedImage);
+            }
+        }
+
+        function loadProfile() {
+            const profile = JSON.parse(localStorage.getItem("profile"));
+            if (!profile) return;
+
+            nameInput.value = profile.name;
+            roleInput.value = profile.role;
+            emailInput.value = profile.email;
+            phoneInput.value = profile.phone;
+            locationInput.value = profile.location;
+            bioInput.value = profile.bio;
+            skillsInput.value = profile.skills.join(", ");
+            interestsInput.value = profile.interests.join(", ");
+            
+            if (profile.achievements) {
+                achievementsInput.value = profile.achievements.join(", ");
+            }
+            
+            if (profile.activities) {
+                activitiesInput.value = profile.activities.join(", ");
+            }
+        }
+
+        // Image Upload Handler
+        const upload = document.getElementById("imageUpload");
+        if (upload) {
+            upload.addEventListener("change", function() {
+                const file = this.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profileImage.src = e.target.result;
+                    profileImage.style.display = 'block';
+                    const fallback = document.querySelector('.avatar-fallback');
+                    if (fallback) fallback.remove();
+                    localStorage.setItem("profileImage", e.target.result);
+                    updateTopBarAvatars(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Close modal when clicking outside
+        document.getElementById("profileModal").addEventListener("click", function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // User Dropdown Menu Functions
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            
+            if (dropdown.classList.contains('active')) {
+                closeUserMenu();
+            } else {
+                dropdown.classList.add('active');
+            }
+        }
+
+        function closeUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.remove('active');
+        }
+
+        // User Menu Trigger Click Handler
+        const userMenuTrigger = document.getElementById('userMenuTrigger');
+        if (userMenuTrigger) {
+            userMenuTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleUserMenu();
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            
+            if (dropdown && !dropdown.contains(e.target) && !trigger.contains(e.target)) {
+                closeUserMenu();
+            }
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        const userDropdown = document.getElementById('userDropdown');
+        if (userDropdown) {
+            userDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+    </script>
+</body>
+</html>

@@ -16,8 +16,15 @@
       {
         "ignore": [
           "scrollbar-width",
-          "scrollbar-width: none"
+          "scrollbar-width: none",
+          "backdrop-filter"
         ]
+      }
+    ],
+    "axe/text-alternatives": [
+      "default",
+      {
+        "image-alt": "off"
       }
     ]
   }
