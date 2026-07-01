@@ -1356,7 +1356,7 @@
                     <a href="Dashboard.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
+                    <a href="CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
@@ -1712,6 +1712,12 @@
             if (savedUserName) {
                 updateTopBarName(savedUserName);
             }
+
+            // Load user role from localStorage and update top bar
+            const savedUserRole = localStorage.getItem("userRole");
+            if (savedUserRole) {
+                updateTopBarRole(savedUserRole);
+            }
             
             // Load initials from localStorage and update avatars
             const savedInitials = localStorage.getItem("userInitials");
@@ -1973,8 +1979,10 @@
 
             localStorage.setItem("profile", JSON.stringify(profile));
             localStorage.setItem("userName", profile.name);
+            localStorage.setItem("userRole", profile.role);
             displayProfile(profile);
             updateTopBarName(profile.name);
+            updateTopBarRole(profile.role);
             updateAvatarInitials(profile.name);
             closeModal();
         }
@@ -2024,6 +2032,17 @@
             }
             if (dropdownName) {
                 dropdownName.innerText = name;
+            }
+        }
+
+        function updateTopBarRole(role) {
+            const topBarRole = document.querySelector('.user-role');
+            const dropdownRole = document.querySelector('.dropdown-role');
+            if (topBarRole) {
+                topBarRole.innerText = role;
+            }
+            if (dropdownRole) {
+                dropdownRole.innerText = role;
             }
         }
 
