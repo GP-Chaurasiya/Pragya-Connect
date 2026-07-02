@@ -732,6 +732,35 @@ color:white;
 .register-btn:hover{
 background:var(--primary-hover);
 }
+
+.search-results{
+
+position:absolute;
+top:55px;
+left:0;
+width:100%;
+background:#fff;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+display:none;
+overflow:hidden;
+z-index:999;
+
+}
+
+.search-item{
+
+padding:14px 18px;
+cursor:pointer;
+transition:.3s;
+
+}
+
+.search-item:hover{
+
+background:#EAF3F4;
+
+}
     </style>
 </head>
 <body>
@@ -1046,6 +1075,7 @@ background:var(--primary-hover);
         </body>
 
 <script src="js/data.js"></script>
+<script src="js/search.js"></script>
 
 <script>
     lucide.createIcons();

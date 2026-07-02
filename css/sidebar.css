@@ -1,5 +1,0 @@
-﻿/* Submenu Styles */
-.submenu-arrow { transition: transform 0.3s ease; }
-.nav-item.submenu-open .submenu-arrow { transform: rotate(180deg); }
-.events-submenu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.events-submenu.active { max-height: 500px; }
