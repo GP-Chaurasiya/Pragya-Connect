@@ -776,6 +776,7 @@ background:var(--primary-hover);
                         <a href="MyRegistrations.html">My Registrations</a>
                     </li>
                 </ul>
+                </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
                 </li>
@@ -1043,8 +1044,8 @@ background:var(--primary-hover);
 
 </section>
         </body>
-<script src="js/events.js"></script>
-<script src="js\data.js"></script>
+
+<script src="js/data.js"></script>
 
 <script>
     lucide.createIcons();
@@ -1130,15 +1131,50 @@ background:var(--primary-hover);
         loadAvatarInitials();
         loadProfileImageToTopBar();
 
-        const page = window.location.pathname.toLowerCase();
+// Events submenu
+const eventsToggle = document.getElementById("eventsToggle");
+const eventsParent = document.querySelector(".has-submenu");
 
-if (
-    page.includes("events.html") ||
-    page.includes("calender.html") ||
-    page.includes("eventdetails.html") ||
-    page.includes("register.html") ||
-    page.includes("myregistrations.html")
-){
-    eventsParent.classList.add("open");
+if (eventsToggle && eventsParent) {
+
+    // Toggle submenu
+    eventsToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        eventsParent.classList.toggle("open");
+    });
+
+    // Keep submenu open on Events pages
+    const page = window.location.pathname.toLowerCase();
+
+    if (
+        page.includes("events.html") ||
+        page.includes("calender.html") ||
+        page.includes("eventdetails.html") ||
+        page.includes("register.html") ||
+        page.includes("myregistrations.html")
+    ) {
+        eventsParent.classList.add("open");
+    }
+}
+
+function loadUserName() {
+
+    const savedName = localStorage.getItem("userName");
+
+    if(savedName){
+
+        const topBarName = document.querySelector(".user-name");
+        const dropdownName = document.querySelector(".dropdown-name");
+
+        if(topBarName){
+            topBarName.textContent = savedName;
+        }
+
+        if(dropdownName){
+            dropdownName.textContent = savedName;
+        }
+
+    }
+
 }
 </script>
