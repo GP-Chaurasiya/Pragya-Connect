@@ -814,15 +814,95 @@
     <script>
         lucide.createIcons();
         
-        // Sidebar toggle
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const body = document.body;
-        
-        if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', () => {
-                body.classList.toggle('sidebar-collapsed');
-            });
-        }
+        // =========================
+// Sidebar Toggle
+// =========================
+
+const sidebar = document.querySelector(".sidebar");
+const toggle = document.getElementById("sidebarToggle");
+
+// Open / Close Sidebar
+toggle.addEventListener("click", function (e) {
+    e.stopPropagation();
+    document.body.classList.toggle("sidebar-collapsed");
+});
+
+// Close when clicking outside
+document.addEventListener("click", function (e) {
+
+    if (
+        !document.body.classList.contains("sidebar-collapsed") &&
+        !sidebar.contains(e.target) &&
+        !toggle.contains(e.target)
+    ) {
+        document.body.classList.add("sidebar-collapsed");
+    }
+
+});
+
+// Track whether the mouse is over the sidebar
+let isSidebarHovered = false;
+
+sidebar.addEventListener("mouseenter", () => {
+    isSidebarHovered = true;
+});
+
+sidebar.addEventListener("mouseleave", () => {
+    isSidebarHovered = false;
+});
+
+// Close sidebar on scroll ONLY if the mouse is NOT over the sidebar
+window.addEventListener("scroll", () => {
+
+    if (
+        !document.body.classList.contains("sidebar-collapsed") &&
+        !isSidebarHovered
+    ) {
+        document.body.classList.add("sidebar-collapsed");
+    }
+
+});
+
+// Close sidebar on mouse wheel ONLY if the mouse is NOT over the sidebar
+window.addEventListener("wheel", () => {
+
+    if (
+        !document.body.classList.contains("sidebar-collapsed") &&
+        !isSidebarHovered
+    ) {
+        document.body.classList.add("sidebar-collapsed");
+    }
+
+});
+
+// Close on touch devices
+window.addEventListener("touchmove", function () {
+
+    if (!document.body.classList.contains("sidebar-collapsed")) {
+        document.body.classList.add("sidebar-collapsed");
+    }
+
+});
+
+// Close after clicking any sidebar link
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        document.body.classList.add("sidebar-collapsed");
+
+    });
+
+});
+
+// Close when ESC key is pressed
+document.addEventListener("keydown", function (e) {
+
+    if (e.key === "Escape") {
+        document.body.classList.add("sidebar-collapsed");
+    }
+
+});
         
         // User dropdown toggle
         const userMenuTrigger = document.getElementById('userMenuTrigger');
