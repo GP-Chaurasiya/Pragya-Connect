@@ -1,13 +1,16 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pragya Connect - Community Feed</title>
+    <title>Pragya Connect - MyRegistrations</title>
     <!-- Google Fonts: Plus Jakarta Sans for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
         :root {
@@ -527,148 +530,85 @@
             color: var(--red-dark);
         }
 
-        /* React App Containers */
-        .content-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
+        .registrations-page{
 
-        #root {
-            width: 100%;
-        }
+padding:20px;
 
-        /* Responsive Breakpoints */
-        @media (max-width: 1200px) {
-            .topbar {
-                grid-template-columns: 1fr;
-            }
-            .topbar-actions {
-                justify-content: flex-start;
-            }
-        }
+}
 
-        @media (max-width: 900px) {
-            .sidebar {
-                width: 72px;
-                padding: 24px 8px;
-                align-items: center;
-            }
-            .logo-title, .logo-subtitle, .nav-item a span, .nav-logout a span, .badge, .logo-img {
-                display: none;
-            }
-            .logo-container {
-                margin-bottom: 24px;
-            }
-            .main-wrapper {
-                margin-left: 72px;
-                width: calc(100% - 72px);
-                padding: 16px;
-            }
-        }
+.page-header{
 
-        @media (max-width: 600px) {
-            .topbar {
-                gap: 12px;
-                margin-bottom: 20px;
-            }
-            .topbar-main {
-                gap: 10px;
-            }
-            .sidebar-toggle-btn {
-                width: 42px;
-                height: 42px;
-            }
-            .sidebar-toggle-btn i, .sidebar-toggle-btn svg {
-                width: 20px;
-                height: 20px;
-            }
-            .search-input {
-                height: 42px;
-                padding: 10px 14px 10px 42px;
-                border-radius: 13px;
-                font-size: 13px;
-            }
-            .search-container i, .search-container svg {
-                left: 14px;
-                width: 17px;
-                height: 17px;
-            }
-            .topbar-actions {
-                justify-content: flex-start;
-                gap: 8px;
-                flex-wrap: nowrap;
-                width: 100%;
-                overflow: hidden;
-            }
-            .icon-btn-badge {
-                width: 42px;
-                height: 42px;
-                flex: 0 0 42px;
-            }
-            .icon-btn-badge .badge-dot {
-                width: 16px;
-                height: 16px;
-                font-size: 9px;
-            }
-            .user-menu-trigger {
-                flex: 1 1 auto;
-                min-width: 0;
-                height: 42px;
-                gap: 8px;
-                padding: 4px 10px 4px 6px;
-            }
-            .user-avatar-circle {
-                width: 34px;
-                height: 34px;
-                font-size: 12px;
-            }
-            .user-details {
-                min-width: 0;
-            }
-            .user-name {
-                font-size: 12.5px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            .user-role {
-                display: none;
-            }
-            .user-menu-trigger i, .user-menu-trigger svg {
-                width: 14px;
-                height: 14px;
-                margin-left: 0;
-                flex-shrink: 0;
-            }
-            .user-dropdown {
-                width: 260px;
-                right: -8px;
-            }
-            .dropdown-header {
-                padding: 16px 20px;
-            }
-            .dropdown-avatar {
-                width: 42px;
-                height: 42px;
-                font-size: 14px;
-            }
-            .dropdown-name {
-                font-size: 13px;
-            }
-            .dropdown-role {
-                font-size: 11px;
-            }
-            .dropdown-item {
-                padding: 10px 20px;
-                font-size: 13px;
-            }
-            .dropdown-item i, .dropdown-item svg {
-                width: 16px;
-                height: 16px;
-            }
-        }
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+
+}
+
+.page-header input{
+
+width:280px;
+height:45px;
+padding:10px 15px;
+border:1px solid #ddd;
+border-radius:10px;
+
+}
+
+.registration-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:20px;
+
+}
+
+.registration-card{
+
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:var(--shadow-md);
+
+}
+
+.registration-card h3{
+
+margin-bottom:10px;
+
+}
+
+.status{
+
+display:inline-block;
+padding:6px 12px;
+border-radius:20px;
+background:#EAF7EF;
+color:#16A34A;
+font-weight:600;
+font-size:14px;
+margin-top:10px;
+
+}
+
+.cancel-btn{
+
+margin-top:20px;
+width:100%;
+height:45px;
+background:#EF4444;
+color:white;
+border:none;
+border-radius:12px;
+cursor:pointer;
+
+}
+
+.cancel-btn:hover{
+
+background:#DC2626;
+
+}
     </style>
 </head>
 <body>
@@ -677,21 +617,21 @@
         <!-- Left Sidebar Navigation -->
         <aside class="sidebar">
             <div class="logo-container">
-                <img src="assets/logo.png" alt="Pragya Logo" class="logo-img">
+                <img src="assets\logo.png" alt="Pragya Logo" class="logo-img">
             </div>
 
             <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
-                </li>
                 <li class="nav-item active">
-                    <a href="CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
+                    <a href="../index.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="../CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="events/Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
+                    <a href="events\Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
@@ -703,7 +643,7 @@
                     <a href="#"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
+                    <a href="../Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="settings"></i> <span>Settings</span></a>
@@ -803,59 +743,44 @@
                 </div>
             </header>
 
-            <!-- Content Area for React App -->
-            <div class="content-area">
-                <div id="root"></div>
-            </div>
-        </div>
+            <div class="registrations-page">
+
+    <div class="page-header">
+        <h2>My Registrations</h2>
     </div>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        lucide.createIcons();
-        
-        // Sidebar toggle
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const body = document.body;
-        
-        if (sidebarToggle) {
-            sidebarToggle.addEventListener('click', () => {
-                body.classList.toggle('sidebar-collapsed');
-            });
-        }
-        
-        // User dropdown toggle
-        const userMenuTrigger = document.getElementById('userMenuTrigger');
-        const userDropdown = document.getElementById('userDropdown');
-        
-        if (userMenuTrigger && userDropdown) {
-            userMenuTrigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                userDropdown.classList.toggle('active');
-            });
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', () => {
-                userDropdown.classList.remove('active');
-            });
-        }
+    <div id="registrationContainer" class="registration-grid">
 
-        // Load user name from localStorage and update top bar
-        function loadUserName() {
-            const savedUserName = localStorage.getItem("userName");
-            if (savedUserName) {
-                const topBarName = document.querySelector('.user-name');
-                const dropdownName = document.querySelector('.dropdown-name');
-                if (topBarName) {
-                    topBarName.innerText = savedUserName;
-                }
-                if (dropdownName) {
-                    dropdownName.innerText = savedUserName;
-                }
-            }
-        }
+    </div>
 
-        // Load user role from localStorage and update top bar
+</div>
+</body>
+
+<script src="js/registrations.js"></script>
+<script>
+    lucide.createIcons();
+
+    // Sidebar Toggle
+    const toggle = document.getElementById("sidebarToggle");
+    toggle.addEventListener("click", () => {
+        document.body.classList.toggle("sidebar-collapsed");
+    });
+
+    // User Dropdown
+    const trigger = document.getElementById("userMenuTrigger");
+    const dropdown = document.getElementById("userDropdown");
+
+    trigger.addEventListener("click", () => {
+        dropdown.classList.toggle("active");
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove("active");
+        }
+    });
+
+     // Load user role from localStorage and update top bar
         function loadUserRole() {
             const savedUserRole = localStorage.getItem("userRole");
             if (savedUserRole) {
@@ -870,7 +795,7 @@
             }
         }
 
-        // Load avatar initials from localStorage
+         // Load avatar initials from localStorage
         function loadAvatarInitials() {
             const savedInitials = localStorage.getItem("userInitials");
             if (savedInitials) {
@@ -915,9 +840,4 @@
         loadUserRole();
         loadAvatarInitials();
         loadProfileImageToTopBar();
-    </script>
-    <!-- Load the built React app -->
-    <script type="module" src="/community-feed/dist/assets/index-BNEfpeqm.js"></script>
-    <link rel="stylesheet" href="/community-feed/dist/assets/index-C-rGuRfn.css">
-</body>
-</html>
+</script>

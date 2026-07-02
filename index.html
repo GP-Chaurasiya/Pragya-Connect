@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pragya Connect - Student Dashboard</title>
+    <title>Pragya Connect - Dashboard</title>
     <!-- Google Fonts: Plus Jakarta Sans for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1582,7 +1582,7 @@
                     <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="calendar"></i> <span>Events</span></a>
+                    <a href="events\Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
@@ -2056,51 +2056,51 @@
             }
         }
 
-        // Load avatar initials from localStorage
-        function loadAvatarInitials() {
-            const savedInitials = localStorage.getItem("userInitials");
-            if (savedInitials) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                if (topBarAvatar) {
-                    topBarAvatar.textContent = savedInitials;
-                }
-                if (dropdownAvatar) {
-                    dropdownAvatar.textContent = savedInitials;
-                }
-            }
-        }
-
-        // Load profile image to top bar avatars
-        function loadProfileImageToTopBar() {
-            const savedImage = localStorage.getItem("profileImage");
-            if (savedImage) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                
-                if (topBarAvatar) {
-                    topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                    topBarAvatar.style.backgroundSize = 'cover';
-                    topBarAvatar.style.backgroundPosition = 'center';
-                    topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                    topBarAvatar.textContent = '';
-                }
-                
-                if (dropdownAvatar) {
-                    dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                    dropdownAvatar.style.backgroundSize = 'cover';
-                    dropdownAvatar.style.backgroundPosition = 'center';
-                    dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                    dropdownAvatar.textContent = '';
+            // Load avatar initials from localStorage
+            function loadAvatarInitials() {
+                const savedInitials = localStorage.getItem("userInitials");
+                if (savedInitials) {
+                    const topBarAvatar = document.querySelector('.user-avatar-circle');
+                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
+                    if (topBarAvatar) {
+                        topBarAvatar.textContent = savedInitials;
+                    }
+                    if (dropdownAvatar) {
+                        dropdownAvatar.textContent = savedInitials;
+                    }
                 }
             }
-        }
 
-        // Call load functions on page load
-        loadUserName();
-        loadUserRole();
-        loadAvatarInitials();
-        loadProfileImageToTopBar();
+            // Load profile image to top bar avatars
+            function loadProfileImageToTopBar() {
+                const savedImage = localStorage.getItem("profileImage");
+                if (savedImage) {
+                    const topBarAvatar = document.querySelector('.user-avatar-circle');
+                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
+                    
+                    if (topBarAvatar) {
+                        topBarAvatar.style.backgroundImage = `url(${savedImage})`;
+                        topBarAvatar.style.backgroundSize = 'cover';
+                        topBarAvatar.style.backgroundPosition = 'center';
+                        topBarAvatar.style.backgroundRepeat = 'no-repeat';
+                        topBarAvatar.textContent = '';
+                    }
+                    
+                    if (dropdownAvatar) {
+                        dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
+                        dropdownAvatar.style.backgroundSize = 'cover';
+                        dropdownAvatar.style.backgroundPosition = 'center';
+                        dropdownAvatar.style.backgroundRepeat = 'no-repeat';
+                        dropdownAvatar.textContent = '';
+                    }
+                }
+            }
+
+            // Call load functions on page load
+            loadUserName();
+            loadUserRole();
+            loadAvatarInitials();
+            loadProfileImageToTopBar();
 
         // Sidebar Toggle Handler
         const sidebarToggle = document.getElementById('sidebarToggle');
