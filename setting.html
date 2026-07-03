@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pragya Connect - Calendar</title>
+    <title>Pragya Connect - Dashboard</title>
     <!-- Google Fonts: Plus Jakarta Sans for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,7 @@
             --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06);
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
+        
         /* Basic Reset */
         * {
             margin: 0;
@@ -357,66 +357,6 @@
             flex-shrink: 0;
         }
 
-                .has-submenu .submenu{
-    list-style:none;
-    margin:6px 0 0 38px;
-    padding-left:8px;
-    border-left:2px solid var(--border);
-
-    max-height:0;
-    overflow:hidden;
-    transition:max-height .35s ease;
-}
-
-.has-submenu.open .submenu{
-    max-height:320px;
-}
-
-.submenu li{
-    margin:6px 0;
-}
-
-.submenu li a{
-
-    display:flex;
-    align-items:center;
-
-    padding:10px 14px;
-
-    color:var(--text-muted);
-
-    text-decoration:none;
-
-    border-radius:12px;
-
-    font-size:13px;
-
-    transition:.3s;
-
-}
-
-.submenu li a:hover{
-
-    background:var(--primary-light);
-
-    color:var(--primary);
-
-}
-
-.submenu-arrow{
-
-    margin-left:auto;
-
-    transition:.3s;
-
-}
-
-.has-submenu.open .submenu-arrow{
-
-    transform:rotate(180deg);
-
-}
-
         .user-menu-trigger {
             display: flex;
             align-items: center;
@@ -590,126 +530,7 @@
             color: var(--red-dark);
         }
 
-.calendar-container{
-
-background:white;
-padding:30px;
-border-radius:20px;
-box-shadow:var(--shadow-md);
-
-}
-
-.calendar-header{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
-
-}
-
-.calendar-header button{
-
-width:45px;
-height:45px;
-border:none;
-border-radius:50%;
-background:var(--primary);
-color:white;
-cursor:pointer;
-
-}
-
-.calendar-layout{
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:30px;
-}
-
-.weekdays{
-
-display:grid;
-grid-template-columns:repeat(7,1fr);
-margin-bottom:10px;
-font-weight:700;
-text-align:center;
-
-}
-
-.calendar-grid{
-
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:12px;
-
-}
-
-.day{
-
-height:95px;
-background:#fff;
-border:1px solid #eee;
-border-radius:15px;
-padding:10px;
-cursor:pointer;
-position:relative;
-transition:.25s;
-
-}
-
-.day:hover{
-
-transform:translateY(-4px);
-box-shadow:0 8px 18px rgba(0,0,0,.08);
-
-}
-
-.day-number{
-
-font-weight:700;
-
-}
-
-.event-dots{
-display:flex;
-gap:4px;
-position:absolute;
-bottom:10px;
-left:50%;
-transform:translateX(-50%);
-}
-
-.event-dot{
-width:6px;
-height:6px;
-border-radius:50%;
-background:var(--accent);
-}
-
-.selected{
-    background:var(--primary);
-    color:white;
-    transform:scale(1.04);
-}
-
-.selected-events{
-
-margin-top:30px;
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:var(--shadow-md);
-
-}
-
-.event-item{
-
-padding:15px;
-border-bottom:1px solid #eee;
-
-}
-
-.search-results{
+        .search-results{
 
 position:absolute;
 top:55px;
@@ -738,8 +559,121 @@ background:#EAF3F4;
 
 }
 
-.today{
-    border:2px solid var(--accent);
+/* SETTINGS PAGE */
+
+.settings-container{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.settings-card{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:var(--shadow-md);
+}
+
+.settings-card h2{
+    font-size:22px;
+    margin-bottom:20px;
+    color:var(--primary);
+}
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.setting-row:last-child{
+    border-bottom:none;
+}
+
+.setting-info h4{
+    font-size:16px;
+    margin-bottom:4px;
+}
+
+.setting-info p{
+    color:var(--text-muted);
+    font-size:14px;
+}
+
+.btn{
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.btn-primary:hover{
+    background:var(--primary-hover);
+}
+
+.btn-danger{
+    background:#EB5757;
+    color:#fff;
+}
+
+.btn-danger:hover{
+    background:#c0392b;
+}
+
+.switch{
+    position:relative;
+    display:inline-block;
+    width:55px;
+    height:28px;
+}
+
+.switch input{
+    display:none;
+}
+
+.slider{
+    position:absolute;
+    cursor:pointer;
+    inset:0;
+    background:#ccc;
+    transition:.4s;
+    border-radius:30px;
+}
+
+.slider:before{
+    position:absolute;
+    content:"";
+    width:22px;
+    height:22px;
+    left:3px;
+    bottom:3px;
+    background:white;
+    transition:.4s;
+    border-radius:50%;
+}
+
+input:checked + .slider{
+    background:var(--primary);
+}
+
+input:checked + .slider:before{
+    transform:translateX(27px);
+}
+
+.setting-select{
+    padding:10px 15px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    font-size:14px;
 }
     </style>
 </head>
@@ -749,39 +683,21 @@ background:#EAF3F4;
         <!-- Left Sidebar Navigation -->
         <aside class="sidebar">
             <div class="logo-container">
-                <img src="assets\logo.png" alt="Pragya Logo" class="logo-img">
+                <img src="assets/logo.png" alt="Pragya Logo" class="logo-img">
             </div>
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="../index.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
+                    <a href="#"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="../CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
+                    <a href="CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
                 </li>
-                <li class="nav-item has-submenu"><a href="#" id="eventsToggle"><i data-lucide="calendar"></i>
-                    <span>Events</span>
-                    <i data-lucide="chevron-down" class="submenu-arrow"></i>
-                </a>
-                <ul class="submenu" id="eventsMenu">
-                    <li >
-                        <a href="Events.html">All Events</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a href="Calender.html">Calendar</a>
-                    </li>
-                    <li>
-                        <a href="EventDetails.html">
-                            Event Details
-                        </a>
-                    </li>
-                    <li>
-                        <a href="MyRegistrations.html">My Registrations</a>
-                    </li>
-                </ul>
+                <li class="nav-item">
+                    <a href="events\Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
@@ -793,10 +709,10 @@ background:#EAF3F4;
                     <a href="#"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="../Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
+                    <a href="Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
                 </li>
-                <li class="nav-item">
-                    <a href="../setting.html"><i data-lucide="settings"></i> <span>Settings</span></a>
+                <li class="nav-item active">
+                    <a href="settings.html"><i data-lucide="settings"></i> <span>Settings</span></a>
                 </li>
             </ul>
 
@@ -862,7 +778,7 @@ background:#EAF3F4;
                                 </a>
                             </li>
                             <li>
-                                <a href="../setting.html" class="dropdown-item">
+                                <a href="#" class="dropdown-item">
                                     <i data-lucide="settings"></i>
                                     <span>Settings</span>
                                 </a>
@@ -893,56 +809,240 @@ background:#EAF3F4;
                 </div>
             </header>
 
-            <section class="calendar-container">
+            <div class="settings-container">
 
-    <div class="calendar-header">
+    <div class="settings-card">
 
-        <button id="prevMonth">
-            <i data-lucide="chevron-left"></i>
-        </button>
+        <h2>⚙️ Settings</h2>
 
-        <h2 id="monthYear"></h2>
+        <!-- Account -->
 
-        <button id="nextMonth">
-            <i data-lucide="chevron-right"></i>
-        </button>
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Account</h4>
+                <p>Edit your personal profile information.</p>
+            </div>
+
+            <button class="btn btn-primary"
+            onclick="location.href='../Profile.html'">
+
+                Edit Profile
+
+            </button>
+
+        </div>
+
+        <!-- Notifications -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Email Notifications</h4>
+                <p>Receive event updates via email.</p>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="emailNotify">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Message Notifications</h4>
+                <p>Receive new message alerts.</p>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="messageNotify">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+        <!-- Dark Mode -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Dark Mode</h4>
+                <p>Enable dark appearance.</p>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="darkMode">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+        <!-- Language -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Language</h4>
+                <p>Select your preferred language.</p>
+            </div>
+
+            <select class="setting-select" id="language">
+
+                <option>English</option>
+                <option>Hindi</option>
+
+            </select>
+
+        </div>
+
+        <!-- Privacy -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Public Profile</h4>
+                <p>Allow other students to see your profile.</p>
+            </div>
+
+            <label class="switch">
+                <input type="checkbox" id="publicProfile">
+                <span class="slider"></span>
+            </label>
+
+        </div>
+
+        <!-- Security -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Security</h4>
+                <p>Change your account password.</p>
+            </div>
+
+            <button class="btn btn-primary">
+
+                Change Password
+
+            </button>
+
+        </div>
+
+        <!-- Logout -->
+
+        <div class="setting-row">
+
+            <div class="setting-info">
+                <h4>Logout</h4>
+                <p>Sign out from your account.</p>
+            </div>
+
+            <button class="btn btn-danger" onclick="logout()">
+
+                Logout
+
+            </button>
+
+        </div>
 
     </div>
 
-    <div class="weekdays">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-    </div>
-
-    <div id="calendar" class="calendar-grid"></div>
-
-</section>
-
-<section class="selected-events">
-
-    <h3>Events on Selected Date</h3>
-
-    <div id="eventList">
-
-        <p>Select a date to view events.</p>
-
-    </div>
-
-</section>
+</div>
 </body>
+</html>
 
-<script src="js/data.js"></script>
-<script src="js/calender.js"></script>
-<script src="js/search.js"></script>
-<script>
-    lucide.createIcons();
+<script src="events\js\search.js"></script>
 
-    // =========================
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Load user name from localStorage and update top bar
+        function loadUserName() {
+            const savedUserName = localStorage.getItem("userName");
+            if (savedUserName) {
+                const topBarName = document.querySelector('.user-name');
+                const dropdownName = document.querySelector('.dropdown-name');
+                if (topBarName) {
+                    topBarName.innerText = savedUserName;
+                }
+                if (dropdownName) {
+                    dropdownName.innerText = savedUserName;
+                }
+                
+                // Update hero banner name with first name
+                const firstName = savedUserName.split(' ')[0];
+                const heroBannerName = document.getElementById('heroBannerName');
+                if (heroBannerName) {
+                    heroBannerName.innerText = firstName + '!';
+                }
+            }
+        }
+
+        // Load user role from localStorage and update top bar
+        function loadUserRole() {
+            const savedUserRole = localStorage.getItem("userRole");
+            if (savedUserRole) {
+                const topBarRole = document.querySelector('.user-role');
+                const dropdownRole = document.querySelector('.dropdown-role');
+                if (topBarRole) {
+                    topBarRole.innerText = savedUserRole;
+                }
+                if (dropdownRole) {
+                    dropdownRole.innerText = savedUserRole;
+                }
+            }
+        }
+
+            // Load avatar initials from localStorage
+            function loadAvatarInitials() {
+                const savedInitials = localStorage.getItem("userInitials");
+                if (savedInitials) {
+                    const topBarAvatar = document.querySelector('.user-avatar-circle');
+                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
+                    if (topBarAvatar) {
+                        topBarAvatar.textContent = savedInitials;
+                    }
+                    if (dropdownAvatar) {
+                        dropdownAvatar.textContent = savedInitials;
+                    }
+                }
+            }
+
+            // Load profile image to top bar avatars
+            function loadProfileImageToTopBar() {
+                const savedImage = localStorage.getItem("profileImage");
+                if (savedImage) {
+                    const topBarAvatar = document.querySelector('.user-avatar-circle');
+                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
+                    
+                    if (topBarAvatar) {
+                        topBarAvatar.style.backgroundImage = `url(${savedImage})`;
+                        topBarAvatar.style.backgroundSize = 'cover';
+                        topBarAvatar.style.backgroundPosition = 'center';
+                        topBarAvatar.style.backgroundRepeat = 'no-repeat';
+                        topBarAvatar.textContent = '';
+                    }
+                    
+                    if (dropdownAvatar) {
+                        dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
+                        dropdownAvatar.style.backgroundSize = 'cover';
+                        dropdownAvatar.style.backgroundPosition = 'center';
+                        dropdownAvatar.style.backgroundRepeat = 'no-repeat';
+                        dropdownAvatar.textContent = '';
+                    }
+                }
+            }
+
+            // Call load functions on page load
+            loadUserName();
+            loadUserRole();
+            loadAvatarInitials();
+            loadProfileImageToTopBar();
+
+        // =========================
 // Sidebar Toggle
 // =========================
 
@@ -1012,6 +1112,17 @@ window.addEventListener("touchmove", function () {
 
 });
 
+// Close after clicking any sidebar link
+document.querySelectorAll(".sidebar a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        document.body.classList.add("sidebar-collapsed");
+
+    });
+
+});
+
 // Close when ESC key is pressed
 document.addEventListener("keydown", function (e) {
 
@@ -1021,244 +1132,100 @@ document.addEventListener("keydown", function (e) {
 
 });
 
-    // User Dropdown
-    const trigger = document.getElementById("userMenuTrigger");
-    const dropdown = document.getElementById("userDropdown");
+// User Dropdown Menu Functions
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            
+            if (dropdown.classList.contains('active')) {
+                closeUserMenu();
+            } else {
+                dropdown.classList.add('active');
+            }
+        }
 
-    trigger.addEventListener("click", () => {
-        dropdown.classList.toggle("active");
+        function closeUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.remove('active');
+        }
+
+        // User Menu Trigger Click Handler
+        const userMenuTrigger = document.getElementById('userMenuTrigger');
+        if (userMenuTrigger) {
+            userMenuTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleUserMenu();
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('userDropdown');
+            const trigger = document.getElementById('userMenuTrigger');
+            
+            if (dropdown && !dropdown.contains(e.target) && !trigger.contains(e.target)) {
+                closeUserMenu();
+            }
+        });
+
+        // Prevent dropdown from closing when clicking inside it
+        const userDropdown = document.getElementById('userDropdown');
+        if (userDropdown) {
+            userDropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        // Load saved settings
+
+document.getElementById("emailNotify").checked =
+JSON.parse(localStorage.getItem("emailNotify")) || false;
+
+document.getElementById("messageNotify").checked =
+JSON.parse(localStorage.getItem("messageNotify")) || false;
+
+document.getElementById("darkMode").checked =
+JSON.parse(localStorage.getItem("darkMode")) || false;
+
+document.getElementById("publicProfile").checked =
+JSON.parse(localStorage.getItem("publicProfile")) || false;
+
+document.getElementById("language").value =
+localStorage.getItem("language") || "English";
+
+
+// Save settings automatically
+
+["emailNotify","messageNotify","darkMode","publicProfile"]
+.forEach(id=>{
+
+    document.getElementById(id).addEventListener("change",function(){
+
+        localStorage.setItem(id,this.checked);
+
     });
 
-    document.addEventListener("click", (e) => {
-        if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
-            dropdown.classList.remove("active");
-        }
-    });
-
-     // Load user role from localStorage and update top bar
-        function loadUserRole() {
-            const savedUserRole = localStorage.getItem("userRole");
-            if (savedUserRole) {
-                const topBarRole = document.querySelector('.user-role');
-                const dropdownRole = document.querySelector('.dropdown-role');
-                if (topBarRole) {
-                    topBarRole.innerText = savedUserRole;
-                }
-                if (dropdownRole) {
-                    dropdownRole.innerText = savedUserRole;
-                }
-            }
-        }
-
-         // Load avatar initials from localStorage
-        function loadAvatarInitials() {
-            const savedInitials = localStorage.getItem("userInitials");
-            if (savedInitials) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                if (topBarAvatar) {
-                    topBarAvatar.textContent = savedInitials;
-                }
-                if (dropdownAvatar) {
-                    dropdownAvatar.textContent = savedInitials;
-                }
-            }
-        }
-
-        // Load profile image to top bar avatars
-        function loadProfileImageToTopBar() {
-            const savedImage = localStorage.getItem("profileImage");
-            if (savedImage) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                
-                if (topBarAvatar) {
-                    topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                    topBarAvatar.style.backgroundSize = 'cover';
-                    topBarAvatar.style.backgroundPosition = 'center';
-                    topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                    topBarAvatar.textContent = '';
-                }
-                
-                if (dropdownAvatar) {
-                    dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                    dropdownAvatar.style.backgroundSize = 'cover';
-                    dropdownAvatar.style.backgroundPosition = 'center';
-                    dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                    dropdownAvatar.textContent = '';
-                }
-            }
-        }
-
-        // Call load functions on page load
-        loadUserName();
-        loadUserRole();
-        loadAvatarInitials();
-        loadProfileImageToTopBar();
-
-const calendar = document.getElementById("calendar");
-const monthYear = document.getElementById("monthYear");
-const eventList = document.getElementById("eventList");
-
-let currentDate = new Date();
-
-function renderCalendar(){
-
-calendar.innerHTML="";
-
-const year=currentDate.getFullYear();
-const month=currentDate.getMonth();
-
-const firstDay=new Date(year,month,1).getDay();
-const daysInMonth=new Date(year,month+1,0).getDate();
-
-monthYear.innerText=currentDate.toLocaleString("default",{
-month:"long",
-year:"numeric"
 });
 
-for(let i=0;i<firstDay;i++){
+document.getElementById("language")
+.addEventListener("change",function(){
 
-calendar.innerHTML+="<div></div>";
+    localStorage.setItem("language",this.value);
 
-}
+});
 
-for(let day=1;day<=daysInMonth;day++){
 
-const dateString=`${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+// Logout
 
-const dayDiv=document.createElement("div");
+function logout(){
 
-dayDiv.className="day";
+    if(confirm("Are you sure you want to logout?")){
 
-dayDiv.innerHTML=`
-<div class="day-number">${day}</div>
-`;
+        localStorage.clear();
 
-const dayEvents = events.filter(e => e.date === dateString);
+        window.location.href="index.html";
 
-if(dayEvents.length){
-
-    const dots=document.createElement("div");
-    dots.className="event-dots";
-
-    dayEvents.slice(0,3).forEach(()=>{
-        const dot=document.createElement("span");
-        dot.className="event-dot";
-        dots.appendChild(dot);
-    });
-
-    dayDiv.appendChild(dots);
-
-}
-
-dayDiv.onclick=()=>showEvents(dateString,dayDiv);
-
-calendar.appendChild(dayDiv);
-
-}
-
-}
-
-function showEvents(date,element){
-
-document.querySelectorAll(".day").forEach(d=>d.classList.remove("selected"));
-
-element.classList.add("selected");
-
-const filtered=events.filter(e=>e.date===date);
-
-if(filtered.length===0){
-
-eventList.innerHTML="<p>No Events</p>";
-
-return;
-
-}
-
-eventList.innerHTML=filtered.map(e=>`
-
-<div class="event-item">
-
-<h4>${e.title}</h4>
-
-<p>${e.time}</p>
-
-<p>${e.venue}</p>
-
-</div>
-
-`).join("");
-
-}
-
-document.getElementById("prevMonth").onclick=()=>{
-
-currentDate.setMonth(currentDate.getMonth()-1);
-
-renderCalendar();
-
-};
-
-document.getElementById("nextMonth").onclick=()=>{
-
-currentDate.setMonth(currentDate.getMonth()+1);
-
-renderCalendar();
-
-};
-
-renderCalendar();
-
-function loadUserName() {
-    const savedName = localStorage.getItem("userName");
-
-    if (savedName) {
-        const topBarName = document.querySelector(".user-name");
-        const dropdownName = document.querySelector(".dropdown-name");
-
-        if (topBarName) topBarName.innerText = savedName;
-        if (dropdownName) dropdownName.innerText = savedName;
     }
-}
 
-// Events submenu
-const eventsToggle = document.getElementById("eventsToggle");
-const eventsParent = document.querySelector(".has-submenu");
-
-if (eventsToggle && eventsParent) {
-
-    // Toggle submenu
-    eventsToggle.addEventListener("click", function (e) {
-        e.preventDefault();
-        eventsParent.classList.toggle("open");
-    });
-
-    // Keep submenu open on Events pages
-    const page = window.location.pathname.toLowerCase();
-
-    if (
-        page.includes("events.html") ||
-        page.includes("calender.html") ||
-        page.includes("eventdetails.html") ||
-        page.includes("register.html") ||
-        page.includes("myregistrations.html")
-    ) {
-        eventsParent.classList.add("open");
-    }
-}
-
-function loadUserName() {
-    const savedName = localStorage.getItem("userName");
-    if(savedName){
-        const topBarName = document.querySelector(".user-name");
-        const dropdownName = document.querySelector(".dropdown-name");
-        if(topBarName){
-            topBarName.textContent = savedName;
-        }
-        if(dropdownName){
-            dropdownName.textContent = savedName;
-        }
-    }
 }
 </script>

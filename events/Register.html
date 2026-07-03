@@ -35,7 +35,7 @@
             --orange-dark: #E47A22;
             
             /* Typography & Shadows */
-            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --font-family: BNCCringe;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06);
@@ -691,9 +691,33 @@ transition:.3s;
 }
 
 .search-item:hover{
+    background:#EAF3F4;
+}
 
-background:#EAF3F4;
+select,
+textarea,
+input[type="date"],
+input[type="file"]{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:15px;
+    font-family:var(--font-family);
+    background:#fff;
+}
 
+select{
+    height:48px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+hr{
+    border:none;
+    border-top:1px solid var(--border);
 }
     </style>
 </head>
@@ -732,9 +756,6 @@ background:#EAF3F4;
                             Event Details
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="Register.html">Register</a>
-                    </li>
                     <li>
                         <a href="MyRegistrations.html">My Registrations</a>
                     </li>
@@ -753,7 +774,7 @@ background:#EAF3F4;
                     <a href="../Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="settings"></i> <span>Settings</span></a>
+                    <a href="../setting.html"><i data-lucide="settings"></i> <span>Settings</span></a>
                 </li>
             </ul>
 
@@ -819,7 +840,7 @@ background:#EAF3F4;
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item">
+                                <a href="../setting.html" class="dropdown-item">
                                     <i data-lucide="settings"></i>
                                     <span>Settings</span>
                                 </a>
@@ -858,36 +879,236 @@ background:#EAF3F4;
 
         <form id="registrationForm">
 
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" id="name" required>
-            </div>
+    <h3 style="margin-bottom:20px;color:var(--primary);">
+        Personal Information
+    </h3>
 
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" id="email" required>
-            </div>
+    <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="name" required>
+    </div>
 
-            <div class="form-group">
-                <label>Phone Number</label>
-                <input type="tel" id="phone" required>
-            </div>
+    <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="email" required>
+    </div>
 
-            <div class="form-group">
-                <label>Course</label>
-                <input type="text" id="course">
-            </div>
+    <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="phone" required>
+    </div>
 
-            <div class="form-group">
-                <label>Event</label>
-                <input type="text" id="eventName" readonly>
-            </div>
+    <div class="form-group">
+        <label>Country *</label>
+        <input type="text" id="country" required>
+    </div>
 
-            <button type="submit" class="register-btn">
-                Register Now
-            </button>
+    <div class="form-group">
+        <label>City *</label>
+        <input type="text" id="city" required>
+    </div>
 
-        </form>
+    <div class="form-group">
+        <label>Date of Birth</label>
+        <input type="date" id="dob">
+    </div>
+
+    <div class="form-group">
+        <label>Gender</label>
+
+        <select id="gender">
+
+            <option value="">Select Gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+
+        </select>
+
+    </div>
+
+    <hr style="margin:30px 0;">
+
+    <h3 style="margin-bottom:20px;color:var(--primary);">
+        Registration Details
+    </h3>
+
+    <div class="form-group">
+        <label>User Type</label>
+
+        <select id="userType">
+
+            <option>Student</option>
+            <option>Teacher</option>
+            <option>Alumni</option>
+            <option>Guest</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+        <label>Organization / University</label>
+        <input type="text" id="organization">
+    </div>
+
+    <div class="form-group">
+        <label>Yoga Experience</label>
+
+        <select id="experience">
+
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Advanced</option>
+            <option>Yoga Teacher</option>
+
+        </select>
+
+    </div>
+
+    <hr style="margin:30px 0;">
+
+    <h3 style="margin-bottom:20px;color:var(--primary);">
+        Event Information
+    </h3>
+
+    <div class="form-group">
+        <label>Event Name</label>
+        <input type="text" id="eventName" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>Event Date</label>
+        <input type="text" id="eventDate" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>Venue</label>
+        <input type="text" id="venue" readonly>
+    </div>
+
+    <hr style="margin:30px 0;">
+
+    <h3 style="margin-bottom:20px;color:var(--primary);">
+        Health Information
+    </h3>
+
+    <div class="form-group">
+
+        <label>Any Medical Condition?</label>
+
+        <select id="medical">
+
+            <option>No</option>
+            <option>Yes</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>If Yes, Please Mention</label>
+
+        <textarea id="medicalDetails" rows="4"></textarea>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Emergency Contact Name *</label>
+
+        <input type="text" id="emergencyName" required>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Emergency Contact Number *</label>
+
+        <input type="tel" id="emergencyPhone" required>
+
+    </div>
+
+    <hr style="margin:30px 0;">
+
+    <h3 style="margin-bottom:20px;color:var(--primary);">
+        Food & Accommodation
+    </h3>
+
+    <div class="form-group">
+
+        <label>Food Preference</label>
+
+        <select id="food">
+
+            <option>Vegetarian</option>
+            <option>Vegan</option>
+            <option>Jain</option>
+            <option>No Preference</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Need Accommodation?</label>
+
+        <select id="stay">
+
+            <option>No</option>
+            <option>Yes</option>
+
+        </select>
+
+    </div>
+
+    <hr style="margin:30px 0;">
+
+    <h3 style="margin-bottom:20px;color:var(--primary);">
+        Documents
+    </h3>
+
+    <div class="form-group">
+
+        <label>Profile Photo</label>
+
+        <input type="file" accept="image/*">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>ID Proof</label>
+
+        <input type="file">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Additional Notes</label>
+
+        <textarea rows="4"></textarea>
+
+    </div>
+
+    <div style="margin:25px 0;">
+
+        <label>
+
+            <input type="checkbox" required>
+
+            I agree to the Terms & Conditions and Privacy Policy.
+
+        </label>
+
+    </div>
+
+    <button class="register-btn" type="submit">Register Now</button>
+
+</form>
 
     </div>
 
@@ -895,7 +1116,6 @@ background:#EAF3F4;
 </body>
 <script src="js/register.js"></script>
 <script src="js/search.js"></script>
-
 <script>
     lucide.createIcons();
 

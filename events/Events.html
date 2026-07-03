@@ -35,7 +35,7 @@
             --orange-dark: #E47A22;
             
             /* Typography & Shadows */
-            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --font-family: BNCCringe;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06);
@@ -799,9 +799,6 @@ background:#EAF3F4;
                         </a>
                     </li>
                     <li>
-                        <a href="Register.html">Register</a>
-                    </li>
-                    <li>
                         <a href="MyRegistrations.html">My Registrations</a>
                     </li>
                 </ul>
@@ -819,7 +816,7 @@ background:#EAF3F4;
                     <a href="../Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="settings"></i> <span>Settings</span></a>
+                    <a href="../setting.html"><i data-lucide="settings"></i> <span>Settings</span></a>
                 </li>
             </ul>
 
@@ -885,7 +882,7 @@ background:#EAF3F4;
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item">
+                                <a href="../setting.html" class="dropdown-item">
                                     <i data-lucide="settings"></i>
                                     <span>Settings</span>
                                 </a>
@@ -945,7 +942,7 @@ background:#EAF3F4;
 
 <section class="events-grid">
 
-    <div class="event-card">
+    <div class="event-card" data-id="1">
         <img src="assets/gallery_group.png">
 
         <div class="event-content">
@@ -960,13 +957,17 @@ background:#EAF3F4;
             <p><i data-lucide="map-pin"></i> Meditation Hall</p>
 
             <div class="card-footer">
-                <button class="details-btn">View Details</button>
-                <button class="register-btn">Register</button>
+                <button class="details-btn" onclick="openDetails(this)">View Details
+</button>
+
+<button class="register-btn" onclick="registerEvent(this)">
+    Register
+</button>
             </div>
         </div>
     </div>
 
-    <div class="event-card">
+    <div class="event-card" data-id="2">
         <img src="assets/gallery_studio_1.png">
 
         <div class="event-content">
@@ -981,13 +982,13 @@ background:#EAF3F4;
             <p><i data-lucide="map-pin"></i>Conference Hall</p>
 
             <div class="card-footer">
-                <button class="details-btn">View Details</button>
-                <button class="register-btn">Register</button>
+                <button class="details-btn" onclick="openDetails(this)">View Details</button>
+                <button class="register-btn" onclick="registerEvent(this)">Register</button>
             </div>
         </div>
     </div>
 
-    <div class="event-card">
+    <div class="event-card" data-id="3">
         <img src="assets/gallery_studio_2.png">
 
         <div class="event-content">
@@ -1002,13 +1003,13 @@ background:#EAF3F4;
             <p><i data-lucide="map-pin"></i>Innovation Lab</p>
 
             <div class="card-footer">
-                <button class="details-btn">View Details</button>
-                <button class="register-btn">Register</button>
+                <button class="details-btn" onclick="openDetails(this)">View Details</button>
+                <button class="register-btn" onclick="registerEvent(this)">Register</button>
             </div>
         </div>
     </div>
 
-    <div class="event-card">
+    <div class="event-card" data-id="4">
         <img src="assets/gallery_mountain.png">
 
         <div class="event-content">
@@ -1023,13 +1024,13 @@ background:#EAF3F4;
             <p><i data-lucide="map-pin"></i>Open Amphitheatre</p>
 
             <div class="card-footer">
-                <button class="details-btn">View Details</button>
-                <button class="register-btn">Register</button>
+                <button class="details-btn" onclick="openDetails(this)">View Details</button>
+                <button class="register-btn" onclick="registerEvent(this)">Register</button>
             </div>
         </div>
     </div>
 
-    <div class="event-card">
+    <div class="event-card" data-id="5">
         <img src="assets/gallery_group.png">
 
         <div class="event-content">
@@ -1044,13 +1045,13 @@ background:#EAF3F4;
             <p><i data-lucide="map-pin"></i>Sports Ground</p>
 
             <div class="card-footer">
-                <button class="details-btn">View Details</button>
-                <button class="register-btn">Register</button>
+                <button class="details-btn" onclick="openDetails(this)">View Details</button>
+                <button class="register-btn" onclick="registerEvent(this)">Register</button>
             </div>
         </div>
     </div>
 
-    <div class="event-card">
+    <div class="event-card" data-id="6">
         <img src="assets/welcome_banner.png">
 
         <div class="event-content">
@@ -1065,8 +1066,8 @@ background:#EAF3F4;
             <p><i data-lucide="map-pin"></i>Main Auditorium</p>
 
             <div class="card-footer">
-                <button class="details-btn">View Details</button>
-                <button class="register-btn">Register</button>
+                <button class="details-btn" onclick="openDetails(this)">View Details</button>
+                <button class="register-btn" onclick="registerEvent(this)">Register</button>
             </div>
         </div>
     </div>
@@ -1272,5 +1273,23 @@ function loadUserName() {
             dropdownName.textContent = savedName;
         }
     }
+}
+
+function openDetails(button) {
+
+    const eventId = button.closest(".event-card").dataset.id;
+
+    window.location.href =
+        `EventDetails.html?id=${eventId}`;
+
+}
+
+function registerEvent(button) {
+
+    const eventId = button.closest(".event-card").dataset.id;
+
+    window.location.href =
+        `Register.html?id=${eventId}`;
+
 }
 </script>
