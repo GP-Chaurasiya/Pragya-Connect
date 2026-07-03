@@ -773,7 +773,7 @@ background:#EAF3F4;
             </div>
 
             <ul class="nav-menu">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a href="../index.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
@@ -787,7 +787,7 @@ background:#EAF3F4;
                     <i data-lucide="chevron-down" class="submenu-arrow"></i>
                 </a>
                 <ul class="submenu" id="eventsMenu">
-                    <li>
+                    <li class="nav-item active">
                         <a href="Events.html">All Events</a>
                     </li>
                     <li>
@@ -1147,17 +1147,6 @@ window.addEventListener("touchmove", function () {
     if (!document.body.classList.contains("sidebar-collapsed")) {
         document.body.classList.add("sidebar-collapsed");
     }
-
-});
-
-// Close after clicking any sidebar link
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        document.body.classList.add("sidebar-collapsed");
-
-    });
 
 });
 

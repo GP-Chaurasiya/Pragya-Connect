@@ -357,6 +357,66 @@
             flex-shrink: 0;
         }
 
+                .has-submenu .submenu{
+    list-style:none;
+    margin:6px 0 0 38px;
+    padding-left:8px;
+    border-left:2px solid var(--border);
+
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+}
+
+.has-submenu.open .submenu{
+    max-height:320px;
+}
+
+.submenu li{
+    margin:6px 0;
+}
+
+.submenu li a{
+
+    display:flex;
+    align-items:center;
+
+    padding:10px 14px;
+
+    color:var(--text-muted);
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    font-size:13px;
+
+    transition:.3s;
+
+}
+
+.submenu li a:hover{
+
+    background:var(--primary-light);
+
+    color:var(--primary);
+
+}
+
+.submenu-arrow{
+
+    margin-left:auto;
+
+    transition:.3s;
+
+}
+
+.has-submenu.open .submenu-arrow{
+
+    transform:rotate(180deg);
+
+}
+
         .user-menu-trigger {
             display: flex;
             align-items: center;
@@ -647,7 +707,7 @@ background:#EAF3F4;
             </div>
 
             <ul class="nav-menu">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a href="../index.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
@@ -656,8 +716,29 @@ background:#EAF3F4;
                 <li class="nav-item">
                     <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
                 </li>
-                <li class="nav-item">
-                    <a href="../Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
+                <li class="nav-item has-submenu"><a href="#" id="eventsToggle"><i data-lucide="calendar"></i>
+                    <span>Events</span>
+                    <i data-lucide="chevron-down" class="submenu-arrow"></i>
+                </a>
+                <ul class="submenu" id="eventsMenu">
+                    <li>
+                        <a href="Events.html">All Events</a>
+                    </li>
+                    <li>
+                        <a href="Calender.html">Calendar</a>
+                    </li>
+                    <li>
+                        <a href="EventDetails.html">
+                            Event Details
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="Register.html">Register</a>
+                    </li>
+                    <li>
+                        <a href="MyRegistrations.html">My Registrations</a>
+                    </li>
+                </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
@@ -888,17 +969,6 @@ window.addEventListener("touchmove", function () {
 
 });
 
-// Close after clicking any sidebar link
-document.querySelectorAll(".sidebar a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        document.body.classList.add("sidebar-collapsed");
-
-    });
-
-});
-
 // Close when ESC key is pressed
 document.addEventListener("keydown", function (e) {
 
@@ -983,6 +1053,46 @@ document.addEventListener("keydown", function (e) {
         loadAvatarInitials();
         loadProfileImageToTopBar();
 
-        window.location.href =`Register.html?event=${encodeURIComponent(event.title)}`;
+        //window.location.href =`Register.html?event=${encodeURIComponent(event.title)}`;
+
+        // Events submenu
+const eventsToggle = document.getElementById("eventsToggle");
+const eventsParent = document.querySelector(".has-submenu");
+
+if (eventsToggle && eventsParent) {
+
+    // Toggle submenu
+    eventsToggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        eventsParent.classList.toggle("open");
+    });
+
+    // Keep submenu open on Events pages
+    const page = window.location.pathname.toLowerCase();
+
+    if (
+        page.includes("events.html") ||
+        page.includes("calender.html") ||
+        page.includes("eventdetails.html") ||
+        page.includes("register.html") ||
+        page.includes("myregistrations.html")
+    ) {
+        eventsParent.classList.add("open");
+    }
+}
+
+function loadUserName() {
+    const savedName = localStorage.getItem("userName");
+    if(savedName){
+        const topBarName = document.querySelector(".user-name");
+        const dropdownName = document.querySelector(".dropdown-name");
+        if(topBarName){
+            topBarName.textContent = savedName;
+        }
+        if(dropdownName){
+            dropdownName.textContent = savedName;
+        }
+    }
+}
 </script>
 
