@@ -357,178 +357,25 @@
             flex-shrink: 0;
         }
 
-        .user-menu-trigger {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 6px 18px 6px 8px;
-            border-radius: 99px;
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
+.login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 40px;
+    background-color: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
 
-        .user-menu-trigger:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .user-avatar-circle {
-            background-color: var(--primary);
-            color: #FFFFFF;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-            flex-shrink: 0;
-        }
-
-        .user-details {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
-
-        .user-name {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--text-main);
-            line-height: 1.2;
-        }
-
-        .user-role {
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--accent);
-            line-height: 1.2;
-            margin-top: 1px;
-        }
-
-        .user-menu-trigger i, .user-menu-trigger svg {
-            width: 16px;
-            height: 16px;
-            color: var(--text-muted);
-            margin-left: 4px;
-        }
-
-        /* User Dropdown Menu */
-        .user-dropdown {
-            position: absolute;
-            top: calc(100% + 12px);
-            right: 0;
-            width: 280px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000;
-        }
-
-        .user-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 20px 24px;
-        }
-
-        .dropdown-avatar {
-            width: 48px;
-            height: 48px;
-            background-color: var(--primary);
-            color: #FFFFFF;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .dropdown-user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .dropdown-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-main);
-            line-height: 1.2;
-        }
-
-        .dropdown-role {
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .dropdown-divider {
-            height: 1px;
-            background-color: var(--border);
-            margin: 0 0;
-        }
-
-        .dropdown-menu {
-            list-style: none;
-            padding: 8px 0;
-            margin: 0;
-        }
-
-        .dropdown-menu li {
-            margin: 0;
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 24px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-family: var(--font-family);
-            font-size: 14px;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .dropdown-item:hover {
-            background-color: var(--primary-light);
-            color: var(--primary);
-        }
-
-        .dropdown-item i, .dropdown-item svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
-
-        .logout-item {
-            color: var(--red-dark);
-        }
-
-        .logout-item:hover {
-            background-color: var(--red-light);
-            color: var(--red-dark);
-        }
+.login-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
 
         /* Two-Column Grid Layout for Content */
         .content-grid {
@@ -1830,62 +1677,8 @@ body{
                         <span class="badge-dot">3</span>
                     </button>
                     
-                    <!-- User Avatar trigger -->
-                    <div class="user-menu-trigger" id="userMenuTrigger">
-                        <div class="user-avatar-circle">GP</div>
-                        <div class="user-details">
-                            <span class="user-name">Gyan Prakash</span>
-                            <span class="user-role">Student</span>
-                        </div>
-                        <i data-lucide="chevron-down"></i>
-                    </div>
-
-                    <!-- User Dropdown Menu -->
-                    <div class="user-dropdown" id="userDropdown">
-                        <div class="dropdown-header">
-                            <div class="dropdown-avatar">GP</div>
-                            <div class="dropdown-user-info">
-                                <span class="dropdown-name">Gyan Prakash</span>
-                                <span class="dropdown-role">Student</span>
-                            </div>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="Profile.html" class="dropdown-item">
-                                    <i data-lucide="user"></i>
-                                    <span>My Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="setting.html" class="dropdown-item">
-                                    <i data-lucide="settings"></i>
-                                    <span>Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <i data-lucide="moon"></i>
-                                    <span>Dark Mode</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <i data-lucide="help-circle"></i>
-                                    <span>Help & Support</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="dropdown-divider"></div>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#" class="dropdown-item logout-item">
-                                    <i data-lucide="log-out"></i>
-                                    <span>Logout</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <!-- Login Button (replaces user menu) -->
+                    <a href="login.html" class="login-btn">Login</a>
                 </div>
             </header>
 
@@ -2280,13 +2073,6 @@ body{
 
     
 <script src="events\js\search.js"></script>
-
-<script>
-    // Force login first
-    if (!localStorage.getItem("loggedIn")) {
-        window.location.href = "login.html";
-    }
-</script>
 
     <script>
         // Initialize Lucide Icons
