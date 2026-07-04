@@ -1618,13 +1618,13 @@ body{
                     <a href="#"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
+                    <a href="#"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="mentors.html"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
+                    <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="events\Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
+                    <a href="#"><i data-lucide="calendar"></i> <span>Events</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
@@ -1636,16 +1636,12 @@ body{
                     <a href="#"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
+                    <a href="#"><i data-lucide="user"></i> <span>Profile</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="setting.html"><i data-lucide="settings"></i> <span>Settings</span></a>
+                    <a href="#"><i data-lucide="settings"></i> <span>Settings</span></a>
                 </li>
             </ul>
-
-            <div class="nav-logout">
-                <a href="#"><i data-lucide="log-out"></i> <span>Logout</span></a>
-            </div>
         </aside>
 
         <!-- Main Workspace Area -->
@@ -1691,7 +1687,7 @@ body{
                     <!-- Welcome Hero Banner -->
                     <section class="welcome-banner">
                         <div class="banner-text">
-                            <h2 class="banner-title">Welcome Back, <br><span id="heroBannerName">Gyan!</span></h2>
+                            <h2 class="banner-title">Welcome Back, <br><span id="heroBannerName">Hello!</span></h2>
                             <p class="banner-desc">Continue learning, connect with mentors, and grow your community.</p>
                         </div>
                         <div class="banner-image-container">
@@ -2021,11 +2017,11 @@ body{
 
         <h4>Quick Links</h4>
 
-        <a href="../dashboard.html">Dashboard</a>
-        <a href="../CommunityFeed.html">Community</a>
-        <a href="events\Events.html">Events</a>
-        <a href="../Profile.html">Profile</a>
-        <a href="../Settings.html">Settings</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Community</a>
+        <a href="#">Events</a>
+        <a href="#">Profile</a>
+        <a href="Settings.html">Settings</a>
 
     </div>
 
@@ -2077,89 +2073,6 @@ body{
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
-
-        // Load user name from localStorage and update top bar
-        function loadUserName() {
-            const savedUserName = localStorage.getItem("userName");
-            if (savedUserName) {
-                const topBarName = document.querySelector('.user-name');
-                const dropdownName = document.querySelector('.dropdown-name');
-                if (topBarName) {
-                    topBarName.innerText = savedUserName;
-                }
-                if (dropdownName) {
-                    dropdownName.innerText = savedUserName;
-                }
-                
-                // Update hero banner name with first name
-                const firstName = savedUserName.split(' ')[0];
-                const heroBannerName = document.getElementById('heroBannerName');
-                if (heroBannerName) {
-                    heroBannerName.innerText = firstName + '!';
-                }
-            }
-        }
-
-        // Load user role from localStorage and update top bar
-        function loadUserRole() {
-            const savedUserRole = localStorage.getItem("userRole");
-            if (savedUserRole) {
-                const topBarRole = document.querySelector('.user-role');
-                const dropdownRole = document.querySelector('.dropdown-role');
-                if (topBarRole) {
-                    topBarRole.innerText = savedUserRole;
-                }
-                if (dropdownRole) {
-                    dropdownRole.innerText = savedUserRole;
-                }
-            }
-        }
-
-            // Load avatar initials from localStorage
-            function loadAvatarInitials() {
-                const savedInitials = localStorage.getItem("userInitials");
-                if (savedInitials) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    if (topBarAvatar) {
-                        topBarAvatar.textContent = savedInitials;
-                    }
-                    if (dropdownAvatar) {
-                        dropdownAvatar.textContent = savedInitials;
-                    }
-                }
-            }
-
-            // Load profile image to top bar avatars
-            function loadProfileImageToTopBar() {
-                const savedImage = localStorage.getItem("profileImage");
-                if (savedImage) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    
-                    if (topBarAvatar) {
-                        topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                        topBarAvatar.style.backgroundSize = 'cover';
-                        topBarAvatar.style.backgroundPosition = 'center';
-                        topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                        topBarAvatar.textContent = '';
-                    }
-                    
-                    if (dropdownAvatar) {
-                        dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                        dropdownAvatar.style.backgroundSize = 'cover';
-                        dropdownAvatar.style.backgroundPosition = 'center';
-                        dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                        dropdownAvatar.textContent = '';
-                    }
-                }
-            }
-
-            // Call load functions on page load
-            loadUserName();
-            loadUserRole();
-            loadAvatarInitials();
-            loadProfileImageToTopBar();
 
         // =========================
 // Sidebar Toggle
@@ -2251,85 +2164,6 @@ document.addEventListener("keydown", function (e) {
 
 });
 
-        // Connect button toggler
-        function toggleConnect(btn) {
-            if (btn.classList.contains('connected')) {
-                btn.classList.remove('connected');
-                btn.textContent = 'Connect';
-            } else {
-                btn.classList.add('connected');
-                btn.textContent = 'Connected';
-            }
-        }
-
-        // Like button toggler
-        function toggleLike(btn, baseCount = 0) {
-            const icon = btn.querySelector('i');
-            const hasHeartIcon = icon.getAttribute('data-lucide') === 'heart';
-            
-            if (btn.classList.contains('active')) {
-                btn.classList.remove('active');
-                btn.style.color = '';
-                if (baseCount > 0) {
-                    btn.innerHTML = `<i data-lucide="heart"></i> Like ${baseCount}`;
-                } else {
-                    btn.innerHTML = `<i data-lucide="heart"></i> Like`;
-                }
-            } else {
-                btn.classList.add('active');
-                btn.style.color = 'var(--red-dark)';
-                if (baseCount > 0) {
-                    btn.innerHTML = `<i data-lucide="heart" fill="var(--red-dark)"></i> Like ${baseCount + 1}`;
-                } else {
-                    btn.innerHTML = `<i data-lucide="heart" fill="var(--red-dark)"></i> Like 1`;
-                }
-            }
-            lucide.createIcons();
-        }
-
-        // User Dropdown Menu Functions
-        function toggleUserMenu() {
-            const dropdown = document.getElementById('userDropdown');
-            const trigger = document.getElementById('userMenuTrigger');
-            
-            if (dropdown.classList.contains('active')) {
-                closeUserMenu();
-            } else {
-                dropdown.classList.add('active');
-            }
-        }
-
-        function closeUserMenu() {
-            const dropdown = document.getElementById('userDropdown');
-            dropdown.classList.remove('active');
-        }
-
-        // User Menu Trigger Click Handler
-        const userMenuTrigger = document.getElementById('userMenuTrigger');
-        if (userMenuTrigger) {
-            userMenuTrigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleUserMenu();
-            });
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const dropdown = document.getElementById('userDropdown');
-            const trigger = document.getElementById('userMenuTrigger');
-            
-            if (dropdown && !dropdown.contains(e.target) && !trigger.contains(e.target)) {
-                closeUserMenu();
-            }
-        });
-
-        // Prevent dropdown from closing when clicking inside it
-        const userDropdown = document.getElementById('userDropdown');
-        if (userDropdown) {
-            userDropdown.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-        }
     </script>
 </body>
 </html>
