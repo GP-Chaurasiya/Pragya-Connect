@@ -357,6 +357,106 @@
             flex-shrink: 0;
         }
 
+.login-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 40px;
+    background-color: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.login-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+        /* Two-Column Grid Layout for Content */
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2.1fr) minmax(410px, 1fr);
+            gap: 24px;
+            align-items: start;
+            min-width: 0;
+        }
+
+        /* Center Column Layout */
+        .center-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        /* Welcome Banner Card */
+        .welcome-banner {
+            background: linear-gradient(90deg, #0B525B 0%, #0B525B 35%, #165F58 60%, #EBA036 100%);
+            border-radius: 20px;
+            padding: 40px 48px;
+            min-height: 220px;
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-md);
+        }
+
+        .banner-text {
+            max-width: 55%;
+            z-index: 2;
+        }
+
+        .banner-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.25;
+        }
+
+        .banner-title span {
+            color: var(--accent);
+            font-size: 40px;
+            font-weight: 800;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .banner-desc {
+            font-size: 14.5px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.5;
+            max-width: 320px;
+        }
+
+        .banner-image-container {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            width: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.95;
+            mask-image: linear-gradient(to left, rgba(0,0,0,1) 65%, rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 65%, rgba(0,0,0,0));
+        }
+
         .user-menu-trigger {
             display: flex;
             align-items: center;
@@ -529,102 +629,7 @@
             background-color: var(--red-light);
             color: var(--red-dark);
         }
-
-        /* Two-Column Grid Layout for Content */
-        .content-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 2.1fr) minmax(410px, 1fr);
-            gap: 24px;
-            align-items: start;
-            min-width: 0;
-        }
-
-        /* Center Column Layout */
-        .center-column {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            min-width: 0;
-        }
-
-        /* Welcome Banner Card */
-        .welcome-banner {
-            background: linear-gradient(90deg, #0B525B 0%, #0B525B 35%, #165F58 60%, #EBA036 100%);
-            border-radius: 20px;
-            padding: 40px 48px;
-            min-height: 220px;
-            color: #FFFFFF;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            overflow: hidden;
-            position: relative;
-            box-shadow: var(--shadow-md);
-        }
-
-        .banner-text {
-            max-width: 55%;
-            z-index: 2;
-        }
-
-        .banner-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            line-height: 1.25;
-        }
-
-        .banner-title span {
-            color: var(--accent);
-            font-size: 40px;
-            font-weight: 800;
-            display: block;
-            margin-top: 4px;
-        }
-
-        .banner-desc {
-            font-size: 14.5px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
-            line-height: 1.5;
-            max-width: 320px;
-        }
-
-        .banner-image-container {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            top: 0;
-            width: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .banner-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.95;
-            mask-image: linear-gradient(to left, rgba(0,0,0,1) 65%, rgba(0,0,0,0));
-            -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 65%, rgba(0,0,0,0));
-        }
-
-        /* Card Standard Styling */
-        .dashboard-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 24px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-
-        .dashboard-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
+        
 
         /* Responsive Breakpoints */
         @media (max-width: 1200px) {
@@ -874,6 +879,360 @@
             }
         }
 
+/* ===========================
+   Dashboard Cards
+=========================== */
+
+.dashboard-card{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:var(--shadow-sm);
+    margin-bottom:24px;
+}
+
+/* ===========================
+   Section Header
+=========================== */
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.section-header h2{
+    font-size:28px;
+    font-weight:700;
+    color:var(--text-main);
+}
+
+.section-header p{
+    margin-top:6px;
+    color:var(--text-muted);
+    font-size:14px;
+}
+
+/* ===========================
+   Section Title
+=========================== */
+
+.section-title-wrap{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.section-title-wrap svg{
+    width:22px;
+    height:22px;
+    color:var(--primary);
+}
+
+.section-title{
+    font-size:20px;
+    font-weight:700;
+    color:var(--text-main);
+}
+
+/* ===========================
+   Search & Filter
+=========================== */
+
+.resources-search{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    margin-top:20px;
+}
+
+.resources-search .search-container{
+    flex:1;
+}
+
+/* ===========================
+   Right Column
+=========================== */
+
+.right-column{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+/* ===========================
+   Activity Grid
+=========================== */
+
+.activity-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+}
+
+/* ===========================
+   Activity Item
+=========================== */
+
+.activity-item{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:18px;
+    transition:var(--transition);
+    background:#fff;
+}
+
+.activity-item:hover{
+    transform:translateY(-4px);
+    border-color:var(--primary);
+    box-shadow:var(--shadow-md);
+}
+
+.activity-details{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.activity-details strong{
+    font-size:15px;
+    color:var(--text-main);
+}
+
+.activity-details{
+    color:var(--text-muted);
+    font-size:14px;
+}
+
+.time{
+    font-size:12px;
+    color:var(--text-muted);
+}
+
+/* ===========================
+   Icon Circle
+=========================== */
+
+.activity-icon-circle{
+    width:58px;
+    height:58px;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-shrink:0;
+}
+
+.activity-icon-circle svg{
+    width:28px;
+    height:28px;
+}
+
+.primary-icon{
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+.accent-icon{
+    background:var(--accent-light);
+    color:var(--accent);
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+.post-submit-btn{
+    border:none;
+    background:var(--primary);
+    color:#fff;
+    padding:11px 20px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.post-submit-btn:hover{
+    background:var(--primary-hover);
+}
+
+.connect-btn{
+    border:1px solid var(--primary);
+    background:#fff;
+    color:var(--primary);
+    padding:10px 18px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.connect-btn:hover{
+    background:var(--primary-light);
+}
+
+.trigger-btn{
+    border:1px solid var(--border);
+    background:#fff;
+    color:var(--text-main);
+    padding:10px 18px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.trigger-btn:hover{
+    border-color:var(--primary);
+    background:var(--primary-light);
+    color:var(--primary);
+}
+
+/* ===========================
+   Resources List
+=========================== */
+
+.resources-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+/* Right Column */
+.right-column{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+    align-self:start;
+}
+
+/* Recent Downloads Card */
+.right-column .dashboard-card{
+    width:100%;
+}
+
+/* Recent Downloads List */
+.events-list{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.event-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:#fff;
+    transition:var(--transition);
+}
+
+.event-item:hover{
+    border-color:var(--primary);
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-sm);
+}
+
+.event-info{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.event-title{
+    font-size:15px;
+    font-weight:600;
+    color:var(--text-main);
+}
+
+.event-time{
+    font-size:13px;
+    color:var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width:1200px){
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+
+    .right-column{
+        margin-top:0;
+    }
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:992px){
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+
+    .activity-grid{
+        grid-template-columns:1fr;
+    }
+
+    .right-column{
+        margin-top:10px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .section-header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .resources-search{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .activity-item{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .activity-item button{
+        width:100%;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .dashboard-card{
+        padding:18px;
+    }
+
+    .section-header h2{
+        font-size:22px;
+    }
+
+    .section-title{
+        font-size:18px;
+    }
+
+}
+
 .search-results{
 
 position:absolute;
@@ -1008,363 +1367,6 @@ background:#EAF3F4;
     transform:translateY(-4px);
 }
 
-@media(max-width:992px){
-
-    .footer{
-        grid-template-columns:1fr 1fr;
-    }
-
-}
-
-@media(max-width:768px){
-
-    .footer{
-        grid-template-columns:1fr;
-        text-align:center;
-    }
-
-    .footer-left{
-        justify-content:center;
-    }
-
-    .footer-contact p{
-        justify-content:center;
-    }
-
-    .social-icons{
-        justify-content:center;
-    }
-
-    .footer-links{
-        align-items:center;
-    }
-
-}
-
-body{
-    display:flex;
-    flex-direction:column;
-    min-height:100vh;
-}
-
-.dashboard-container{
-    flex:1;
-}
-
-.main-wrapper{
-    min-height:100vh;
-}
-
-/* ===============================
-   Mentors Page
-==================================*/
-
-.main-content{
-    display:flex;
-    flex-direction:column;
-    gap:28px;
-}
-
-/* Hero */
-
-.mentor-hero{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:40px;
-    border-radius:20px;
-    background:linear-gradient(135deg,#0B525B,#126872);
-    color:#fff;
-    overflow:hidden;
-}
-
-.hero-text{
-    max-width:55%;
-}
-
-.hero-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 18px;
-    border-radius:30px;
-    background:rgba(255,255,255,.15);
-    font-size:13px;
-    font-weight:600;
-    margin-bottom:18px;
-}
-
-.hero-text h1{
-    font-size:38px;
-    margin-bottom:14px;
-    line-height:1.2;
-}
-
-.hero-text p{
-    color:rgba(255,255,255,.9);
-    line-height:1.7;
-    font-size:15px;
-}
-
-.hero-image img{
-    width:340px;
-    max-width:100%;
-}
-
-/* Search */
-
-.mentor-toolbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    flex-wrap:wrap;
-}
-
-.mentor-filters{
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-}
-
-.mentor-filters button{
-    padding:12px 20px;
-    border:none;
-    border-radius:12px;
-    background:#fff;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
-    box-shadow:var(--shadow-sm);
-}
-
-.mentor-filters button:hover,
-.mentor-filters button.active{
-    background:var(--primary);
-    color:#fff;
-}
-
-/* Featured */
-
-.featured-mentor{
-    display:grid;
-    grid-template-columns:320px 1fr;
-    gap:35px;
-    align-items:center;
-    padding:30px;
-}
-
-.featured-mentor img{
-    width:100%;
-    border-radius:18px;
-    object-fit:cover;
-}
-
-.mentor-tag{
-    display:inline-block;
-    padding:6px 14px;
-    background:#EAF3F4;
-    color:#0B525B;
-    border-radius:30px;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:15px;
-}
-
-.mentor-info h2{
-    font-size:34px;
-    color:#1D2D30;
-}
-
-.mentor-info h4{
-    color:#EBA036;
-    margin:10px 0 18px;
-}
-
-.mentor-info p{
-    color:#6B7280;
-    line-height:1.8;
-}
-
-.mentor-tags{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin:22px 0;
-}
-
-.mentor-tags span{
-    background:#F3F4F6;
-    padding:8px 15px;
-    border-radius:30px;
-    font-size:13px;
-}
-
-.mentor-buttons{
-    display:flex;
-    gap:15px;
-}
-
-.primary-btn{
-    background:#0B525B;
-    color:#fff;
-    border:none;
-    padding:13px 26px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
-}
-
-.primary-btn:hover{
-    background:#083E45;
-}
-
-.outline-btn{
-    background:#fff;
-    color:#0B525B;
-    border:2px solid #0B525B;
-    padding:13px 26px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
-}
-
-.outline-btn:hover{
-    background:#0B525B;
-    color:#fff;
-}
-
-/* Heading */
-
-.section-heading{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.section-heading h2{
-    font-size:28px;
-    color:#1D2D30;
-}
-
-.section-heading a{
-    color:#EBA036;
-    text-decoration:none;
-    font-weight:700;
-}
-
-/* Grid */
-
-.mentor-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
-}
-
-.mentor-card{
-    overflow:hidden;
-    padding:0;
-    transition:.35s;
-}
-
-.mentor-card:hover{
-    transform:translateY(-8px);
-    box-shadow:var(--shadow-lg);
-}
-
-.mentor-card img{
-    width:100%;
-    height:300px;
-    object-fit:cover;
-}
-
-.mentor-content{
-    padding:22px;
-}
-
-.mentor-content span{
-    display:inline-block;
-    background:#EAF3F4;
-    color:#0B525B;
-    padding:6px 14px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:700;
-    margin-bottom:12px;
-}
-
-.mentor-content h3{
-    font-size:22px;
-    margin-bottom:10px;
-    color:#1D2D30;
-}
-
-.mentor-content p{
-    color:#6B7280;
-    line-height:1.7;
-    margin-bottom:20px;
-}
-
-.mentor-content button{
-    width:100%;
-    background:#0B525B;
-    color:#fff;
-    border:none;
-    padding:13px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
-}
-
-.mentor-content button:hover{
-    background:#083E45;
-}
-
-/* Responsive */
-
-@media(max-width:992px){
-
-.hero-text{
-    max-width:100%;
-}
-
-.hero-image{
-    display:none;
-}
-
-.featured-mentor{
-    grid-template-columns:1fr;
-}
-
-}
-
-@media(max-width:768px){
-
-.hero-text h1{
-    font-size:30px;
-}
-
-.mentor-toolbar{
-    flex-direction:column;
-    align-items:stretch;
-}
-
-.search-box{
-    width:100%;
-}
-
-.mentor-filters{
-    justify-content:center;
-}
-
-.mentor-buttons{
-    flex-direction:column;
-}
-
-}
 .footer-bottom{
     background: var(--primary);
     color: #fff;
@@ -1409,6 +1411,44 @@ body{
         flex-wrap: wrap;
     }
 }
+
+@media(max-width:992px){
+
+    .footer{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .footer{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .footer-left{
+        justify-content:center;
+    }
+
+    .footer-contact p{
+        justify-content:center;
+    }
+
+    .social-icons{
+        justify-content:center;
+    }
+
+    .footer-links{
+        align-items:center;
+    }
+
+}
+
+.footer{
+    width:100%;
+    margin-top:50px;
+}
     </style>
 </head>
 <body>
@@ -1427,14 +1467,14 @@ body{
                 <li class="nav-item">
                     <a href="CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a href="#"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
+                <li class="nav-item">
+                    <a href="mentors.html"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="events\Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
                 </li>
-                <li class="nav-item">
-                    <a href="resources.html"><i data-lucide="book-open"></i> <span>Resources</span></a>
+                <li class="nav-item active">
+                    <a href=""><i data-lucide="book-open"></i> <span>Resources</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="message-square"></i> <span>Messages</span><span class="badge">3</span></a>
@@ -1537,75 +1577,220 @@ body{
                 </div>
             </header>
 
-<!-- ===================== Mentors Page ===================== -->
+<main class="content-grid">
 
-<main class="main-content">
+    <!-- Left Column -->
+    <div class="center-column">
 
-    <!-- Hero -->
-    <section class="mentor-hero dashboard-card">
-        <div class="hero-text">
-            <span class="hero-badge">
-                <i data-lucide="graduation-cap"></i>
-                Mentorship
-            </span>
+        <!-- Page Header -->
+        <section class="dashboard-card">
+            <div class="section-header">
+                <div>
+                    <h2>Resources Library</h2>
+                    <p>
+                        Browse yoga guides, meditation videos, books and learning material.
+                    </p>
+                </div>
 
-            <h1>Learn from the Best Mentors</h1>
+                <button class="post-submit-btn"><i data-lucide="upload"></i>Upload Resource</button>
+            </div>
+        </section>
 
-            <p>
-                Connect with experienced yoga masters, meditation teachers,
-                and spiritual guides from Pragya Yog School.
-            </p>
-        </div>
+        <!-- Featured Resources -->
 
-        <div class="hero-image">
-            <img src="assets/banner/mentor-banner.png" alt="">
-        </div>
-    </section>
+        <section class="dashboard-card">
 
-    <!-- Search -->
-    <section class="mentor-toolbar">
-        <div class="mentor-filters">
-            <button class="filter-btn active" data-filter="All">All</button>
-            <button class="filter-btn" data-filter="Founder">Founder</button>
-            <button class="filter-btn" data-filter="Master Teacher">Master Teachers</button>
-            <button class="filter-btn" data-filter="Instructor">Instructors</button>
-        </div>
-    </section>
+            <div class="section-header">
 
-    <!-- Featured Mentor -->
-    <section class="dashboard-card featured-mentor" data-category="Founder">
-        <img src="assets/teachers/aarya-kuldeep.jpg" id="featuredImage">
+                <div class="section-title-wrap">
+                    <i data-lucide="star"></i>
+                    <h3 class="section-title">Featured Resources</h3>
+                </div>
 
-        <div class="mentor-info">
-            
-            <span class="mentor-tag" id="featuredTag">Founder</span>
-
-            <h2 id="featuredName">Aarya Kuldeep</h2>
-
-            <h4 id="featuredRole">Founder • Pragya Yog School</h4>
-
-            <p id="featuredDescription">
-                Dedicated yoga educator, researcher and spiritual mentor
-                committed to spreading authentic yogic wisdom.
-            </p>
-
-            <div class="mentor-tags">
-                <span>Yoga</span>
-                <span>Meditation</span>
-                <span>Philosophy</span>
             </div>
 
-        </div>
+            <div class="activity-grid" style="margin-top:25px;">
 
-    </section>
+                <div class="activity-item">
+                    <div class="activity-icon-circle primary-icon">
+                        <i data-lucide="book-open"></i>
+                    </div>
 
-    <!-- Section -->
-    <div class="section-heading">
-        <h2>Our Mentors</h2>
+                    <div class="activity-details">
+                        <strong>Yoga Fundamentals</strong>
+                        PDF Guide
+                        <span class="time">2.3 MB</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon-circle accent-icon">
+                        <i data-lucide="play-circle"></i>
+                    </div>
+
+                    <div class="activity-details">
+                        <strong>Meditation Masterclass</strong>
+                        Video
+                        <span class="time">25 min</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon-circle primary-icon">
+                        <i data-lucide="presentation"></i>
+                    </div>
+
+                    <div class="activity-details">
+                        <strong>Workshop Slides</strong>
+                        PPT
+                        <span class="time">5 MB</span>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon-circle accent-icon">
+                        <i data-lucide="award"></i>
+                    </div>
+
+                    <div class="activity-details">
+                        <strong>Certification Guide</strong>
+                        PDF
+                        <span class="time">1.8 MB</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Resources List -->
+
+        <section class="dashboard-card">
+
+            <div class="section-header">
+
+                <div class="section-title-wrap">
+                    <i data-lucide="folder-open"></i>
+                    <h3 class="section-title">All Resources</h3>
+                </div>
+
+            </div>
+
+            <div class="resources-list">
+
+                <div class="activity-item">
+
+                    <div class="activity-icon-circle primary-icon">
+                        <i data-lucide="file-text"></i>
+                    </div>
+
+                    <div class="activity-details" style="flex:1;">
+                        <strong>Yoga Basics.pdf</strong>
+                        Beginner Yoga Notes
+                        <span class="time">Updated yesterday</span>
+                    </div>
+
+                    <button class="connect-btn">Preview</button>
+                    <button class="post-submit-btn">Download</button>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-icon-circle accent-icon">
+                        <i data-lucide="video"></i>
+                    </div>
+
+                    <div class="activity-details" style="flex:1;">
+                        <strong>Breathing Exercises</strong>
+                        Video Tutorial
+                        <span class="time">18 Minutes</span>
+                    </div>
+
+                    <button class="connect-btn">Watch</button>
+                    <button class="post-submit-btn">Save</button>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-icon-circle primary-icon">
+                        <i data-lucide="book"></i>
+                    </div>
+
+                    <div class="activity-details" style="flex:1;">
+                        <strong>Meditation Guide</strong>
+                        Ebook
+                        <span class="time">4 MB</span>
+                    </div>
+
+                    <button class="connect-btn">Preview</button>
+                    <button class="post-submit-btn">Download</button>
+
+                </div>
+
+                <div class="activity-item">
+
+                    <div class="activity-icon-circle accent-icon">
+                        <i data-lucide="presentation"></i>
+                    </div>
+
+                    <div class="activity-details" style="flex:1;">
+                        <strong>Workshop Presentation</strong>
+                        PPT Slides
+                        <span class="time">Updated 2 days ago</span>
+                    </div>
+
+                    <button class="connect-btn">Preview</button>
+                    <button class="post-submit-btn">Download</button>
+
+                </div>
+
+            </div>
+
+        </section>
+
     </div>
 
-    <!-- Mentor Grid -->
-    <section class="mentor-grid" id="mentorGrid"></section>
+    <!-- Right Column -->
+
+    <div class="right-column">
+
+        <section class="dashboard-card">
+
+            <div class="section-title-wrap">
+                <i data-lucide="clock-3"></i>
+                <h3 class="section-title">Recent Downloads</h3>
+            </div>
+
+            <div class="events-list">
+
+                <div class="event-item">
+                    <div class="event-info">
+                        <span class="event-title">Yoga Basics.pdf</span>
+                        <span class="event-time">Downloaded Today</span>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-info">
+                        <span class="event-title">Meditation Guide</span>
+                        <span class="event-time">Yesterday</span>
+                    </div>
+                </div>
+
+                <div class="event-item">
+                    <div class="event-info">
+                        <span class="event-title">Workshop Slides</span>
+                        <span class="event-time">2 Days Ago</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
 
 </main>
 
@@ -1627,11 +1812,11 @@ body{
 
         <h4>Quick Links</h4>
 
-        <a href="../dashboard.html">Dashboard</a>
-        <a href="../CommunityFeed.html">Community</a>
-        <a href="events\Events.html">Events</a>
-        <a href="../Profile.html">Profile</a>
-        <a href="setting.html">Settings</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Community</a>
+        <a href="#">Events</a>
+        <a href="#">Profile</a>
+        <a href="Settings.html">Settings</a>
 
     </div>
 
@@ -1683,95 +1868,12 @@ body{
     </div>
 </div>
 
-<script src="events/js/mentor.js"></script>
-<script src="events/js/search.js"></script>
+    
+<script src="events\js\search.js"></script>
 
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
-
-        // Load user name from localStorage and update top bar
-        function loadUserName() {
-            const savedUserName = localStorage.getItem("userName");
-            if (savedUserName) {
-                const topBarName = document.querySelector('.user-name');
-                const dropdownName = document.querySelector('.dropdown-name');
-                if (topBarName) {
-                    topBarName.innerText = savedUserName;
-                }
-                if (dropdownName) {
-                    dropdownName.innerText = savedUserName;
-                }
-                
-                // Update hero banner name with first name
-                const firstName = savedUserName.split(' ')[0];
-                const heroBannerName = document.getElementById('heroBannerName');
-                if (heroBannerName) {
-                    heroBannerName.innerText = firstName + '!';
-                }
-            }
-        }
-
-        // Load user role from localStorage and update top bar
-        function loadUserRole() {
-            const savedUserRole = localStorage.getItem("userRole");
-            if (savedUserRole) {
-                const topBarRole = document.querySelector('.user-role');
-                const dropdownRole = document.querySelector('.dropdown-role');
-                if (topBarRole) {
-                    topBarRole.innerText = savedUserRole;
-                }
-                if (dropdownRole) {
-                    dropdownRole.innerText = savedUserRole;
-                }
-            }
-        }
-
-            // Load avatar initials from localStorage
-            function loadAvatarInitials() {
-                const savedInitials = localStorage.getItem("userInitials");
-                if (savedInitials) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    if (topBarAvatar) {
-                        topBarAvatar.textContent = savedInitials;
-                    }
-                    if (dropdownAvatar) {
-                        dropdownAvatar.textContent = savedInitials;
-                    }
-                }
-            }
-
-            // Load profile image to top bar avatars
-            function loadProfileImageToTopBar() {
-                const savedImage = localStorage.getItem("profileImage");
-                if (savedImage) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    
-                    if (topBarAvatar) {
-                        topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                        topBarAvatar.style.backgroundSize = 'cover';
-                        topBarAvatar.style.backgroundPosition = 'center';
-                        topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                        topBarAvatar.textContent = '';
-                    }
-                    
-                    if (dropdownAvatar) {
-                        dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                        dropdownAvatar.style.backgroundSize = 'cover';
-                        dropdownAvatar.style.backgroundPosition = 'center';
-                        dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                        dropdownAvatar.textContent = '';
-                    }
-                }
-            }
-
-            // Call load functions on page load
-            loadUserName();
-            loadUserRole();
-            loadAvatarInitials();
-            loadProfileImageToTopBar();
 
         // =========================
 // Sidebar Toggle
@@ -1863,19 +1965,7 @@ document.addEventListener("keydown", function (e) {
 
 });
 
-        // Connect button toggler
-        function toggleConnect(btn) {
-            if (btn.classList.contains('connected')) {
-                btn.classList.remove('connected');
-                btn.textContent = 'Connect';
-            } else {
-                btn.classList.add('connected');
-                btn.textContent = 'Connected';
-            }
-        }
-
-        
-        // User Dropdown Menu Functions
+// User Dropdown Menu Functions
         function toggleUserMenu() {
             const dropdown = document.getElementById('userDropdown');
             const trigger = document.getElementById('userMenuTrigger');
@@ -1919,195 +2009,103 @@ document.addEventListener("keydown", function (e) {
             });
         }
 
-const mentorGrid = document.getElementById("mentorGrid");
+// ================================
+// Resources Page Functionality
+// ================================
 
-function renderMentors(filter = "All") {
+document.addEventListener("DOMContentLoaded", () => {
 
-    mentorGrid.innerHTML = "";
+    const searchInput = document.querySelector(".search-input");
+    const resourceCards = document.querySelectorAll(".resources-list .activity-item");
+    const uploadBtn = document.querySelector(".post-submit-btn");
 
-    const filteredTeachers = teachers.filter(teacher =>
-        filter === "All" || teacher.category === filter
-    );
+    // ----------------------------
+    // Preview Button
+    // ----------------------------
+    document.querySelectorAll(".connect-btn").forEach(btn => {
 
-    filteredTeachers.forEach(teacher => {
+        btn.addEventListener("click", function () {
 
-        mentorGrid.innerHTML += `
-            <div class="mentor-card dashboard-card"
-                 data-category="${teacher.category}">
+            const title = this.parentElement.querySelector("strong").innerText;
 
-                <img src="${teacher.image}" alt="${teacher.name}">
+            alert("Opening preview for:\n\n" + title);
 
-                <div class="mentor-content">
+            // Example:
+            // window.open("resources/" + title + ".pdf");
 
-                    <span>${teacher.role}</span>
-
-                    <h3>${teacher.name}</h3>
-
-                    ${teacher.qualification
-                        ? `<small>${teacher.qualification}</small>`
-                        : ""
-                    }
-
-                    <p>${teacher.description}</p>
-
-                </div>
-
-            </div>
-        `;
+        });
 
     });
 
-}
+    // ----------------------------
+    // Download Button
+    // ----------------------------
+    document.querySelectorAll(".post-submit-btn").forEach(btn => {
 
+        if (btn.innerText.trim() === "Download") {
 
-function renderMentors(filter = "All") {
+            btn.addEventListener("click", function () {
 
-    mentorGrid.innerHTML = "";
+                const title = this.parentElement.querySelector("strong").innerText;
 
-    // Don't show founder card again in the grid
-    if (filter === "Founder") {
-        mentorGrid.style.display = "none";
-        return;
+                alert("Downloading " + title);
+
+                // Example download
+                // window.location.href = "resources/" + title;
+
+                addRecentDownload(title);
+
+            });
+
+        }
+
+    });
+
+    // ----------------------------
+    // Upload Resource
+    // ----------------------------
+    if (uploadBtn) {
+
+        uploadBtn.addEventListener("click", function () {
+
+            alert("Upload Resource feature coming soon.");
+
+            // Future:
+            // document.getElementById("fileUpload").click();
+
+        });
+
     }
-
-    mentorGrid.style.display = "grid";
-
-    const filteredTeachers = teachers.filter(teacher =>
-        filter === "All" || teacher.category === filter
-    );
-
-    filteredTeachers.forEach(teacher => {
-
-        mentorGrid.innerHTML += `
-            <div class="mentor-card dashboard-card">
-
-                <img src="${teacher.image}" alt="${teacher.name}">
-
-                <div class="mentor-content">
-                    <span>${teacher.role}</span>
-
-                    <h3>${teacher.name}</h3>
-
-                    ${teacher.qualification
-                        ? `<small>${teacher.qualification}</small>`
-                        : ""
-                    }
-
-                    <p>${teacher.description}</p>
-                </div>
-
-            </div>
-        `;
-    });
-
-}
-
-const filterButtons = document.querySelectorAll(".filter-btn");
-filterButtons.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        filterButtons.forEach(btn => btn.classList.remove("active"));
-
-        button.classList.add("active");
-
-        const category = button.dataset.filter;
-
-        renderFeaturedMentor(category);
-        renderMentors(category);
-
-    });
 
 });
 
-function renderFeaturedMentor(category = "All") {
+// =====================================
+// Recent Downloads
+// =====================================
 
-    const featuredSection = document.querySelector(".featured-mentor");
+function addRecentDownload(title) {
 
-    // Show featured founder only on All and Founder
-    if (category === "Master Teacher" || category === "Instructor") {
-        featuredSection.style.display = "none";
-        return;
+    const list = document.querySelector(".events-list");
+
+    if (!list) return;
+
+    const item = document.createElement("div");
+    item.className = "event-item";
+
+    item.innerHTML = `
+        <div class="event-info">
+            <span class="event-title">${title}</span>
+            <span class="event-time">Just Now</span>
+        </div>
+    `;
+
+    list.prepend(item);
+
+    while (list.children.length > 5) {
+        list.removeChild(list.lastElementChild);
     }
 
-    featuredSection.style.display = "grid";
-
-    const featured = teachers.find(t => t.category === "Founder");
-
-    if (!featured) return;
-
-    document.getElementById("featuredImage").src = featured.image;
-    document.getElementById("featuredImage").alt = featured.name;
-
-    document.getElementById("featuredTag").textContent = featured.category;
-    document.getElementById("featuredName").textContent = featured.name;
-
-    document.getElementById("featuredRole").textContent =
-        featured.role +
-        (featured.qualification ? " • " + featured.qualification : "");
-
-    document.getElementById("featuredDescription").textContent =
-        featured.description;
 }
-
-function renderMentors(filter = "All") {
-
-    mentorGrid.innerHTML = "";
-
-    // Founder tab -> don't show any grid cards
-    if (filter === "Founder") {
-        mentorGrid.style.display = "none";
-        return;
-    }
-
-    mentorGrid.style.display = "grid";
-
-    let filteredTeachers;
-
-    if (filter === "All") {
-        // Show all mentors except Founder
-        filteredTeachers = teachers.filter(
-            teacher => teacher.category !== "Founder"
-        );
-    } else {
-        // Show only selected category
-        filteredTeachers = teachers.filter(
-            teacher => teacher.category === filter
-        );
-    }
-
-    filteredTeachers.forEach(teacher => {
-
-        mentorGrid.innerHTML += `
-            <div class="mentor-card dashboard-card">
-                <img src="${teacher.image}" alt="${teacher.name}">
-
-                <div class="mentor-content">
-                    <span>${teacher.role}</span>
-
-                    <h3>${teacher.name}</h3>
-
-                    ${teacher.qualification
-                        ? `<small>${teacher.qualification}</small>`
-                        : ""
-                    }
-
-                    <p>${teacher.description}</p>
-                </div>
-            </div>
-        `;
-    });
-}
-
-// Set default filter to All
-document.querySelectorAll(".filter-btn").forEach(btn => {
-    btn.classList.remove("active");
-});
-
-document.querySelector('.filter-btn[data-filter="All"]').classList.add("active");
-
-renderFeaturedMentor("All");
-renderMentors("All");
     </script>
 </body>
 </html>

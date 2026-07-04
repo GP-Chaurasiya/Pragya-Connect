@@ -1,7 +1,7 @@
 const searchData = [
   {
     title: "Dashboard",
-    page: "index.html"
+    page: "dashboard.html"
   },
   {
     title: "Community Feed",
@@ -30,6 +30,18 @@ const searchData = [
   {
     title: "My Registrations",
     page: "events/MyRegistrations.html"
+  },
+  {
+    title: "Pdf",
+    page: "resources.html"
+  },
+  {
+    title: "library",
+    page: "resources.html"
+  },
+  {
+    title: "teacher",
+    page: "mentors.html"
   }
 ];
 

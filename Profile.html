@@ -1477,12 +1477,56 @@ background:#EAF3F4;
 }
 
 .footer-bottom{
-    background:var(--primary);
-    color:#fff;
-    text-align:center;
-    padding:16px;
-    font-size:14px;
-    border-radius:0 0 20px 20px;
+    background: var(--primary);
+    color: #fff;
+    padding: 16px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 0 0 20px 20px;
+}
+
+.footer-bottom-links{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-bottom-links a{
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: .3s;
+}
+
+.footer-bottom-links a:hover{
+    color: var(--accent);
+}
+
+.footer-bottom-links span{
+    color: rgba(255,255,255,.6);
+}
+
+@media (max-width:768px){
+    .footer-bottom{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-bottom-links{
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media(max-width:992px){
+
+    .footer{
+        grid-template-columns:1fr 1fr;
+    }
+
 }
 
 @media(max-width:992px){
@@ -1560,7 +1604,7 @@ body{
                     <a href="events\Events.html"><i data-lucide="calendar"></i> <span>Events</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="book-open"></i> <span>Resources</span></a>
+                    <a href="resources.html"><i data-lucide="book-open"></i> <span>Resources</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="#"><i data-lucide="message-square"></i> <span>Messages</span><span class="badge">3</span></a>
@@ -1641,12 +1685,6 @@ body{
                                 <a href="setting.html" class="dropdown-item">
                                     <i data-lucide="settings"></i>
                                     <span>Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="dropdown-item">
-                                    <i data-lucide="moon"></i>
-                                    <span>Dark Mode</span>
                                 </a>
                             </li>
                             <li>
@@ -1943,12 +1981,18 @@ body{
 </footer>
 
 <div class="footer-bottom">
-    © 2026 Pragya Connect. All Rights Reserved.
+    <span>© 2026 Pragya Connect. All Rights Reserved.</span>
+
+    <div class="footer-bottom-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <span>|</span>
+        <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+    </div>
 </div>
 
 <script src="events\js\search.js"></script>
             
-            <script>
+    <script>
         // Initialize Lucide Icons
         window.onload = function () {
             lucide.createIcons();
