@@ -2063,6 +2063,16 @@ function renderMentors(filter = "All") {
         `;
     });
 }
+
+// Set default filter to All
+document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.classList.remove("active");
+});
+
+document.querySelector('.filter-btn[data-filter="All"]').classList.add("active");
+
+renderFeaturedMentor("All");
+renderMentors("All");
     </script>
 </body>
 </html>
