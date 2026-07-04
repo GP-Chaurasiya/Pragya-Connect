@@ -13,7 +13,7 @@ const teachers = [
     name: "Dr. Yatendra Dutt Amoli",
     role: "Master Teacher",
     category: "Master Teacher",
-    image: "assets/teachers/yatendra.jpg",
+    image: "assets/teachers/dr-yatendra-dutt-amoli.png",
     description: "PhD in Yog and specialist in Kashmir Shaivism and Tantra."
   },
   {
@@ -21,7 +21,7 @@ const teachers = [
     name: "Dr. Usha Jaiswal",
     role: "Master Teacher",
     category: "Master Teacher",
-    image: "assets/teachers/usha.jpg",
+    image: "assets/teachers/dr-usha-jaiswal.png",
     description: "Pranic Healing expert and Master Teacher."
   },
   {
@@ -29,7 +29,7 @@ const teachers = [
     name: "Dr. Rakesh Jaiswal",
     role: "Master Teacher",
     category: "Master Teacher",
-    image: "assets/teachers/rakesh.jpg",
+    image: "assets/teachers/dr-rakesh-jaiswal.jpg",
     description: "Expert in Spiritual Psychology and Transformational Training."
   },
   {
@@ -46,7 +46,7 @@ const teachers = [
     role: "Yoga Instructor",
     qualification: "M.Sc., B.Sc. in Yogic Science",
     category: "Instructor",
-    image: "assets/teachers/ashish.jpg",
+    image: "assets/teachers/ashish-prajapati.jpg",
     description: "Dedicated Yoga Instructor with academic expertise."
   },
   {
