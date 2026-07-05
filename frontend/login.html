@@ -189,47 +189,70 @@ color:#6B7280;
 </div>
 
 <script>
+const BASE_URL = "https://pragya-connect-backend.onrender.com";
 
 // Toggle Password
-function togglePassword(){
-const pass=document.getElementById("password");
-pass.type = pass.type === "password" ? "text" : "password";
+function togglePassword() {
+    const pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
 }
 
 // Login Logic
-document.getElementById("loginForm").addEventListener("submit", function(e){
-e.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
-const email=document.getElementById("email").value;
-const pass=document.getElementById("password").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-// Simple demo validation
-if(email.length>3 && pass.length>3){
+    try {
+        const response = await fetch(`${BASE_URL}/api/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
 
-localStorage.setItem("loggedIn","true");
+        const data = await response.json();
 
-// Optional remember email
-if(document.getElementById("remember").checked){
-localStorage.setItem("email",email);
-}
+        if (response.ok) {
+            // Save token and user data
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userId", data.user._id);
+            localStorage.setItem("loggedIn", "true");
 
-window.location.href="dashboard.html";
+            // Remember email
+            if (document.getElementById("remember").checked) {
+                localStorage.setItem("email", email);
+            }
 
-}else{
-alert("Please enter valid credentials");
-}
+            alert("Login Successful");
 
+            // Redirect
+            window.location.href = "dashboard.html";
+
+        } else {
+            alert(data.message || "Invalid Credentials");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Server Error");
+    }
 });
 
-// Auto fill email if remembered
-window.onload=function(){
-const savedEmail=localStorage.getItem("email");
-if(savedEmail){
-document.getElementById("email").value=savedEmail;
-document.getElementById("remember").checked=true;
-}
-}
+// Auto fill remembered email
+window.onload = function() {
+    const savedEmail = localStorage.getItem("email");
 
+    if (savedEmail) {
+        document.getElementById("email").value = savedEmail;
+        document.getElementById("remember").checked = true;
+    }
+}
 </script>
 
 </body>
