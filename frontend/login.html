@@ -221,6 +221,22 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         if (response.ok) {
             // Save token and user data
             localStorage.setItem("token", data.token);
+            localStorage.setItem("userId",data.user.id);
+
+localStorage.setItem("userName",data.user.name);
+
+localStorage.setItem("userEmail",data.user.email);
+
+localStorage.setItem("userRole",data.user.role);
+
+localStorage.setItem(
+"userInitials",
+data.user.name
+.split(" ")
+.map(n=>n[0])
+.join("")
+.toUpperCase()
+);
             localStorage.setItem("loggedIn", "true");
 
             // Remember email
