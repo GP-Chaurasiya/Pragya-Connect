@@ -1,109 +1,92 @@
-let registrations =
-JSON.parse(localStorage.getItem("registrations")) || [];
+let registrations = JSON.parse(localStorage.getItem("registrations")) || [];
 
 const container = document.getElementById("registrationContainer");
-const search = document.getElementById("searchInput");
 
-function display(data){
+function display(data) {
+    if (!container) return;
+    container.innerHTML = "";
 
-    container.innerHTML="";
-
-    if(data.length===0){
-
-        container.innerHTML=`
-        <div class="registration-card">
-            <h3>No registrations found.</h3>
-        </div>`;
+    if (data.length === 0) {
+        container.innerHTML = `
+            <div class="registration-card" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">
+                <i data-lucide="calendar-off" style="width: 48px; height: 48px; margin-bottom: 12px; display: inline-block;"></i>
+                <p>No event registrations found.</p>
+            </div>`;
+        if (window.lucide) lucide.createIcons();
         return;
     }
 
-    data.forEach((item)=>{
-
+    data.forEach((item) => {
         container.innerHTML += `
-
-        <div class="registration-card">
-
-            <h3>${item.event}</h3>
-
-            <p><strong>Name:</strong> ${item.name}</p>
-
-            <p><strong>Email:</strong> ${item.email}</p>
-
-            <p><strong>Phone:</strong> ${item.phone}</p>
-
-            <p><strong>Course:</strong> ${item.course}</p>
-
-            <p><strong>Date:</strong> ${item.date}</p>
-
-            <p class="status">${item.status}</p>
-
-            <button
-                class="edit-btn"
-                onclick="editRegistration('${item.id}')">
-
-                Edit
-
-            </button>
-
-            <button
-                class="cancel-btn"
-                onclick="cancelRegistration('${item.id}')">
-
-                Cancel Registration
-
-            </button>
-
-        </div>
-
+            <div class="registration-card" style="padding: 20px; border-radius: 16px; border: 1px solid var(--border); background-color: var(--card-bg); margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+                <h3 style="font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">${item.event}</h3>
+                <p style="font-size: 14px; margin-bottom: 6px; color: var(--text-main);"><strong>Name:</strong> ${item.name}</p>
+                <p style="font-size: 14px; margin-bottom: 6px; color: var(--text-main);"><strong>Email:</strong> ${item.email}</p>
+                <p style="font-size: 14px; margin-bottom: 6px; color: var(--text-main);"><strong>Phone:</strong> ${item.phone}</p>
+                <p style="font-size: 14px; margin-bottom: 6px; color: var(--text-main);"><strong>Event Date:</strong> ${item.eventDate || item.date}</p>
+                <p style="font-size: 14px; margin-bottom: 12px; color: var(--text-main);"><strong>Venue:</strong> ${item.venue || "TBD"}</p>
+                <p class="status" style="display: inline-block; font-size: 12px; font-weight: 700; background-color: var(--primary-light); color: var(--primary); padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 15px;">${item.status}</p>
+                <div style="display: flex; gap: 10px;">
+                    <button class="edit-btn" onclick="editRegistration('${item.id}')" style="background-color: var(--bg-body); border: 1px solid var(--border); color: var(--text-main); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600;">Edit</button>
+                    <button class="cancel-btn" onclick="cancelRegistration('${item.id}')" style="background: none; border: 1px solid transparent; color: var(--red-dark); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600;">Cancel</button>
+                </div>
+            </div>
         `;
-
     });
 
+    if (window.lucide) lucide.createIcons();
 }
 
-function cancelRegistration(id){
+window.cancelRegistration = function(id) {
+    const reg = registrations.find(r => r.id === id);
+    if (!reg) return;
 
-    if(confirm("Cancel this registration?")){
+    if (confirm(`Are you sure you want to cancel your registration for ${reg.event}?`)) {
+        registrations = registrations.filter(r => r.id !== id);
+        localStorage.setItem("registrations", JSON.stringify(registrations));
 
-        registrations = registrations.filter(reg => reg.id !== id);
-
-        localStorage.setItem(
-            "registrations",
-            JSON.stringify(registrations)
-        );
+        // Create notification
+        const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
+        const localNotifs = JSON.parse(localStorage.getItem("local_notifications") || "[]");
+        localNotifs.push({
+            _id: "notif_" + Date.now(),
+            user: currentUser,
+            title: "Registration Cancelled",
+            type: "event",
+            content: `You have successfully cancelled your registration for ${reg.event}.`,
+            is_read: false,
+            createdAt: new Date().toISOString()
+        });
+        localStorage.setItem("local_notifications", JSON.stringify(localNotifs));
 
         display(registrations);
-
     }
+};
 
-}
-
-function editRegistration(id){
-
-    const index = registrations.findIndex(reg => reg.id === id);
-
-    if(index === -1) return;
+window.editRegistration = function(id) {
+    const index = registrations.findIndex(r => r.id === id);
+    if (index === -1) return;
 
     const reg = registrations[index];
 
+    const name = prompt("Registrant Name", reg.name);
+    if (name === null || name.trim() === "") return;
+
+    const email = prompt("Email Address", reg.email);
+    if (email === null || email.trim() === "") return;
+
     const phone = prompt("Phone Number", reg.phone);
-    if(phone === null) return;
+    if (phone === null || phone.trim() === "") return;
 
-    const course = prompt("Course", reg.course);
-    if(course === null) return;
-
+    reg.name = name;
+    reg.email = email;
     reg.phone = phone;
-    reg.course = course;
 
     registrations[index] = reg;
+    localStorage.setItem("registrations", JSON.stringify(registrations));
 
-    localStorage.setItem(
-        "registrations",
-        JSON.stringify(registrations)
-    );
-
+    alert("Registration updated successfully!");
     display(registrations);
-
-}
+};
 
 display(registrations);

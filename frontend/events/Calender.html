@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Pragya Connect - Calendar</title>
     <!-- Google Fonts: Plus Jakarta Sans for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,8 +37,8 @@
             /* Typography & Shadows */
             --font-family: 'Plus Jakarta Sans',sans-serif;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06);
+            --shadow-md:0 10px 30px rgba(0,0,0,.08);
+            --shadow-lg:0 20px 40px rgba(0,0,0,.12);
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -929,174 +929,31 @@ background:#EAF3F4;
 
 </section>
 </body>
+</html>
 
 <script src="js/data.js"></script>
+<script src="../assets/js/app-service.js"></script>
+<script src="../common.js"></script>
 <script src="js/calender.js"></script>
 <script src="js/search.js"></script>
 <script>
-    lucide.createIcons();
+    const calendar = document.getElementById("calendar");
+    const monthYear = document.getElementById("monthYear");
+    const eventList = document.getElementById("eventList");
+    let currentDate = new Date();
 
-    // =========================
-// Sidebar Toggle
-// =========================
-
-const sidebar = document.querySelector(".sidebar");
-const toggle = document.getElementById("sidebarToggle");
-
-// Open / Close Sidebar
-toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    document.body.classList.toggle("sidebar-collapsed");
-});
-
-// Close when clicking outside
-document.addEventListener("click", function (e) {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !sidebar.contains(e.target) &&
-        !toggle.contains(e.target)
-    ) {
-        document.body.classList.add("sidebar-collapsed");
+    // Submenu controller
+    const eventsToggle = document.getElementById("eventsToggle");
+    const eventsParent = document.querySelector(".has-submenu");
+    if (eventsToggle && eventsParent) {
+        eventsParent.classList.add("open");
+        eventsToggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            eventsParent.classList.toggle("open");
+        });
     }
 
-});
-
-// Track whether the mouse is over the sidebar
-let isSidebarHovered = false;
-
-sidebar.addEventListener("mouseenter", () => {
-    isSidebarHovered = true;
-});
-
-sidebar.addEventListener("mouseleave", () => {
-    isSidebarHovered = false;
-});
-
-// Close sidebar on scroll ONLY if the mouse is NOT over the sidebar
-window.addEventListener("scroll", () => {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close sidebar on mouse wheel ONLY if the mouse is NOT over the sidebar
-window.addEventListener("wheel", () => {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close on touch devices
-window.addEventListener("touchmove", function () {
-
-    if (!document.body.classList.contains("sidebar-collapsed")) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close when ESC key is pressed
-document.addEventListener("keydown", function (e) {
-
-    if (e.key === "Escape") {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-    // User Dropdown
-    const trigger = document.getElementById("userMenuTrigger");
-    const dropdown = document.getElementById("userDropdown");
-
-    trigger.addEventListener("click", () => {
-        dropdown.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
-            dropdown.classList.remove("active");
-        }
-    });
-
-     // Load user role from localStorage and update top bar
-        function loadUserRole() {
-            const savedUserRole = localStorage.getItem("userRole");
-            if (savedUserRole) {
-                const topBarRole = document.querySelector('.user-role');
-                const dropdownRole = document.querySelector('.dropdown-role');
-                if (topBarRole) {
-                    topBarRole.innerText = savedUserRole;
-                }
-                if (dropdownRole) {
-                    dropdownRole.innerText = savedUserRole;
-                }
-            }
-        }
-
-         // Load avatar initials from localStorage
-        function loadAvatarInitials() {
-            const savedInitials = localStorage.getItem("userInitials");
-            if (savedInitials) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                if (topBarAvatar) {
-                    topBarAvatar.textContent = savedInitials;
-                }
-                if (dropdownAvatar) {
-                    dropdownAvatar.textContent = savedInitials;
-                }
-            }
-        }
-
-        // Load profile image to top bar avatars
-        function loadProfileImageToTopBar() {
-            const savedImage = localStorage.getItem("profileImage");
-            if (savedImage) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                
-                if (topBarAvatar) {
-                    topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                    topBarAvatar.style.backgroundSize = 'cover';
-                    topBarAvatar.style.backgroundPosition = 'center';
-                    topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                    topBarAvatar.textContent = '';
-                }
-                
-                if (dropdownAvatar) {
-                    dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                    dropdownAvatar.style.backgroundSize = 'cover';
-                    dropdownAvatar.style.backgroundPosition = 'center';
-                    dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                    dropdownAvatar.textContent = '';
-                }
-            }
-        }
-
-        // Call load functions on page load
-        loadUserName();
-        loadUserRole();
-        loadAvatarInitials();
-        loadProfileImageToTopBar();
-
-const calendar = document.getElementById("calendar");
-const monthYear = document.getElementById("monthYear");
-const eventList = document.getElementById("eventList");
-
-let currentDate = new Date();
-
-function renderCalendar(){
+    function renderCalendar(){
 
 calendar.innerHTML="";
 
@@ -1217,8 +1074,6 @@ function loadUserName() {
 }
 
 // Events submenu
-const eventsToggle = document.getElementById("eventsToggle");
-const eventsParent = document.querySelector(".has-submenu");
 
 if (eventsToggle && eventsParent) {
 

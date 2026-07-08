@@ -1,4 +1,6 @@
 const express = require("express");
+const cors = require("cors");
+const path = require("path");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -11,6 +13,8 @@ const adminRoutes = require("./routes/adminRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const mentorRoutes = require("./routes/mentorRoutes");
 const resourceRoutes = require("./routes/resourceRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 // Load Environment Variables
 dotenv.config();
@@ -24,7 +28,11 @@ const app = express();
 app.use(cors());
 
 // Middleware
+app.use(cors());
 app.use(express.json());
+
+// Serve Frontend Static Files
+app.use(express.static(path.join(__dirname, "../Frontend")));
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -34,13 +42,16 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/mentors", mentorRoutes);
 app.use("/api/resources", resourceRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/notifications", notificationRoutes);
 
-// Root Route
+// Fallback for landing page
 app.get("/", (req, res) => {
-    res.send("Pragya Connect Backend Running");
+    res.sendFile(path.join(__dirname, "../Frontend/index.html"));
 });
 
 // Start Server
-app.listen(5000, () => {
-    console.log("Server running on port 5000");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

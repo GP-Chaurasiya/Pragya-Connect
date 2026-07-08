@@ -4,6 +4,31 @@ const router = express.Router();
 const Post = require("../models/post");
 const Comment = require("../models/Comment");
 
+// GET ALL POSTS WITH COMMENTS
+router.get("/", async (req, res) => {
+    try {
+        const posts = await Post.find()
+            .populate("user_id", "name role")
+            .sort({ createdAt: -1 });
+
+        const postsWithComments = await Promise.all(posts.map(async (post) => {
+            const comments = await Comment.find({ post_id: post._id })
+                .populate("user_id", "name role")
+                .sort({ createdAt: 1 });
+
+            return {
+                ...post.toObject(),
+                comments
+            };
+        }));
+
+        res.json(postsWithComments);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Posts Fetch Failed");
+    }
+});
 
 // CREATE POST API
 router.post("/create", async (req, res) => {
@@ -17,50 +42,49 @@ router.post("/create", async (req, res) => {
         });
 
         await post.save();
-
-        res.send("Post Created Successfully");
+        res.status(201).json(post);
 
     } catch (error) {
         console.log(error);
-        res.send("Post Creation Failed");
+        res.status(500).send("Post Creation Failed");
     }
 });
-
 
 // EDIT POST API
 router.put("/edit/:id", async (req, res) => {
     try {
         const { content, image } = req.body;
 
-        await Post.findByIdAndUpdate(req.params.id, {
-            content,
-            image
-        });
+        const post = await Post.findByIdAndUpdate(
+            req.params.id,
+            { content, image },
+            { new: true }
+        );
 
-        res.send("Post Updated Successfully");
+        res.json(post);
 
     } catch (error) {
         console.log(error);
-        res.send("Post Update Failed");
+        res.status(500).send("Post Update Failed");
     }
 });
-
 
 // DELETE POST API
 router.delete("/delete/:id", async (req, res) => {
     try {
         await Post.findByIdAndDelete(req.params.id);
+        // Also delete associated comments
+        await Comment.deleteMany({ post_id: req.params.id });
 
         res.send("Post Deleted Successfully");
 
     } catch (error) {
         console.log(error);
-        res.send("Post Delete Failed");
+        res.status(500).send("Post Deletion Failed");
     }
 });
 
-
-// COMMENT API
+// COMMENT API (Create Comment)
 router.post("/comment", async (req, res) => {
     try {
         const { post_id, user_id, comment_text } = req.body;
@@ -72,36 +96,64 @@ router.post("/comment", async (req, res) => {
         });
 
         await comment.save();
-
-        res.send("Comment Added Successfully");
+        res.status(201).json(comment);
 
     } catch (error) {
         console.log(error);
-        res.send("Comment Failed");
+        res.status(500).send("Comment Failed");
     }
 });
 
+// EDIT COMMENT API
+router.put("/comment/:id", async (req, res) => {
+    try {
+        const { comment_text } = req.body;
 
-// LIKE API
+        const comment = await Comment.findByIdAndUpdate(
+            req.params.id,
+            { comment_text },
+            { new: true }
+        );
+
+        res.json(comment);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Comment Edit Failed");
+    }
+});
+
+// DELETE COMMENT API
+router.delete("/comment/:id", async (req, res) => {
+    try {
+        await Comment.findByIdAndDelete(req.params.id);
+        res.send("Comment Deleted Successfully");
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Comment Delete Failed");
+    }
+});
+
+// LIKE API (Toggle / Add Like)
 router.put("/like/:id", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
         if (!post) {
-            return res.send("Post not found");
+            return res.status(404).send("Post not found");
         }
 
+        // Simplistic toggle or incremental like count. Let's increment
         post.likes += 1;
-
         await post.save();
 
-        res.send("Post Liked Successfully");
+        res.json({ likes: post.likes });
 
     } catch (error) {
         console.log(error);
-        res.send("Like Failed");
+        res.status(500).send("Like Failed");
     }
 });
-
 
 module.exports = router;

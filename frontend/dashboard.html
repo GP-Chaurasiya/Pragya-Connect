@@ -59,6 +59,10 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        html {
+          scroll-behavior: smooth;
+        }
+
         /* Layout Structure */
         .dashboard-container {
             display: flex;
@@ -1177,31 +1181,6 @@
             margin-top: 3px;
         }
 
-        .connect-btn {
-            background-color: transparent;
-            border: 1.5px solid var(--primary);
-            color: var(--primary);
-            font-family: var(--font-family);
-            font-size: 13px;
-            font-weight: 700;
-            padding: 8px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .connect-btn:hover {
-            background-color: var(--primary);
-            color: #FFFFFF;
-            transform: translateY(-1px);
-        }
-
-        .connect-btn.connected {
-            background-color: var(--primary);
-            border-color: var(--primary);
-            color: #FFFFFF;
-        }
-
         /* Bottom Row Split: Resources and Announcements */
         .bottom-split-row {
             display: grid;
@@ -1787,9 +1766,34 @@ body{
     min-height:100vh;
 }
 
+.footer,
+.footer-bottom{
+    width:calc(100% - 272px);
+    margin-left:272px;
+}
+
 .footer{
-    width:100%;
     margin-top:50px;
+}
+
+body.sidebar-collapsed .footer,
+body.sidebar-collapsed .footer-bottom{
+    width:100%;
+    margin-left:0;
+}
+
+@media (max-width:900px){
+    .footer,
+    .footer-bottom{
+        width:calc(100% - 72px);
+        margin-left:72px;
+    }
+
+    body.sidebar-collapsed .footer,
+    body.sidebar-collapsed .footer-bottom{
+        width:100%;
+        margin-left:0;
+    }
 }
     </style>
 </head>
@@ -1900,7 +1904,7 @@ body{
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="dropdown-item">
+                                <a href="help-support.html" class="dropdown-item">
                                     <i data-lucide="help-circle"></i>
                                     <span>Help & Support</span>
                                 </a>
@@ -1944,71 +1948,16 @@ body{
                         </div>
                         <div class="create-post-actions-row">
                             <div class="media-triggers">
-                                <button class="trigger-btn image-btn"><i data-lucide="image"></i> Image</button>
-                                <button class="trigger-btn video-btn"><i data-lucide="video"></i> Video</button>
-                                <button class="trigger-btn doc-btn"><i data-lucide="file-text"></i> Document</button>
+                                <button class="trigger-btn image-btn" id="imageBtn"><i data-lucide="image"></i> Image</button>
+                                <button class="trigger-btn video-btn" id="videoBtn"><i data-lucide="video"></i> Video</button>
+                                <button class="trigger-btn doc-btn" id="documentBtn"><i data-lucide="file-text"></i> Document</button>
                             </div>
                             <button class="post-submit-btn">Post</button>
                         </div>
                     </section>
 
-                    <!-- Feed Post 1: Akhilesh -->
-                    <article class="dashboard-card feed-post">
-                        <div class="post-header">
-                            <div class="post-author-info">
-                                <div class="avatar">A</div>
-                                <div class="author-meta">
-                                    <span class="author-name">Akhilesh</span>
-                                    <span class="post-time">2 hours ago • <i data-lucide="globe"></i></span>
-                                </div>
-                            </div>
-                            <button class="post-options-btn"><i data-lucide="more-horizontal"></i></button>
-                        </div>
-                        
-                        <div class="post-body-split">
-                            <div class="post-text-content">
-                                Successfully completed<br>
-                                <span style="color: var(--primary); font-size: 15px; font-weight: 700;">Meditation Session! 🧘‍♂️</span>
-                            </div>
-                            <img src="assets/akhilesh_post.png" alt="Meditation illustration" class="post-illustration">
-                        </div>
-
-                        <div class="post-actions-row">
-                            <button class="action-btn" onclick="toggleLike(this)"><i data-lucide="heart"></i> Like</button>
-                            <button class="action-btn"><i data-lucide="message-square"></i> Comment</button>
-                            <button class="action-btn"><i data-lucide="share-2"></i> Share</button>
-                        </div>
-                    </article>
-
-                    <!-- Feed Post 2: Hrishikesh -->
-                    <article class="dashboard-card feed-post hrishikesh-post">
-                        <div class="post-header">
-                            <div class="post-author-info">
-                                <div class="avatar" style="background-color: var(--primary-light); color: var(--primary)">H</div>
-                                <div class="author-meta">
-                                    <span class="author-name">Hrishikesh</span>
-                                    <span class="post-time">5 hours ago • <i data-lucide="globe"></i></span>
-                                </div>
-                            </div>
-                            <button class="post-options-btn"><i data-lucide="more-horizontal"></i></button>
-                        </div>
-
-                        <div class="post-body-full">
-                            <p>Uploaded Yoga Workshop Photos</p>
-                            <div class="post-gallery-grid">
-                                <img src="assets/gallery_studio_1.png" alt="Yoga Studio Poses" class="gallery-img">
-                                <img src="assets/gallery_group.png" alt="Yoga Group Photo" class="gallery-img">
-                                <img src="assets/gallery_studio_2.png" alt="Yoga Stretching Mats" class="gallery-img">
-                                <img src="assets/gallery_mountain.png" alt="Mountain Meditation Yoga" class="gallery-img">
-                            </div>
-                        </div>
-
-                        <div class="post-actions-row">
-                            <button class="action-btn" onclick="toggleLike(this, 24)"><i data-lucide="heart"></i> Like 24</button>
-                            <button class="action-btn"><i data-lucide="message-square"></i> Comment 6</button>
-                            <button class="action-btn"><i data-lucide="share-2"></i> Share</button>
-                        </div>
-                    </article>
+                    <!-- Dynamic Feed Container -->
+                    <div id="dashboardFeed"></div>
 
                 </div>
 
@@ -2075,7 +2024,7 @@ body{
                             <a href="mentors.html" class="view-all-link">View All</a>
                         </div>
 
-                        <div class="mentors-list">
+                        <div class="mentors-list" id="mentorSuggestions">
                             <!-- Mentor 1 -->
                             <div class="mentor-item">
                                 <div class="mentor-profile-info">
@@ -2085,7 +2034,6 @@ body{
                                         <span class="mentor-title">Meditation Expert</span>
                                     </div>
                                 </div>
-                                <button class="connect-btn" onclick="toggleConnect(this)">Connect</button>
                             </div>
                             <!-- Mentor 2 -->
                             <div class="mentor-item">
@@ -2096,7 +2044,6 @@ body{
                                         <span class="mentor-title">Yoga Mentor</span>
                                     </div>
                                 </div>
-                                <button class="connect-btn" onclick="toggleConnect(this)">Connect</button>
                             </div>
                         </div>
                     </section>
@@ -2305,7 +2252,7 @@ body{
 </footer>
 
 <div class="footer-bottom">
-    <span>© 2026 Pragya Connect. All Rights Reserved.</span>
+    <span>&copy; 2026 Pragya Connect. All Rights Reserved.</span>
 
     <div class="footer-bottom-links">
         <a href="privacy-policy.html">Privacy Policy</a>
@@ -2314,265 +2261,534 @@ body{
     </div>
 </div>  
 
+<!-- Hidden File Inputs -->
+<input type="file" id="imageInput" accept="image/*" multiple hidden>
+<input type="file" id="videoInput" accept="video/*" hidden>
+<input type="file" id="documentInput"accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip"hidden>
+
+<!-- Preview Area -->
+<div id="mediaPreview" style="margin-top:15px;"></div>
     
-<script src="events\js\search.js"></script>
+<script src="events/js/data.js"></script>
+<script src="events/js/mentor.js"></script>
+<script src="assets/js/app-service.js"></script>
+<script src="common.js"></script>
+<script src="events/js/search.js"></script>
+<script>
 
-    <script>
-        // Initialize Lucide Icons
+    // Dashboard Specific Dynamic Rendering Logic
+
+    // Render Feed Posts
+    async function renderDashboardFeed() {
+        window.addEventListener("postsUpdated", renderDashboardFeed);
+        window.addEventListener("storage", renderDashboardFeed);
+        const feedContainer = document.getElementById("dashboardFeed");
+        if (!feedContainer) return;
+        feedContainer.innerHTML = "";
+
+        const posts = await AppService.getPosts();
+        const latestPosts = posts.slice(0, 2);
+
+        if (latestPosts.length === 0) {
+            feedContainer.innerHTML = `
+                <div class="dashboard-card feed-post" style="text-align: center; padding: 40px 20px;">
+                    <i data-lucide="info" style="width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 12px; display: inline-block;"></i>
+                    <p style="color: var(--text-muted);">No posts available. Be the first to share in Community Feed!</p>
+                </div>
+            `;
+            lucide.createIcons();
+            return;
+        }
+
+        latestPosts.forEach(post => {
+            const authorName = post.user_id?.name || post.userName || "Gyan Prakash";
+            const authorRole = post.user_id?.role || post.userRole || "Student";
+            const content = post.content || "";
+            const image = post.image || "";
+            const likes = post.likes || 0;
+            const commentsCount = post.comments ? post.comments.length : 0;
+            const timeText = post.createdAt ? new Date(post.createdAt).toLocaleDateString() : "Just now";
+
+            let mediaHTML = "";
+            if (image) {
+                mediaHTML = `<img src="${image}" alt="Post attachment" class="post-illustration">`;
+            }
+
+            const postHTML = `
+                <article class="dashboard-card feed-post" data-id="${post._id}">
+                    <div class="post-header">
+                       <div class="post-author-info">
+                           <div class="avatar">${authorName.charAt(0)}</div>
+                           <div class="author-meta">
+                               <span class="author-name">${authorName}</span>
+                               <span class="post-time">${timeText} • <i data-lucide="globe"></i></span>
+                           </div>
+                       </div>
+                       <button class="post-options-btn"><i data-lucide="more-horizontal"></i></button>
+                    </div>
+                    
+                    <div class="post-body-split">
+                       <div class="post-text-content">
+                           ${content}
+                       </div>
+                       ${mediaHTML}
+                    </div>
+
+                    <div class="post-actions-row">
+                       <button class="action-btn like-btn" onclick="likeDashboardPost(this, '${post._id}')">
+                           <i data-lucide="heart"></i> Like <span>${likes}</span>
+                       </button>
+                       <button class="action-btn comment-btn" onclick="toggleCommentsSection('${post._id}')">
+                           <i data-lucide="message-square"></i> Comment <span>${commentsCount}</span>
+                       </button>
+                       <button class="action-btn share-btn" onclick="openShareDialog('${post._id}')">
+                           <i data-lucide="share-2"></i> Share
+                       </button>
+                    </div>
+
+                    <div class="comments-section" id="comments-${post._id}" style="display: none; padding: 15px 0; border-top: 1px solid var(--border); margin-top: 15px;">
+                       <div class="comments-list" style="max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;">
+                           ${renderPostComments(post.comments || [])}
+                       </div>
+                       <div class="comment-input-row" style="display: flex; gap: 10px;">
+                           <input type="text" placeholder="Write a comment..." class="comment-input-field" style="flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 10px; outline: none; background: transparent; color: var(--text-main);" onkeypress="handleCommentSubmit(event, '${post._id}')">
+                           <button class="post-submit-btn" style="padding: 8px 15px; font-size: 13px;" onclick="submitComment('${post._id}')">Send</button>
+                       </div>
+                    </div>
+                </article>
+            `;
+            feedContainer.innerHTML += postHTML;
+        });
+
         lucide.createIcons();
+    }
 
-        // Load user name from localStorage and update top bar
-        function loadUserName() {
-            const savedUserName = localStorage.getItem("userName");
-            if (savedUserName) {
-                const topBarName = document.querySelector('.user-name');
-                const dropdownName = document.querySelector('.dropdown-name');
-                if (topBarName) {
-                    topBarName.innerText = savedUserName;
-                }
-                if (dropdownName) {
-                    dropdownName.innerText = savedUserName;
-                }
-                
-                // Update hero banner name with first name
-                const firstName = savedUserName.split(' ')[0];
-                const heroBannerName = document.getElementById('heroBannerName');
-                if (heroBannerName) {
-                    heroBannerName.innerText = firstName + '!';
-                }
-            }
+    function renderPostComments(comments) {
+        return comments.map(c => {
+            const cName = c.user_id?.name || c.userName || "User";
+            const cText = c.comment_text || c.content || "";
+            return `
+                <div class="comment-item" style="display: flex; gap: 8px; font-size: 13px;">
+                    <div class="avatar" style="width: 24px; height: 24px; font-size: 11px; display: flex; align-items: center; justify-content: center; background-color: var(--primary-light); color: var(--primary); border-radius: 50%; font-weight: 700; flex-shrink: 0;">${cName.charAt(0)}</div>
+                    <div class="comment-body" style="background-color: var(--bg-body); padding: 8px 12px; border-radius: 12px; flex: 1;">
+                        <span style="font-weight: 700; display: block; margin-bottom: 2px; color: var(--text-main);">${cName}</span>
+                        <span style="color: var(--text-main);">${cText}</span>
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+
+    async function likeDashboardPost(btn, postId) {
+        const res = await AppService.likePost(postId);
+        if (res) {
+            const countSpan = btn.querySelector("span");
+            if (countSpan) countSpan.textContent = res.likes;
+            btn.classList.add("active");
+            btn.style.color = "var(--red-dark)";
         }
+    }
 
-        // Load user role from localStorage and update top bar
-        function loadUserRole() {
-            const savedUserRole = localStorage.getItem("userRole");
-            if (savedUserRole) {
-                const topBarRole = document.querySelector('.user-role');
-                const dropdownRole = document.querySelector('.dropdown-role');
-                if (topBarRole) {
-                    topBarRole.innerText = savedUserRole;
-                }
-                if (dropdownRole) {
-                    dropdownRole.innerText = savedUserRole;
-                }
-            }
+    function toggleCommentsSection(postId) {
+        const sect = document.getElementById(`comments-${postId}`);
+        if (sect) {
+            sect.style.display = sect.style.display === "none" ? "block" : "none";
         }
+    }
 
-            // Load avatar initials from localStorage
-            function loadAvatarInitials() {
-                const savedInitials = localStorage.getItem("userInitials");
-                if (savedInitials) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    if (topBarAvatar) {
-                        topBarAvatar.textContent = savedInitials;
-                    }
-                    if (dropdownAvatar) {
-                        dropdownAvatar.textContent = savedInitials;
-                    }
+    async function submitComment(postId) {
+        const sect = document.getElementById(`comments-${postId}`);
+        const input = sect.querySelector(".comment-input-field");
+        const val = input.value.trim();
+        if (!val) return;
+        await AppService.addComment(postId, val);
+        input.value = "";
+        renderDashboardFeed();
+    }
+
+    function handleCommentSubmit(e, postId) {
+        if (e.key === "Enter") {
+            submitComment(postId);
+        }
+    }
+
+    function openShareDialog(postId) {
+        const shareLink = `${window.location.origin}/dashboard.html?post=${postId}`;
+        
+        const modal = document.createElement("div");
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100%";
+        modal.style.height = "100%";
+        modal.style.backgroundColor = "rgba(0, 0, 0, 0.4)";
+        modal.style.display = "flex";
+        modal.style.alignItems = "center";
+        modal.style.justifyContent = "center";
+        modal.style.zIndex = "10000";
+
+        modal.innerHTML = `
+            <div class="dashboard-card" style="width: 400px; padding: 24px; position: relative;">
+                <h3 style="margin-bottom: 15px; color: var(--text-main);">Share Post</h3>
+                <input type="text" value="${shareLink}" readonly style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 15px; outline: none; background-color: var(--bg-body); color: var(--text-main);">
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button class="post-submit-btn" style="background-color: var(--text-muted);" onclick="this.closest('.share-modal').remove()">Close</button>
+                    <button class="post-submit-btn" onclick="navigator.clipboard.writeText('${shareLink}'); alert('Link copied to clipboard!'); this.closest('.share-modal').remove()">Copy Link</button>
+                </div>
+            </div>
+        `;
+        modal.className = "share-modal";
+        document.body.appendChild(modal);
+    }
+
+    // Render Mentor Suggestions based on relevance
+    function renderMentorSuggestions() {
+        const user = JSON.parse(localStorage.getItem("profile"));
+        if (!user || !window.teachers) return;
+
+        const userKeywords = [
+            ...user.skills,
+            ...user.interests,
+            user.bio || "",
+            user.achievements || "",
+            user.role || ""
+        ].map(k => k.toLowerCase());
+
+        const scoredMentors = teachers.map(mentor => {
+            let score = 0;
+            const mentorText = [
+                mentor.name,
+                mentor.role,
+                mentor.category,
+                mentor.description || ""
+            ].join(" ").toLowerCase();
+
+            userKeywords.forEach(keyword => {
+                if (mentorText.includes(keyword)) {
+                    score += 5;
                 }
+            });
+
+            if (user.role && user.role.toLowerCase().includes(mentor.category.toLowerCase())) {
+                score += 10;
             }
 
-            // Load profile image to top bar avatars
-            function loadProfileImageToTopBar() {
-                const savedImage = localStorage.getItem("profileImage");
-                if (savedImage) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    
-                    if (topBarAvatar) {
-                        topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                        topBarAvatar.style.backgroundSize = 'cover';
-                        topBarAvatar.style.backgroundPosition = 'center';
-                        topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                        topBarAvatar.textContent = '';
-                    }
-                    
-                    if (dropdownAvatar) {
-                        dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                        dropdownAvatar.style.backgroundSize = 'cover';
-                        dropdownAvatar.style.backgroundPosition = 'center';
-                        dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                        dropdownAvatar.textContent = '';
-                    }
-                }
-            }
+            return { ...mentor, score };
+        });
 
-            // Call load functions on page load
-            loadUserName();
-            loadUserRole();
-            loadAvatarInitials();
-            loadProfileImageToTopBar();
+        scoredMentors.sort((a, b) => b.score - a.score);
 
-        // =========================
-// Sidebar Toggle
-// =========================
-
-const sidebar = document.querySelector(".sidebar");
-const toggle = document.getElementById("sidebarToggle");
-
-// Open / Close Sidebar
-toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    document.body.classList.toggle("sidebar-collapsed");
-});
-
-// Close when clicking outside
-document.addEventListener("click", function (e) {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !sidebar.contains(e.target) &&
-        !toggle.contains(e.target)
-    ) {
-        document.body.classList.add("sidebar-collapsed");
+        const suggestionsContainer = document.querySelector(".mentors-list");
+        if (suggestionsContainer) {
+            suggestionsContainer.innerHTML = "";
+            scoredMentors.slice(0, 3).forEach(mentor => {
+                suggestionsContainer.innerHTML += `
+                    <div class="mentor-item" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                        <div class="mentor-profile-info" style="display: flex; gap: 12px; align-items: center;">
+                            <img src="${mentor.image}" alt="${mentor.name}" class="mentor-avatar" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                            <div class="mentor-text">
+                                <span class="mentor-name" style="font-weight: 700; color: var(--text-main); display: block;">${mentor.name}</span>
+                                <span class="mentor-title" style="font-size: 12px; color: var(--text-muted);">${mentor.role}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
     }
 
-});
+    // Render Upcoming Events from data.js
+    function renderUpcomingEvents() {
+        if (!window.events) return;
+        const today = new Date("2026-07-07");
 
-// Track whether the mouse is over the sidebar
-let isSidebarHovered = false;
+        const upcoming = events
+            .filter(e => new Date(e.date) >= today)
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-sidebar.addEventListener("mouseenter", () => {
-    isSidebarHovered = true;
-});
-
-sidebar.addEventListener("mouseleave", () => {
-    isSidebarHovered = false;
-});
-
-// Close sidebar on scroll ONLY if the mouse is NOT over the sidebar
-window.addEventListener("scroll", () => {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
+        const eventsList = document.querySelector(".events-list");
+        if (eventsList) {
+            eventsList.innerHTML = "";
+            upcoming.slice(0, 3).forEach(e => {
+                const evDate = new Date(e.date);
+                const month = evDate.toLocaleString('default', { month: 'short' });
+                const day = evDate.getDate();
+                eventsList.innerHTML += `
+                    <div class="event-item" onclick="window.location.href='events/EventDetails.html?id=${e.id}'" style="cursor: pointer; display: flex; gap: 15px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                        <div class="event-date-badge" style="background-color: var(--primary-light); color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; font-weight: 700; flex-shrink: 0;">
+                            <div class="month" style="font-size: 10px; text-transform: uppercase;">${month}</div>
+                            <div class="day" style="font-size: 18px; line-height: 1.1;">${day}</div>
+                        </div>
+                        <div class="event-info" style="flex: 1;">
+                            <span class="event-title" style="font-weight: 700; display: block; color: var(--text-main);">${e.title}</span>
+                            <span class="event-time" style="font-size: 12px; color: var(--text-muted);">${e.time} • ${e.venue}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
     }
 
-});
+    // Initialize Dashboard
+    document.addEventListener("DOMContentLoaded", () => {
+        renderDashboardFeed();
+        renderMentorSuggestions();
+        renderUpcomingEvents();
 
-// Close sidebar on mouse wheel ONLY if the mouse is NOT over the sidebar
-window.addEventListener("wheel", () => {
+        // Bind Create Post click
+        const createPostBtn = document.querySelector(".create-post-card .post-submit-btn");
+        if (createPostBtn) {
+            createPostBtn.addEventListener("click", async () => {
+                const input = document.querySelector(".create-post-card .create-post-field");
+                const content = input.value.trim();
+                if (!content) return;
+                await AppService.createPost(content);
+                input.value = "";
+                renderDashboardFeed();
+            });
+        }
+    });
 
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
+    // Buttons
+const imageBtn = document.getElementById("imageBtn");
+const videoBtn = document.getElementById("videoBtn");
+const documentBtn = document.getElementById("documentBtn");
 
-});
+// Inputs
+const imageInput = document.getElementById("imageInput");
+const videoInput = document.getElementById("videoInput");
+const documentInput = document.getElementById("documentInput");
 
-// Close on touch devices
-window.addEventListener("touchmove", function () {
+// Preview
+const preview = document.getElementById("mediaPreview");
 
-    if (!document.body.classList.contains("sidebar-collapsed")) {
-        document.body.classList.add("sidebar-collapsed");
-    }
+// Open File Picker
+imageBtn.addEventListener("click", () => imageInput.click());
+videoBtn.addEventListener("click", () => videoInput.click());
+documentBtn.addEventListener("click", () => documentInput.click());
 
-});
+// Image Preview
+imageInput.addEventListener("change", function () {
 
-// Close after clicking any sidebar link
-document.querySelectorAll(".sidebar a").forEach(link => {
+    preview.innerHTML = "";
 
-    link.addEventListener("click", () => {
+    [...this.files].forEach(file => {
 
-        document.body.classList.add("sidebar-collapsed");
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
 
+        img.style.width = "120px";
+        img.style.height = "120px";
+        img.style.objectFit = "cover";
+        img.style.margin = "8px";
+        img.style.borderRadius = "10px";
+
+        preview.appendChild(img);
     });
 
 });
 
-// Close when ESC key is pressed
-document.addEventListener("keydown", function (e) {
+// Video Preview
+videoInput.addEventListener("change", function () {
 
-    if (e.key === "Escape") {
-        document.body.classList.add("sidebar-collapsed");
-    }
+    preview.innerHTML = "";
+
+    const file = this.files[0];
+    if (!file) return;
+
+    const video = document.createElement("video");
+
+    video.src = URL.createObjectURL(file);
+    video.controls = true;
+    video.style.width = "300px";
+    video.style.borderRadius = "10px";
+
+    preview.appendChild(video);
 
 });
 
-        // Connect button toggler
-        function toggleConnect(btn) {
-            if (btn.classList.contains('connected')) {
-                btn.classList.remove('connected');
-                btn.textContent = 'Connect';
-            } else {
-                btn.classList.add('connected');
-                btn.textContent = 'Connected';
+// Document Preview
+documentInput.addEventListener("change", function () {
+
+    preview.innerHTML = "";
+
+    const file = this.files[0];
+    if (!file) return;
+
+    const card = document.createElement("div");
+
+    card.style.padding = "15px";
+    card.style.border = "1px solid #ddd";
+    card.style.borderRadius = "10px";
+    card.style.display = "inline-flex";
+    card.style.alignItems = "center";
+    card.style.gap = "10px";
+
+    card.innerHTML = `
+        <i class="fa-solid fa-file-lines" style="font-size:24px;color:#EBA036"></i>
+        <div>
+            <strong>${file.name}</strong><br>
+            <small>${(file.size / 1024).toFixed(2)} KB</small>
+        </div>
+    `;
+
+    preview.appendChild(card);
+
+});
+
+// ===============================
+// Mentor Recommendation System
+// ===============================
+
+function normalizeArray(arr) {
+    if (!arr) return [];
+
+    if (Array.isArray(arr)) {
+        return arr.map(item => item.toLowerCase().trim());
+    }
+
+    return arr
+        .split(",")
+        .map(item => item.toLowerCase().trim())
+        .filter(Boolean);
+}
+
+function calculateMatch(user, mentor) {
+
+    let score = 0;
+
+    const userInterests = normalizeArray(user.interests);
+    const userSkills = normalizeArray(user.skills);
+    const mentorTags = normalizeArray(mentor.tags);
+
+    // Interest Match (40 Points)
+
+    userInterests.forEach(interest => {
+
+        if (mentorTags.includes(interest)) {
+            score += 20;
+        }
+
+    });
+
+    // Skill Match (40 Points)
+
+    userSkills.forEach(skill => {
+
+        if (mentorTags.includes(skill)) {
+            score += 20;
+        }
+
+    });
+
+    // Bio Match (20 Points)
+
+    if (user.bio) {
+
+        const bio = user.bio.toLowerCase();
+
+        mentorTags.forEach(tag => {
+
+            if (bio.includes(tag.toLowerCase())) {
+                score += 5;
             }
-        }
 
-        // Like button toggler
-        function toggleLike(btn, baseCount = 0) {
-            const icon = btn.querySelector('i');
-            const hasHeartIcon = icon.getAttribute('data-lucide') === 'heart';
-            
-            if (btn.classList.contains('active')) {
-                btn.classList.remove('active');
-                btn.style.color = '';
-                if (baseCount > 0) {
-                    btn.innerHTML = `<i data-lucide="heart"></i> Like ${baseCount}`;
-                } else {
-                    btn.innerHTML = `<i data-lucide="heart"></i> Like`;
-                }
-            } else {
-                btn.classList.add('active');
-                btn.style.color = 'var(--red-dark)';
-                if (baseCount > 0) {
-                    btn.innerHTML = `<i data-lucide="heart" fill="var(--red-dark)"></i> Like ${baseCount + 1}`;
-                } else {
-                    btn.innerHTML = `<i data-lucide="heart" fill="var(--red-dark)"></i> Like 1`;
-                }
-            }
-            lucide.createIcons();
-        }
-
-        // User Dropdown Menu Functions
-        function toggleUserMenu() {
-            const dropdown = document.getElementById('userDropdown');
-            const trigger = document.getElementById('userMenuTrigger');
-            
-            if (dropdown.classList.contains('active')) {
-                closeUserMenu();
-            } else {
-                dropdown.classList.add('active');
-            }
-        }
-
-        function closeUserMenu() {
-            const dropdown = document.getElementById('userDropdown');
-            dropdown.classList.remove('active');
-        }
-
-        // User Menu Trigger Click Handler
-        const userMenuTrigger = document.getElementById('userMenuTrigger');
-        if (userMenuTrigger) {
-            userMenuTrigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleUserMenu();
-            });
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const dropdown = document.getElementById('userDropdown');
-            const trigger = document.getElementById('userMenuTrigger');
-            
-            if (dropdown && !dropdown.contains(e.target) && !trigger.contains(e.target)) {
-                closeUserMenu();
-            }
         });
 
-        // Prevent dropdown from closing when clicking inside it
-        const userDropdown = document.getElementById('userDropdown');
-        if (userDropdown) {
-            userDropdown.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-        }
-    </script>
+    }
+
+    return Math.min(score, 100);
+
+}
+
+
+// ===============================
+// Get Recommended Mentors
+// ===============================
+
+function getRecommendedMentors(user) {
+
+    return teachers
+
+        .map(teacher => ({
+
+            ...teacher,
+
+            match: calculateMatch(user, teacher)
+
+        }))
+
+        .sort((a, b) => b.match - a.match)
+
+        .slice(0, 5);
+
+}
+
+
+
+// ===============================
+// Render Mentor Suggestions
+// ===============================
+
+function renderRecommendedMentors() {
+
+    const currentUser = JSON.parse(localStorage.getItem("profile"));
+
+    if (!currentUser) return;
+
+    const mentors = getRecommendedMentors(currentUser);
+
+    const container = document.getElementById("mentorSuggestions");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    mentors.forEach(mentor => {
+
+        container.innerHTML += `
+
+        <div class="mentor-item">
+
+            <div class="mentor-profile-info">
+
+                <img
+                    src="${mentor.image}"
+                    class="mentor-avatar">
+
+                <div>
+
+                    <div class="mentor-name">
+                        ${mentor.name}
+                    </div>
+
+                    <div class="mentor-role">
+                        ${mentor.role}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+
+
+// ===============================
+// Refresh Automatically
+// ===============================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    renderRecommendedMentors();
+
+});
+</script>
 </body>
 </html>
