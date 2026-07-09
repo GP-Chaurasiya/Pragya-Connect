@@ -38,30 +38,6 @@ sidebar.addEventListener("mouseleave", () => {
     isSidebarHovered = false;
 });
 
-// Close sidebar on scroll ONLY if the mouse is NOT over the sidebar
-window.addEventListener("scroll", () => {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close sidebar on mouse wheel ONLY if the mouse is NOT over the sidebar
-window.addEventListener("wheel", () => {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
 // Close on touch devices
 window.addEventListener("touchmove", function () {
 
