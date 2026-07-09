@@ -26,9 +26,7 @@ body{
 }
 
 .login-container{
-    width:1200px;
-    max-width:95%;
-    height:700px;
+    width:min(1300px,95%);
     display:flex;
     background:#fff;
     border-radius:24px;
@@ -67,15 +65,18 @@ letter-spacing:1px;
 }
 
 .login-left{
-    width:55%;
-    overflow:hidden;
-    background:#000;
+    flex:1.2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0;
+    background:#fff;
 }
 
 .login-left img{
     width:100%;
-    height:100%;
-    object-fit:cover;
+    height:auto;
+    display:block;
 }
 
 .welcome{
@@ -168,24 +169,67 @@ font-size:12px;
 color:#6B7280;
 }
 
-@media(max-width:900px){
+/* Tablets */
+@media (max-width:992px){
 
 .login-container{
     flex-direction:column;
-    height:auto;
+    width:100%;
+    border-radius:20px;
 }
 
 .login-left{
     width:100%;
-    height:260px;
+}
+
+.login-left img{
+    width:100%;
+    height:auto;
 }
 
 .login-right{
     width:100%;
-    padding:35px 25px;
+    padding:35px;
 }
 
 }
+
+/* Mobile */
+@media (max-width:576px){
+
+body{
+    padding:0;
+    background:#fff;
+}
+
+.login-container{
+    width:100%;
+    min-height:100vh;
+    border-radius:0;
+    box-shadow:none;
+}
+
+.login-left{
+    padding:0;
+}
+
+.login-left img{
+    width:100%;
+    height:auto;
+    display:block;
+}
+
+.login-right{
+    padding:25px 20px;
+}
+
+.login-header img{
+    width:70px;
+    height:70px;
+}
+
+}
+
 
 </style>
 </head>
