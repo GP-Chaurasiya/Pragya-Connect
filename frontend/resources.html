@@ -14,33 +14,90 @@
     
     <style>
         :root {
-            /* Palette Design Tokens */
-            --primary: #0B525B;
-            --primary-light: #EAF3F4;
-            --primary-hover: #083E45;
-            --accent: #EBA036;
-            --accent-light: #FEF6EC;
-            --bg-body: #FAFAF8;
-            --bg-card: #FFFFFF;
-            --text-main: #1D2D30;
-            --text-muted: #6B7280;
-            --border: #ECECEC;
-            
-            /* Status Colors */
-            --red-light: #FEECEB;
-            --red-dark: #EB5757;
-            --green-light: #ECFDF3;
-            --green-dark: #039855;
-            --orange-light: #FFF5EC;
-            --orange-dark: #E47A22;
-            
-            /* Typography & Shadows */
-            --font-family: 'Plus Jakarta Sans',sans-serif;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* =========================
+       PYSHK Brand Theme
+    ========================== */
+
+    /* Primary */
+    --primary: #00381F;
+    --primary-hover: #00522E;
+    --primary-light: #E8F2ED;
+
+    /* Accent */
+    --accent: #D9AE29;
+    --accent-hover: #C89D1F;
+    --accent-light: #FFF8E6;
+
+    /* Supporting Colors */
+    --olive: #9D9D48;
+    --terracotta: #944426;
+    --burgundy: #620513;
+
+    /* Backgrounds */
+    --bg-body: #F5EFE5;
+    --bg-card: #FFFFFF;
+    --bg-sidebar: #00381F;
+    --bg-soft: #FAF8F4;
+
+    /* Typography */
+    --text-main: #272727;
+    --text-heading: #00381F;
+    --text-muted: #6F6F6F;
+    --text-light: #FFFFFF;
+
+    /* Borders */
+    --border: #E5DDD2;
+
+    /* Status */
+    --success: #0F8A4B;
+    --success-bg: #EAF8F1;
+
+    --warning: #D9AE29;
+    --warning-bg: #FFF8E6;
+
+    --danger: #620513;
+    --danger-bg: #F8EDEE;
+
+    --info: #944426;
+    --info-bg: #F9F0EC;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+
+    /* Radius */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+
+    /* Animation */
+    --transition: all 0.3s ease;
+}
+
+/* Headings */
+h1,h2,h3,h4,h5,h6{
+    font-family:"BN Cringe Serif", serif;
+    font-weight:400;
+    color:var(--text-heading);
+}
+
+/* Body */
+body,
+p,
+button,
+input,
+textarea,
+select{
+    font-family:"Neue Montreal",sans-serif;
+}
+
+/* Hero text / Quotes */
+.quote,
+.hero-title,
+.event-title{
+    font-family:"Canela",serif;
+}
 
         /* Basic Reset */
         * {
@@ -1791,11 +1848,11 @@ background:#EAF3F4;
     <div class="footer-social">
         <h4>Follow Us</h4>
         <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.facebook.com/pragyahk"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/pragyahk"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/pyshk/"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://www.youtube.com/@pys_hk"><i class="fab fa-youtube"></i></a>
+            <a href="https://x.com/pragyahk"><i class="fab fa-x-twitter"></i></a>
         </div>
 
     </div>
