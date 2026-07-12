@@ -253,22 +253,27 @@ select{
             min-height: 100vh;
             padding: 32px 32px;
             transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow:visible
         }
 
         /* Topbar Header styling */
         .topbar {
-            display: grid;
-            grid-template-columns: minmax(0, 2.1fr) minmax(410px, 1fr);
-            align-items: center;
-            margin-bottom: 32px;
-            gap: 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            width:100%;
+            margin-bottom:24px;
+            flex-wrap:nowrap;
+            overflow: visible;
         }
 
         .topbar-main {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            min-width: 0;
+            display:flex;
+            align-items:center;
+            gap:16px;
+            flex:1;
+            min-width:0;
         }
 
         /* Sidebar Toggle Button */
@@ -320,12 +325,12 @@ select{
             }
         }
 
-        .search-container {
-            position: relative;
-            flex-grow: 1;
-            min-width: 0;
-            max-width: none;
-        }
+        .search-container{
+    position:relative;
+    flex:1 1 auto;
+    min-width:0;
+    max-width:100%;
+}
 
         .search-container i, .search-container svg {
             position: absolute;
@@ -360,13 +365,15 @@ select{
         }
 
         /* Topbar actions (badges, user info) */
-        .topbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            justify-content: flex-start;
-            min-width: 0;
-            position: relative;
+        .topbar-actions{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            flex:0 0 auto;
+            margin-left:auto;
+            position:relative;
+            width:auto;
+            overflow:visible;
         }
 
         .icon-btn-badge {
@@ -411,17 +418,17 @@ select{
             flex-shrink: 0;
         }
 
-        .user-menu-trigger {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 6px 18px 6px 8px;
-            border-radius: 99px;
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
+        .user-menu-trigger{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:999px;
+            padding:6px 16px 6px 8px;
+            cursor:pointer;
+            box-shadow:var(--shadow-sm);
+            transition:.3s;
         }
 
         .user-menu-trigger:hover {
@@ -448,10 +455,14 @@ select{
             display: flex;
             flex-direction: column;
             text-align: left;
+            min-width: 0;
         }
 
         .user-name {
-            font-size: 13.5px;
+            max-width:120px;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
             font-weight: 700;
             color: var(--text-main);
             line-height: 1.2;
@@ -473,26 +484,28 @@ select{
         }
 
         /* User Dropdown Menu */
-        .user-dropdown {
-            position: absolute;
-            top: calc(100% + 12px);
-            right: 0;
-            width: 280px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000;
+        .user-dropdown{
+            position:absolute;
+            top:calc(100% + 10px);
+            right:0;
+            width:280px;
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:20px;
+            box-shadow:0 16px 40px rgba(0,0,0,.15);
+            opacity:0;
+            visibility:hidden;
+            pointer-events:none;
+            transform:translateY(-8px);
+            transition:.25s;
+            z-index:999999;
         }
 
-        .user-dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+        .user-dropdown.active{
+            opacity:1;
+            visibility:visible;
+            pointer-events:auto;
+            transform:translateY(0);
         }
 
         .dropdown-header {
@@ -597,14 +610,27 @@ select{
         }
 
         /* Responsive Breakpoints */
-        @media (max-width: 1200px) {
-            .topbar {
-                grid-template-columns: 1fr;
-            }
-            .topbar-actions {
-                justify-content: flex-start;
-            }
-        }
+@media (max-width:992px){
+
+    .topbar{
+        position:relative;
+        gap:12px;
+    }
+
+    .search-container{
+        min-width:100px;
+    }
+
+    .user-role{
+        display:none;
+    }
+
+    .user-name{
+        max-width:90px;
+        font-size:13px;
+    }
+
+}
 
         @media (max-width: 900px) {
             .sidebar {
@@ -627,6 +653,7 @@ select{
 
         @media (max-width: 600px) {
             .topbar {
+                position:relative;
                 gap: 12px;
                 margin-bottom: 20px;
             }
@@ -656,8 +683,8 @@ select{
                 justify-content: flex-start;
                 gap: 8px;
                 flex-wrap: nowrap;
-                width: 100%;
-                overflow: hidden;
+                width:auto;
+                overflow:visible;
             }
             .icon-btn-badge {
                 width: 42px;
@@ -670,11 +697,13 @@ select{
                 font-size: 9px;
             }
             .user-menu-trigger {
-                flex: 1 1 auto;
+                flex:0 0 auto;
                 min-width: 0;
-                height: 42px;
                 gap: 8px;
-                padding: 4px 10px 4px 6px;
+                padding:0;
+                width:42px;
+                height:42px;
+                justify-content:center;
             }
             .user-avatar-circle {
                 width: 34px;
@@ -682,26 +711,23 @@ select{
                 font-size: 12px;
             }
             .user-details {
-                min-width: 0;
+                display:none;
             }
             .user-name {
-                font-size: 12.5px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                width:42px;
+                padding:0;
+                justify-content:center;
             }
             .user-role {
                 display: none;
             }
             .user-menu-trigger i, .user-menu-trigger svg {
-                width: 14px;
-                height: 14px;
-                margin-left: 0;
-                flex-shrink: 0;
+                display:none;
             }
             .user-dropdown {
                 width: 260px;
-                right: -8px;
+                right:0;
+                top:52px;
             }
             .dropdown-header {
                 padding: 16px 20px;
@@ -726,6 +752,34 @@ select{
                 height: 16px;
             }
         }
+
+        @media (max-width:420px){
+
+.topbar{
+    position:relative;
+    gap:6px;
+}
+
+.search-container{
+    min-width:60px;
+}
+
+.search-input{
+    font-size:12px;
+    padding-left:38px;
+}
+
+.icon-btn-badge{
+    width:38px;
+    height:38px;
+}
+
+.sidebar-toggle-btn{
+    width:38px;
+    height:38px;
+}
+
+}
 
         .search-results{
 
@@ -783,10 +837,10 @@ background:#EAF3F4;
                     <a href="resources.html"><i data-lucide="book-open"></i> <span>Resources</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="message-square"></i> <span>Messages</span><span class="badge">3</span></a>
+                    <a href="message.html"><i data-lucide="message-square"></i> <span>Messages</span><span class="badge">3</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
+                    <a href="notifications.html"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>

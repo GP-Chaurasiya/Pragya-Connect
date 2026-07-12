@@ -256,22 +256,28 @@ select{
             min-height: 100vh;
             padding: 32px 32px;
             transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible;
         }
 
         /* Topbar Header styling */
-        .topbar {
-            display: grid;
-            grid-template-columns: minmax(0, 2.1fr) minmax(410px, 1fr);
-            align-items: center;
-            margin-bottom: 32px;
-            gap: 24px;
+        .topbar{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            margin-bottom:32px;
+            flex-wrap:nowrap;
+            width:100%;
+            position: relative;
+            overflow: visible;
         }
 
-        .topbar-main {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            min-width: 0;
+        .topbar-main{
+            display:flex;
+            align-items:center;
+            gap:16px;
+            flex:1;
+            min-width:0;
         }
 
         /* Sidebar Toggle Button */
@@ -323,11 +329,10 @@ select{
             }
         }
 
-        .search-container {
-            position: relative;
-            flex-grow: 1;
-            min-width: 0;
-            max-width: none;
+        .search-container{
+            position:relative;
+            flex:1;
+            min-width:0;
         }
 
         .search-container i, .search-container svg {
@@ -363,13 +368,16 @@ select{
         }
 
         /* Topbar actions (badges, user info) */
-        .topbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            justify-content: flex-start;
-            min-width: 0;
-            position: relative;
+        .topbar-actions{
+            display:flex;
+            align-items:center;
+            justify-content:flex-end;
+            gap:12px;
+            flex-shrink:0;
+            flex-wrap:nowrap;
+            position:relative; 
+            overflow:visible;
+            z-index:1000;
         }
 
         .icon-btn-badge {
@@ -415,6 +423,7 @@ select{
         }
 
         .user-menu-trigger {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -476,20 +485,20 @@ select{
         }
 
         /* User Dropdown Menu */
-        .user-dropdown {
-            position: absolute;
-            top: calc(100% + 12px);
-            right: 0;
-            width: 280px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000;
+        .user-dropdown{
+            position:absolute;
+            top:calc(100% + 10px);
+            right:0;
+            width:280px;
+            background:#fff;
+            border:1px solid var(--border);
+            border-radius:18px;
+            box-shadow:0 20px 40px rgba(0,0,0,.15);
+            opacity:0;
+            visibility:hidden;
+            transform:translateY(-10px);
+            transition:.25s;
+            z-index:999999;
         }
 
         .user-dropdown.active {
@@ -684,20 +693,17 @@ select{
 
 
         /* Responsive Breakpoints */
-        @media (max-width: 1200px) {
-            .topbar {
-                grid-template-columns: 1fr;
-            }
-            .topbar-actions {
-                justify-content: flex-start;
-            }
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-            .activity-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+        @media (max-width:1200px){
+
+    .content-grid{
+        grid-template-columns:1fr;
+    }
+
+    .activity-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
 
         @media (max-width: 900px) {
             .sidebar {
@@ -727,62 +733,61 @@ select{
             }
         }
 
-        @media (max-width: 600px) {
-            .topbar {
-                gap: 12px;
-                margin-bottom: 20px;
-            }
-            .topbar-main {
-                gap: 10px;
-            }
-            .sidebar-toggle-btn {
-                width: 42px;
-                height: 42px;
-            }
-            .sidebar-toggle-btn i, .sidebar-toggle-btn svg {
-                width: 20px;
-                height: 20px;
-            }
-            .search-input {
-                height: 42px;
-                padding: 10px 14px 10px 42px;
-                border-radius: 13px;
-                font-size: 13px;
-            }
-            .search-container i, .search-container svg {
-                left: 14px;
-                width: 17px;
-                height: 17px;
-            }
-            .topbar-actions {
-                justify-content: flex-start;
-                gap: 8px;
-                flex-wrap: nowrap;
-                width: 100%;
-                overflow: hidden;
-            }
-            .icon-btn-badge {
-                width: 42px;
-                height: 42px;
-                flex: 0 0 42px;
-            }
-            .icon-btn-badge .badge-dot {
-                width: 16px;
-                height: 16px;
-                font-size: 9px;
-            }
-            .user-menu-trigger {
-                flex: 1 1 auto;
-                min-width: 0;
-                height: 42px;
-                gap: 8px;
-                padding: 4px 10px 4px 6px;
-            }
-            .user-avatar-circle {
-                width: 34px;
-                height: 34px;
-                font-size: 12px;
-            }
+@media (max-width: 600px) {
+    .topbar{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+        flex-wrap:nowrap;
+    }
+
+    .topbar-main{
+        flex:1;
+        min-width:0;
+        gap:8px;
+    }
+
+    .search-container{
+        flex:1;
+        min-width:0;
+    }
+
+    .search-input{
+        height:40px;
+        font-size:13px;
+        padding:10px 12px 10px 40px;
+    }
+
+    .sidebar-toggle-btn,
+    .icon-btn-badge{
+        width:40px;
+        height:40px;
+        flex-shrink:0;
+    }
+
+    .topbar-actions{
+        position:relative;
+    }
+
+    .user-menu-trigger{
+        width:auto;
+        min-width:0;
+        flex-shrink:1;
+        padding:4px 8px 4px 5px;
+        gap:6px;
+    }
+
+    .user-details{
+        display:none;
+    }
+
+    .user-avatar-circle{
+        width:30px;
+        height:30px;
+        font-size:12px;
+    }
+
             .user-details {
                 min-width: 0;
             }
@@ -802,8 +807,10 @@ select{
                 flex-shrink: 0;
             }
             .user-dropdown {
-                width: 260px;
-                right: -8px;
+                right:0;
+                left:auto;
+                width:260px;
+                max-width:calc(100vw - 20px);
             }
             .dropdown-header {
                 padding: 16px 20px;
@@ -900,36 +907,33 @@ select{
             }
         }
 
-        @media (max-width: 420px) {
-            .topbar-main {
-                gap: 8px;
-            }
-            .sidebar-toggle-btn,
-            .icon-btn-badge {
-                width: 38px;
-                height: 38px;
-            }
-            .icon-btn-badge {
-                flex-basis: 38px;
-            }
-            .search-input {
-                height: 38px;
-                padding-left: 38px;
-                font-size: 12px;
-            }
-            .user-menu-trigger {
-                height: 38px;
-                padding-right: 8px;
-            }
-            .user-avatar-circle {
-                width: 30px;
-                height: 30px;
-                font-size: 11px;
-            }
-            .user-name {
-                font-size: 12px;
-            }
-        }
+@media (max-width:420px){
+
+    .topbar{
+        gap:6px;
+    }
+
+    .search-input{
+        font-size:12px;
+        padding-left:36px;
+    }
+
+    .sidebar-toggle-btn,
+    .icon-btn-badge{
+        width:36px;
+        height:36px;
+    }
+
+    .user-menu-trigger{
+        padding:3px 6px;
+    }
+
+    .user-avatar-circle{
+        width:28px;
+        height:28px;
+        font-size:11px;
+    }
+}
 
 .search-results{
 
