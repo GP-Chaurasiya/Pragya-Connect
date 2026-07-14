@@ -736,12 +736,6 @@ select{
             color: rgba(255,255,255,.6);
         }
 
-        @media (max-width: 1200px) {
-            .topbar {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 900px) {
             .sidebar {
                 width: 72px;
@@ -824,6 +818,82 @@ select{
                 flex-wrap: wrap;
             }
         }
+
+@media (max-width:768px){
+
+.topbar{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.topbar-main{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+}
+
+.search-container{
+    flex:1;
+    min-width:0;
+    width:100%;
+}
+
+.search-container{
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+
+.search-container svg{
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.search-input{
+    width:100%;
+}
+
+.topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-shrink:0;
+    margin-left:auto;
+}
+
+.sidebar-toggle-btn,
+.icon-btn-badge{
+    width:42px;
+    height:42px;
+    flex-shrink:0;
+}
+
+.user-menu-trigger{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    width:42px;
+    height:42px;
+    border-radius:50%;
+}
+
+.user-details,
+.user-menu-trigger > i{
+    display:none;
+}
+
+.user-dropdown{
+    right:0;
+    left:auto;
+    width:260px;
+    max-width:calc(100vw - 20px);
+}
+
+}
     </style>
 </head>
 <body>

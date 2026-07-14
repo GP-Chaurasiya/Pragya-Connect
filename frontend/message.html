@@ -837,32 +837,39 @@ select{
 @media (max-width:768px){
 
 .dashboard-container{
-    --sidebar-width:0px;
-    --conversation-width:100%;
-    display:grid;
-    grid-template-columns:
-        var(--sidebar-width)
-        var(--conversation-width)
-        minmax(0,1fr);
-
-    transition:grid-template-columns .3s ease;
+    display:block;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
 }
 
 .dashboard-container.sidebar-collapsed{
     --sidebar-width:0px;
     --conversation-width:minmax(320px,1fr);
-    grid-template-columns:
-        0
-        100%
-        0;
 }
 
-.sidebar.collapsed{
-    width:0;
-    min-width:0;
-    overflow:hidden;
-    padding:0;
-    border:none;
+.sidebar{
+    position:fixed;
+    top:0;
+    left:-72px;
+    width:72px;
+    height:100vh;
+    z-index:1000;
+    transition:left .3s ease;
+    background:#fff;
+}
+
+.sidebar.open{
+    left:0;
+}
+
+.sidebar-arrow{
+    left:20px;
+    z-index:1100;
+}
+
+.sidebar.open + .sidebar-arrow{
+    left:72px;
 }
 
 .conversation-panel{
@@ -880,11 +887,13 @@ select{
 }
 
 .conversation-panel{
-    display:block;
+    display:flex;
+    width:100%;
 }
 
 .chat-window{
     display:none;
+    width:100%;
 }
 
 .chat-window.active{
@@ -899,16 +908,6 @@ select{
 /* ---------- Very Small Phones ---------- */
 
 @media(max-width:480px){
-
-.dashboard-container{
-    --sidebar-width:272px;
-    --conversation-width:360px;
-}
-
-.dashboard-container.sidebar-collapsed{
-    --sidebar-width:72px;
-    --conversation-width:420px;
-}
 
 .search-box{
     padding:10px;
@@ -1068,10 +1067,15 @@ const dashboard = document.querySelector(".dashboard-container");
 const arrow = document.getElementById("sidebarArrow");
 
 arrow.addEventListener("click", () => {
+    if (window.innerWidth <= 768) {
+        sidebar.classList.toggle("open");
+    } else {
+        sidebar.classList.toggle("collapsed");
+        dashboard.classList.toggle("sidebar-collapsed");
 
-    sidebar.classList.toggle("collapsed");
-    dashboard.classList.toggle("sidebar-collapsed");
+    }
     arrow.classList.toggle("collapsed");
+});
 
     const icon = arrow.querySelector("i");
 
@@ -1085,7 +1089,6 @@ arrow.addEventListener("click", () => {
 
     }
 
-});
 </script>
 <script>
     lucide.createIcons();
@@ -1183,8 +1186,8 @@ arrow.addEventListener("click", () => {
 
         // Load chat history
         loadChatHistory();
-        if(window.innerWidth<=768){
-            document.querySelector(".conversation-panel").style.display="flex";
+        if(window.innerWidth <= 768){
+            document.querySelector(".conversation-panel").classList.add("hide");
             document.querySelector(".chat-window").classList.add("active");
         }
     }
@@ -1485,8 +1488,8 @@ arrow.addEventListener("click", () => {
     const backBtn = document.querySelector(".back-btn");
     if (backBtn) {
         backBtn.addEventListener("click",()=>{
-            document.querySelector(".chat-window")
-            .classList.remove("active");
+            document.querySelector(".chat-window").classList.remove("active");
+            document.querySelector(".conversation-panel").classList.remove("hide");
         });
     }
 

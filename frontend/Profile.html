@@ -258,19 +258,21 @@ select{
         }
 
         /* Topbar Header styling */
-        .topbar {
-            display: grid;
-            grid-template-columns: minmax(0, 2.1fr) minmax(410px, 1fr);
-            align-items: center;
-            margin-bottom: 32px;
-            gap: 24px;
+        .topbar{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            margin-bottom:30px;
+            width:100%;
         }
 
-        .topbar-main {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            min-width: 0;
+        .topbar-main{
+            display:flex;
+            align-items:center;
+            gap:14px;
+            flex:1;
+            min-width:0;
         }
 
         /* Sidebar Toggle Button */
@@ -362,13 +364,12 @@ select{
         }
 
         /* Topbar actions (badges, user info) */
-        .topbar-actions {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            justify-content: flex-start;
-            min-width: 0;
-            position: relative;
+        .topbar-actions{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            flex-shrink:0;
+            position:relative;
         }
 
         .icon-btn-badge {
@@ -987,275 +988,182 @@ select{
         }
 
         /* Responsive Design */
-        @media (max-width: 992px) {
-            .profile-grid {
-                grid-template-columns: 1fr;
-            }
 
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
+@media(max-width:992px){
 
-            .profile-header {
-                flex-direction: column;
+.profile-grid{
+    grid-template-columns:1fr
+}
+
+}
+
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 72px;
+                padding: 24px 8px;
                 align-items: center;
-                text-align: center;
             }
 
-            .profile-avatar {
-                width: 100px;
-                height: 100px;
-            }
-
-            .avatar-container {
-                width: 100px;
-                height: 100px;
-            }
-
-            .profile-info {
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .topbar {
-                gap: 12px;
-                margin-bottom: 20px;
-            }
-            .topbar-main {
-                gap: 10px;
-            }
-            .sidebar-toggle-btn {
-                width: 42px;
-                height: 42px;
-            }
-            .sidebar-toggle-btn i, .sidebar-toggle-btn svg {
-                width: 20px;
-                height: 20px;
-            }
-            .search-input {
-                height: 42px;
-                padding: 10px 14px 10px 42px;
-                border-radius: 13px;
-                font-size: 13px;
-            }
-            .search-container i, .search-container svg {
-                left: 14px;
-                width: 17px;
-                height: 17px;
-            }
-            .topbar-actions {
-                justify-content: flex-start;
-                gap: 8px;
-                flex-wrap: nowrap;
-                width: 100%;
-                overflow: hidden;
-            }
-            .icon-btn-badge {
-                width: 42px;
-                height: 42px;
-                flex: 0 0 42px;
-            }
-            .icon-btn-badge .badge-dot {
-                width: 16px;
-                height: 16px;
-                font-size: 9px;
-            }
-            .user-menu-trigger {
-                flex: 1 1 auto;
-                min-width: 0;
-                height: 42px;
-                gap: 8px;
-                padding: 4px 10px 4px 6px;
-            }
-            .user-avatar-circle {
-                width: 34px;
-                height: 34px;
-                font-size: 12px;
-            }
-            .user-details {
-                min-width: 0;
-            }
-            .user-name {
-                font-size: 12.5px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            .user-role {
+            .logo-img,
+            .nav-item a span,
+            .nav-logout a span,
+            .nav-item .badge {
                 display: none;
             }
-            .user-menu-trigger i, .user-menu-trigger svg {
-                width: 14px;
-                height: 14px;
-                margin-left: 0;
-                flex-shrink: 0;
+
+            .main-wrapper {
+                margin-left: 72px;
+                width: calc(100% - 72px);
+                padding: 16px;
             }
-            .user-dropdown {
-                width: 260px;
-                right: -8px;
+
+            .footer-container,
+            .footer-brand {
+                flex-direction: column;
             }
-            .dropdown-header {
-                padding: 16px 20px;
-            }
-            .dropdown-avatar {
-                width: 42px;
-                height: 42px;
-                font-size: 14px;
-            }
-            .dropdown-name {
-                font-size: 13px;
-            }
-            .dropdown-role {
-                font-size: 11px;
-            }
-            .dropdown-item {
-                padding: 10px 20px;
-                font-size: 13px;
-            }
-            .dropdown-item i, .dropdown-item svg {
-                width: 16px;
-                height: 16px;
-            }
-            .profile-cover {
-                height: 240px;
-                border-radius: 16px;
-            }
-            .profile-header {
-                bottom: -50px;
-                gap: 16px;
-            }
-            .avatar-container {
-                width: 100px;
-                height: 100px;
-            }
-            .profile-avatar {
-                width: 100px;
-                height: 100px;
-                border-width: 4px;
-            }
-            .camera-btn {
-                width: 36px;
-                height: 36px;
-                bottom: -6px;
-                right: -6px;
-            }
-            .profile-info h1 {
-                font-size: 20px;
-            }
-            .profile-info p {
-                font-size: 13px;
-            }
-            .edit-profile-btn {
-                padding: 8px 16px;
-                font-size: 12px;
-            }
-            .modal-box {
-                width: 90%;
-                max-height: 85vh;
-                padding: 24px;
-            }
-            .modal-box h2 {
-                font-size: 18px;
-            }
-            .modal-box input,
-            .modal-box textarea {
-                font-size: 13px;
-                padding: 10px 14px;
-            }
-            .profile-card {
-                padding: 20px;
-            }
-            .profile-card h3 {
-                font-size: 16px;
-            }
-            .info-item label {
-                font-size: 12px;
-            }
-            .info-item span {
-                font-size: 13px;
-            }
-            .chip {
-                font-size: 12px;
-                padding: 6px 12px;
+
+            .footer {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media (max-width: 420px) {
-            .topbar-main {
-                gap: 8px;
-            }
-            .sidebar-toggle-btn,
-            .icon-btn-badge {
-                width: 38px;
-                height: 38px;
-            }
-            .icon-btn-badge {
-                flex-basis: 38px;
-            }
-            .search-input {
-                height: 38px;
-                padding-left: 38px;
-                font-size: 12px;
-            }
-            .user-menu-trigger {
-                height: 38px;
-                padding-right: 8px;
-            }
-            .user-avatar-circle {
-                width: 30px;
-                height: 30px;
-                font-size: 11px;
-            }
-            .user-name {
-                font-size: 12px;
-            }
-            .profile-cover {
-                height: 200px;
-                border-radius: 12px;
-            }
-            .profile-header {
-                bottom: -40px;
-                gap: 12px;
-            }
-            .avatar-container {
-                width: 80px;
-                height: 80px;
-            }
-            .profile-avatar {
-                width: 80px;
-                height: 80px;
-                border-width: 3px;
-            }
-            .camera-btn {
-                width: 32px;
-                height: 32px;
-                bottom: -4px;
-                right: -4px;
-            }
-            .profile-info h1 {
-                font-size: 18px;
-            }
-            .profile-info p {
-                font-size: 12px;
-            }
-            .edit-profile-btn {
-                padding: 6px 14px;
-                font-size: 11px;
-            }
-            .modal-box {
-                padding: 20px;
-            }
-            .modal-box h2 {
-                font-size: 16px;
-            }
-            .profile-card {
-                padding: 16px;
-            }
-            .profile-card h3 {
-                font-size: 15px;
-            }
-        }
+@media (max-width:768px){
+
+.topbar{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.topbar-main{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    min-width:0;
+}
+
+.search-container{
+    flex:1;
+    min-width:0;
+    width:100%;
+}
+
+.search-container{
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+
+.search-container svg{
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.search-input{
+    width:100%;
+}
+
+.topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-shrink:0;
+    margin-left:auto;
+}
+
+.sidebar-toggle-btn,
+.icon-btn-badge{
+    width:42px;
+    height:42px;
+    flex-shrink:0;
+}
+
+.avatar-container{
+    width:80px;
+    height:80px;
+}
+
+.profile-avatar{
+    width:80px;
+    height:80px;
+}
+
+.avatar-fallback{
+    font-size:24px;
+}
+
+.camera-btn{
+    width:28px;
+    height:28px;
+    right:0;
+    bottom:0;
+}
+
+.camera-btn svg{
+    width:14px;
+    height:14px;
+}
+
+/* Topbar user */
+.user-menu-trigger{
+    width:42px;
+    height:42px;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.user-avatar-circle{
+    width:32px;
+    height:32px;
+    min-width:32px;
+    font-size:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.user-details,
+.user-menu-trigger > svg{
+    display:none;
+}
+
+.user-dropdown{
+    right:0;
+    left:auto;
+    width:260px;
+    max-width:calc(100vw - 20px);
+}
+
+}
+
+@media (max-width:420px){
+
+.topbar{
+    gap:6px;
+}
+
+.search-input{
+    font-size:12px;
+    height:38px;
+}
+
+.sidebar-toggle-btn,
+.icon-btn-badge,
+.user-menu-trigger{
+    width:36px;
+    height:36px;
+}
+
+.user-avatar-circle{
+    width:28px;
+    height:28px;
+    font-size:11px;
+}
+
+}
 
         /* Modal Styling */
         .modal {
@@ -1566,23 +1474,28 @@ background:#EAF3F4;
     color: rgba(255,255,255,.6);
 }
 
-@media (max-width:768px){
-    .footer-bottom{
-        flex-direction: column;
-        text-align: center;
-    }
+@media(max-width:768px){
 
-    .footer-bottom-links{
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+.footer{
+    grid-template-columns:1fr;
+    gap:30px;
+    padding:25px;
 }
 
-@media(max-width:992px){
+.footer-left,
+.footer-links,
+.footer-contact,
+.footer-social{
+    text-align:center;
+}
 
-    .footer{
-        grid-template-columns:1fr 1fr;
-    }
+.footer-contact p{
+    justify-content:center;
+}
+
+.social-icons{
+    justify-content:center;
+}
 
 }
 
@@ -1617,20 +1530,6 @@ background:#EAF3F4;
         align-items:center;
     }
 
-}
-
-body{
-    display:flex;
-    flex-direction:column;
-    min-height:100vh;
-}
-
-.dashboard-container{
-    flex:1;
-}
-
-.main-wrapper{
-    min-height:100vh;
 }
 
 .footer{
@@ -1991,10 +1890,10 @@ body{
 
         <h4>Quick Links</h4>
 
-        <a href="../dashboard.html">Dashboard</a>
-        <a href="../CommunityFeed.html">Community</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="CommunityFeed.html">Community</a>
         <a href="events\Events.html">Events</a>
-        <a href="../Profile.html">Profile</a>
+        <a href="Profile.html">Profile</a>
         <a href="setting.html">Settings</a>
 
     </div>
