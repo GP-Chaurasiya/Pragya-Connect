@@ -1,39 +1,47 @@
 const form = document.getElementById("registrationForm");
 
 if (form) {
-    const params = new URLSearchParams(window.location.search);
+    const params  = new URLSearchParams(window.location.search);
     const eventId = parseInt(params.get("id")) || 1;
     const eventInput = document.getElementById("eventName");
+    const eventDateInput = document.getElementById("eventDate");
+    const venueInput     = document.getElementById("venue");
 
-    // Load event name from events array
+    // Pre-fill read-only event fields from the events data array
     const event = window.events ? events.find(e => e.id === eventId) : null;
-    if (eventInput && event) {
-        eventInput.value = event.title;
-        // Make field readonly instead of disabled, so form submit still sends the value
-        eventInput.setAttribute("readonly", "true");
+    if (event) {
+        if (eventInput)     { eventInput.value = event.title;  eventInput.setAttribute("readonly", "true"); }
+        if (eventDateInput) { eventDateInput.value = event.date || ""; }
+        if (venueInput)     { venueInput.value = event.venue || ""; }
     }
 
-    form.addEventListener("submit", function(e) {
+    form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const registration = {
-            id: "REG-" + Date.now(),
-            eventId: event ? event.id : eventId,
-            name: document.getElementById("name").value,
-            email: document.getElementById("email").value,
-            phone: document.getElementById("phone").value,
-            event: eventInput ? eventInput.value : "Yoga Session",
+            id:        "REG-" + Date.now(),
+            eventId:   event ? event.id : eventId,
+            name:      document.getElementById("name").value,
+            email:     document.getElementById("email").value,
+            phone:     document.getElementById("phone").value,
+            country:   (document.getElementById("country") || {}).value || "",
+            city:      (document.getElementById("city")    || {}).value || "",
+            userType:  (document.getElementById("userType") || {}).value || "Student",
+            experience:(document.getElementById("experience") || {}).value || "Beginner",
+            event:     eventInput ? eventInput.value : "Yoga Session",
             eventDate: event ? event.date : new Date().toLocaleDateString(),
-            venue: event ? event.venue : "Pragya Hall",
-            status: "Registered",
-            date: new Date().toLocaleDateString()
+            venue:     event ? event.venue : "Pragya Hall",
+            status:    "Registered",
+            date:      new Date().toLocaleDateString(),
+            registeredAt: new Date().toISOString()
         };
 
-        let registrations = JSON.parse(localStorage.getItem("registrations")) || [];
+        // Save registration
+        let registrations = JSON.parse(localStorage.getItem("registrations") || "[]");
         registrations.push(registration);
         localStorage.setItem("registrations", JSON.stringify(registrations));
 
-        // Create a local notification for registration confirmation
+        // Save a local notification
         const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
         const localNotifs = JSON.parse(localStorage.getItem("local_notifications") || "[]");
         localNotifs.push({
@@ -47,7 +55,7 @@ if (form) {
         });
         localStorage.setItem("local_notifications", JSON.stringify(localNotifs));
 
-        alert("Registration Successful!");
-        window.location.href = "MyRegistrations.html";
+        // Redirect to beautiful confirmation page within MyRegistrations.html with the regId
+        window.location.href = `MyRegistrations.html?regId=${encodeURIComponent(registration.id)}&success=true`;
     });
 }

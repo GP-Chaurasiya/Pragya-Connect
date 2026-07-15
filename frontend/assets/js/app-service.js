@@ -74,10 +74,12 @@ const AppService = {
 
     async createPost(content, image = null) {
         const user = JSON.parse(localStorage.getItem("profile"));
+        const savedImage = localStorage.getItem("profileImage");
         const postData = {
             user_id: "60d0fe4f5311236168a109ca",
             userName: user.name,
             userRole: user.role,
+            userAvatar: savedImage || null,
             content,
             image
         };
@@ -94,6 +96,9 @@ const AppService = {
         const newPost = {
             _id: "post_" + Date.now(),
             user_id: { name: user.name, role: user.role },
+            userName: user.name,
+            userRole: user.role,
+            userAvatar: savedImage || null,
             content,
             image,
             likes: 0,
@@ -102,8 +107,8 @@ const AppService = {
         };
         localPosts.unshift(newPost);
         localStorage.setItem("local_posts", JSON.stringify(localPosts));
-        return newPost;
         window.dispatchEvent(new Event("postsUpdated"));
+        return newPost;
     },
 
     async likePost(postId) {
@@ -126,9 +131,12 @@ const AppService = {
 
     async addComment(postId, commentText) {
         const user = JSON.parse(localStorage.getItem("profile"));
+        const savedImage = localStorage.getItem("profileImage");
         const commentData = {
             post_id: postId,
             user_id: "60d0fe4f5311236168a109ca",
+            userName: user.name,
+            userAvatar: savedImage || null,
             comment_text: commentText
         };
 
@@ -144,18 +152,20 @@ const AppService = {
         const newComment = {
             _id: "cmt_" + Date.now(),
             user_id: { name: user.name, role: user.role },
+            userName: user.name,
+            userAvatar: savedImage || null,
             comment_text: commentText,
             createdAt: new Date().toISOString()
         };
         localPosts = localPosts.map(p => {
-            if (p._id === postId) {
+            if (p._id === postId || p.id === postId) {
                 return { ...p, comments: [...(p.comments || []), newComment] };
             }
             return p;
         });
         localStorage.setItem("local_posts", JSON.stringify(localPosts));
-        return newComment;
         window.dispatchEvent(new Event("postsUpdated"));
+        return newComment;
     },
 
     // --- MESSAGES SERVICE ---
@@ -470,6 +480,8 @@ const AppService = {
                 el.setAttribute("href", prefix + "Profile.html");
             } else if (linkText === "Settings" || el.querySelector('[data-lucide="settings"]')) {
                 el.setAttribute("href", prefix + "setting.html");
+            } else if (linkText.toLowerCase().includes("help") || el.querySelector('[data-lucide="help-circle"]')) {
+                el.setAttribute("href", prefix + "help-support.html");
             } else if (linkText === "Logout" || el.querySelector('[data-lucide="log-out"]')) {
                 el.setAttribute("href", prefix + "index.html");
             }

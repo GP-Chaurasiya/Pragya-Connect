@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pragya Connect - Help & Support</title>
+    <!-- Google Fonts: Plus Jakarta Sans for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons Library -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            /* =========================
+               PYSHK Brand Theme
+            ========================== */
+            --primary: #0B525B;
+            --primary-hover: #146B75;
+            --primary-light: #E8F2ED;
+            --accent: #EBA036;
+            --accent-hover: #D98E25;
+            --accent-light: #FFF8E6;
+            --bg-body: #FAFAF8;
+            --bg-card: #FFFFFF;
+            --border: #E5DDD2;
+            --text-main: #272727;
+            --text-heading: #0B525B;
+            --text-muted: #6F6F6F;
+            --text-light: #FFFFFF;
+            --success: #0F8A4B;
+            --success-bg: #EAF8F1;
+            --danger: #9E2A2B;
+            --danger-bg: #FDF0F0;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 22px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Dark Mode overrides */
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-card: #1E1E1E;
+            --border: #2D2D2D;
+            --text-main: #E0E0E0;
+            --text-heading: #84C5CC;
+            --text-muted: #A0A0A0;
+            --primary-light: #1A3038;
+        }
+
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* Layout Structure */
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 272px;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px 32px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+            scrollbar-width: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 0 12px 8px;
+        }
+
+        .logo-img {
+            max-width: 140px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+
+        .nav-item a i, .nav-item a svg {
+            width: 22px;
+            height: 22px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .nav-item.active a {
+            background-color: var(--primary);
+            color: #FFFFFF;
+        }
+
+        .main-wrapper {
+            margin-left: 272px;
+            width: calc(100% - 272px);
+            min-width: 0;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 32px;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Topbar Header styling */
+        .topbar {
+            display: grid;
+            grid-template-columns: minmax(0, 2.1fr) minmax(410px, 1fr);
+            align-items: center;
+            margin-bottom: 32px;
+            gap: 24px;
+        }
+
+        .topbar-main {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            min-width: 0;
+        }
+
+        .sidebar-toggle-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+        }
+
+        .icon-btn-badge {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .icon-btn-badge:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .badge-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: var(--accent);
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 700;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 4px;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(235, 160, 54, 0.3);
+        }
+
+        /* User Menu Trigger */
+        .user-menu-trigger {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 4px 16px 4px 6px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .user-menu-trigger:hover {
+            border-color: var(--primary);
+            background-color: var(--primary-light);
+        }
+
+        .user-avatar-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* User Dropdown */
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 12px;
+            width: 280px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 150;
+            display: none;
+            overflow: hidden;
+            animation: dropdownFadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .user-dropdown.active {
+            display: block;
+        }
+
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background-color: var(--bg-soft);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dropdown-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown-user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .dropdown-role {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border);
+        }
+
+        .dropdown-menu {
+            list-style: none;
+            padding: 8px 0;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .dropdown-item.logout-item:hover {
+            background-color: var(--danger-bg);
+            color: var(--danger);
+        }
+
+        /* 2-Column Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(320px, 1.1fr);
+            gap: 32px;
+            align-items: start;
+        }
+
+        .dashboard-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-heading);
+        }
+
+        .section-header p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* FAQ Accordions */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 18px 20px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--bg-body);
+        }
+
+        .faq-answer-inner {
+            padding: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .post-submit-btn {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .post-submit-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Right Column elements */
+        .support-info-card {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .support-info-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .support-info-card p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .contact-method i {
+            color: var(--primary);
+        }
+
+        /* Dynamic Tickets list */
+        .ticket-item {
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+        }
+
+        .ticket-item:last-child {
+            border-bottom: none;
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
+        .ticket-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .ticket-status {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .status-open {
+            background-color: var(--accent-light);
+            color: var(--accent);
+        }
+
+        .status-resolved {
+            background-color: var(--success-bg);
+            color: var(--success);
+        }
+
+        .ticket-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Submenu styling in sidebar */
+        .has-submenu .submenu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .has-submenu.open .submenu {
+            max-height: 500px;
+            margin-top: 4px;
+            margin-bottom: 8px;
+        }
+
+        .submenu-item a {
+            padding: 8px 20px;
+            font-size: 13px;
+        }
+
+        /* Footer styling */
+        .footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding: 40px 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-logo {
+            max-width: 120px;
+            height: auto;
+        }
+
+        .footer-links h4, .footer-contact h4, .footer-social h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 16px;
+        }
+
+        .footer-links a, .footer-contact p {
+            display: block;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icons a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <img src="assets/logo.png" alt="Pragya Logo" class="logo-img">
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html"><i data-lucide="layout-dashboard"></i> <span>Dashboard</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="CommunityFeed.html"><i data-lucide="users-2"></i> <span>Community Feed</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="mentors.html"><i data-lucide="graduation-cap"></i> <span>Mentors</span></a>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a href="#" id="eventsToggle"><i data-lucide="calendar"></i> <span>Events</span> <i data-lucide="chevron-down" style="margin-left: auto; width: 16px; height: 16px;"></i></a>
+                    <ul class="submenu">
+                        <li class="submenu-item"><a href="events/Events.html">Browse Events</a></li>
+                        <li class="submenu-item"><a href="events/Calender.html">Calendar</a></li>
+                        <li class="submenu-item"><a href="events/MyRegistrations.html">My Registrations</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="resources.html"><i data-lucide="book-open"></i> <span>Resources</span></a>
+                </li>
+                <li class="nav-item">
+                    <a href="notifications.html"><i data-lucide="bell"></i> <span>Notifications</span></a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Workspace -->
+        <div class="main-wrapper">
+            <!-- Header Top Bar -->
+            <header class="topbar">
+                <div class="topbar-main">
+                    <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle Sidebar">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <h2>Help &amp; Support</h2>
+                </div>
+
+                <div class="topbar-actions">
+                    <!-- Notifications button -->
+                    <a href="notifications.html" class="icon-btn-badge" aria-label="Notifications">
+                        <i data-lucide="bell"></i>
+                        <span class="badge-dot" id="notifBadge">0</span>
+                    </a>
+                    
+                    <!-- Messages button -->
+                    <a href="message.html" class="icon-btn-badge" aria-label="Messages">
+                        <i data-lucide="message-square"></i>
+                        <span class="badge-dot">3</span>
+                    </a>
+                    
+                    <!-- User Avatar trigger -->
+                    <div class="user-menu-trigger" id="userMenuTrigger">
+                        <div class="user-avatar-circle">GP</div>
+                        <div class="user-details">
+                            <span class="user-name">Gyan Prakash</span>
+                            <span class="user-role">Student</span>
+                        </div>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+
+                    <!-- User Dropdown Menu -->
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-avatar">GP</div>
+                            <div class="dropdown-user-info">
+                                <span class="dropdown-name">Gyan Prakash</span>
+                                <span class="dropdown-role">Student</span>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="Profile.html" class="dropdown-item">
+                                    <i data-lucide="user"></i>
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="setting.html" class="dropdown-item">
+                                    <i data-lucide="settings"></i>
+                                    <span>Settings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="help-support.html" class="dropdown-item">
+                                    <i data-lucide="help-circle"></i>
+                                    <span>Help &amp; Support</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="dropdown-divider"></div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="index.html" class="dropdown-item logout-item">
+                                    <i data-lucide="log-out"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Grid -->
+            <main class="content-grid">
+                <!-- Left Column (FAQs & Submit Form) -->
+                <div class="left-column">
+                    <!-- FAQ Section -->
+                    <section class="dashboard-card">
+                        <div class="section-header">
+                            <h2>Frequently Asked Questions</h2>
+                        </div>
+                        <div class="faq-list">
+                            <div class="faq-item">
+                                <button class="faq-question">
+                                    <span>How do I register for an event?</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </button>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        Go to the <strong>Events</strong> page via the sidebar navigation, browse the available programs, click on <strong>View Details</strong>, and then select <strong>Register Now</strong> to fill out and submit the registration form.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button class="faq-question">
+                                    <span>How do I chat with a teacher or mentor?</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </button>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        Navigate to the <strong>Messages</strong> icon in the top header. Your chat list is pre-populated with active teachers from Pragya Yog School. Select a teacher from the list to view chat history and start conversation.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button class="faq-question">
+                                    <span>Can I access resources and notes offline?</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </button>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        Yes! Once you click <strong>Download</strong> on any notes, videos, or presentation files in the Resources Library, they are saved locally and tracked in your browser for offline consultation.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="faq-item">
+                                <button class="faq-question">
+                                    <span>How can I toggle Dark Appearance?</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </button>
+                                <div class="faq-answer">
+                                    <div class="faq-answer-inner">
+                                        Navigate to the <strong>Settings</strong> page from your user profile dropdown menu at the top-right, then toggle the <strong>Dark Mode</strong> switch to turn dark theme on/off.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Raise Support Ticket Form -->
+                    <section class="dashboard-card">
+                        <div class="section-header">
+                            <h2>Raise a Ticket / Bug Report</h2>
+                            <p>Contact support regarding any technical errors, feature requests, or questions.</p>
+                        </div>
+                        <form id="supportTicketForm">
+                            <div class="form-group">
+                                <label for="ticketCategory">Category</label>
+                                <select id="ticketCategory" class="form-control" required>
+                                    <option value="Bug Report">Bug Report</option>
+                                    <option value="Feature Request">Feature Request</option>
+                                    <option value="General Inquiry">General Inquiry</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ticketSubject">Subject</label>
+                                <input type="text" id="ticketSubject" class="form-control" placeholder="Brief summary of the issue" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ticketDescription">Description</label>
+                                <textarea id="ticketDescription" class="form-control" rows="5" placeholder="Provide detailed steps to reproduce or outline your query..." required></textarea>
+                            </div>
+                            <button type="submit" class="post-submit-btn">
+                                <i data-lucide="send"></i> Submit Ticket
+                            </button>
+                        </form>
+                    </section>
+                </div>
+
+                <!-- Right Column (Contact & Existing Tickets) -->
+                <div class="right-column">
+                    <!-- Help Info Panel -->
+                    <section class="dashboard-card support-info-card">
+                        <h3>Direct Support Contact</h3>
+                        <p>Need urgent assistance? Contact the Pragya Yog School Support Center directly during working hours (9:00 AM - 6:00 PM).</p>
+                        <div class="contact-method">
+                            <i data-lucide="phone"></i>
+                            <span>+852 6708 2503</span>
+                        </div>
+                        <div class="contact-method">
+                            <i data-lucide="mail"></i>
+                            <span>support@pyshk.com</span>
+                        </div>
+                        <div class="contact-method">
+                            <i data-lucide="clock"></i>
+                            <span>Mon - Sat, 9am - 6pm HKT</span>
+                        </div>
+                        
+                        <button class="post-submit-btn" style="background-color: var(--primary); color: white; width: 100%; justify-content: center; margin-top: 15px;" onclick="window.location.href='message.html'">
+                            <i data-lucide="message-square"></i> Open Live Chat Support
+                        </button>
+                    </section>
+
+                    <!-- Submitted Tickets List -->
+                    <section class="dashboard-card">
+                        <div class="section-header">
+                            <h2>My Tickets</h2>
+                        </div>
+                        <div id="ticketsContainer">
+                            <p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 20px;">No support tickets raised yet.</p>
+                        </div>
+                    </section>
+                </div>
+            </main>
+
+            <!-- Standard Unified Footer -->
+            <footer class="footer">
+                <div class="footer-left">
+                    <img src="assets/logo.png" alt="Pragya Connect Logo" class="footer-logo">
+                    <h3>Pragya Connect</h3>
+                    <p>Community &amp; Mentorship Portal</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="CommunityFeed.html">Community</a>
+                    <a href="events/Events.html">Events</a>
+                    <a href="resources.html">Resources</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><i data-lucide="phone"></i> +852 6708 2503</p>
+                    <p><i data-lucide="mail"></i> info@pyshk.com</p>
+                    <p><i data-lucide="map-pin"></i> 1303-04, 13/F Tak Woo House, Wo On Lane, Central, HK</p>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/pragyahk"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/pragyahk"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/pyshk/"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@pys_hk"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </footer>
+            
+            <div class="footer-bottom">
+                <span>&copy; 2026 Pragya Connect. All Rights Reserved.</span>
+                <div class="footer-bottom-links">
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/app-service.js"></script>
+    <script src="common.js"></script>
+    <script>
+        // FAQ Accordion Toggle Logic
+        document.querySelectorAll(".faq-question").forEach(q => {
+            q.addEventListener("click", () => {
+                const item = q.parentElement;
+                const answer = item.querySelector(".faq-answer");
+                const isActive = item.classList.contains("active");
+
+                // Close all FAQ items
+                document.querySelectorAll(".faq-item").forEach(other => {
+                    other.classList.remove("active");
+                    other.querySelector(".faq-answer").style.maxHeight = null;
+                });
+
+                if (!isActive) {
+                    item.classList.add("active");
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+
+        // Tickets storage & display logic
+        const ticketsContainer = document.getElementById("ticketsContainer");
+        const supportTicketForm = document.getElementById("supportTicketForm");
+
+        function getTickets() {
+            return JSON.parse(localStorage.getItem("help_tickets") || "[]");
+        }
+
+        function saveTicket(ticket) {
+            const tickets = getTickets();
+            tickets.unshift(ticket); // latest ticket first
+            localStorage.setItem("help_tickets", JSON.stringify(tickets));
+        }
+
+        function renderTickets() {
+            const tickets = getTickets();
+            if (!ticketsContainer) return;
+
+            if (tickets.length === 0) {
+                ticketsContainer.innerHTML = `
+                    <p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 20px;">No support tickets raised yet.</p>
+                `;
+                return;
+            }
+
+            ticketsContainer.innerHTML = tickets.map(t => `
+                <div class="ticket-item">
+                    <div class="ticket-header">
+                        <span class="ticket-title">${t.subject}</span>
+                        <span class="ticket-status ${t.status === 'Open' ? 'status-open' : 'status-resolved'}">${t.status}</span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4;">${t.description}</p>
+                    <div class="ticket-meta">
+                        <span>Category: ${t.category}</span> &bull; 
+                        <span>Raised: ${t.date}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        if (supportTicketForm) {
+            supportTicketForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const category = document.getElementById("ticketCategory").value;
+                const subject = document.getElementById("ticketSubject").value;
+                const description = document.getElementById("ticketDescription").value;
+
+                const ticket = {
+                    id: "TCK-" + Date.now(),
+                    category: category,
+                    subject: subject,
+                    description: description,
+                    status: "Open",
+                    date: new Date().toLocaleDateString("en-US", { day: 'numeric', month: 'short', year: 'numeric' })
+                };
+
+                saveTicket(ticket);
+                renderTickets();
+                supportTicketForm.reset();
+
+                // Create user alert/notification locally
+                const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
+                const localNotifs = JSON.parse(localStorage.getItem("local_notifications") || "[]");
+                localNotifs.push({
+                    _id: "notif_" + Date.now(),
+                    user: currentUser,
+                    title: "Support Ticket Raised",
+                    type: "general",
+                    content: `Your support ticket regarding "${subject}" has been successfully submitted and is under review.`,
+                    is_read: false,
+                    createdAt: new Date().toISOString()
+                });
+                localStorage.setItem("local_notifications", JSON.stringify(localNotifs));
+
+                alert("Your support ticket has been submitted. We will notify you of status changes.");
+            });
+        }
+
+        // Submenu controller
+        const eventsToggle = document.getElementById("eventsToggle");
+        const eventsParent = document.querySelector(".has-submenu");
+        if (eventsToggle && eventsParent) {
+            eventsToggle.addEventListener("click", function (e) {
+                e.preventDefault();
+                eventsParent.classList.toggle("open");
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderTickets();
+        });
+    </script>
+</body>
+</html>

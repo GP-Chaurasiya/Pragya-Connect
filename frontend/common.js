@@ -110,11 +110,15 @@ function loadAvatarInitials() {
     const savedInitials = localStorage.getItem("userInitials") || "GP";
     const topBarAvatar = document.querySelector('.user-avatar-circle');
     const dropdownAvatar = document.querySelector('.dropdown-avatar');
+    const postAvatar = document.getElementById('dashboardPostAvatar');
     if (topBarAvatar) {
         topBarAvatar.textContent = savedInitials;
     }
     if (dropdownAvatar) {
         dropdownAvatar.textContent = savedInitials;
+    }
+    if (postAvatar) {
+        postAvatar.textContent = savedInitials;
     }
 }
 
@@ -124,22 +128,21 @@ function loadProfileImageToTopBar() {
     if (savedImage) {
         const topBarAvatar = document.querySelector('.user-avatar-circle');
         const dropdownAvatar = document.querySelector('.dropdown-avatar');
+        const postAvatar = document.getElementById('dashboardPostAvatar');
         
-        if (topBarAvatar) {
-            topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-            topBarAvatar.style.backgroundSize = 'cover';
-            topBarAvatar.style.backgroundPosition = 'center';
-            topBarAvatar.style.backgroundRepeat = 'no-repeat';
-            topBarAvatar.textContent = '';
-        }
+        const setBg = (el) => {
+            if (el) {
+                el.style.backgroundImage = `url(${savedImage})`;
+                el.style.backgroundSize = 'cover';
+                el.style.backgroundPosition = 'center';
+                el.style.backgroundRepeat = 'no-repeat';
+                el.textContent = '';
+            }
+        };
         
-        if (dropdownAvatar) {
-            dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-            dropdownAvatar.style.backgroundSize = 'cover';
-            dropdownAvatar.style.backgroundPosition = 'center';
-            dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-            dropdownAvatar.textContent = '';
-        }
+        setBg(topBarAvatar);
+        setBg(dropdownAvatar);
+        setBg(postAvatar);
     }
 }
 

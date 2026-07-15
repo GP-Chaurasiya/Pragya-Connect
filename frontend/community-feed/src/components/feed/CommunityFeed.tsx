@@ -4,7 +4,7 @@ import { CreatePost } from './CreatePost';
 import { PostCard } from './PostCard';
 import { PostSkeleton, CreatePostSkeleton } from '../ui/Skeleton';
 import { EmptyState, ErrorState } from '../ui/EmptyState';
-import { Post, Comment } from '../../types';
+import { Post } from '../../types';
 import { cn } from '../../lib/utils';
 
 interface CommunityFeedProps {
@@ -12,27 +12,43 @@ interface CommunityFeedProps {
 }
 
 const mapApiPostToReactPost = (apiPost: any): Post => {
+  const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
+  const currentUserImage = localStorage.getItem("profileImage");
+
+  const authorName = apiPost.user_id?.name || apiPost.userName || "Gyan Prakash";
+  let userAvatar = apiPost.userAvatar || "https://api.dicebear.com/7.x/avataaars/svg?seed=Gyan";
+  if (authorName === currentUser && currentUserImage) {
+    userAvatar = currentUserImage;
+  }
+
   return {
     id: apiPost._id || apiPost.id,
     userId: apiPost.user_id?._id || apiPost.user_id || "user1",
-    userName: apiPost.user_id?.name || apiPost.userName || "Gyan Prakash",
+    userName: authorName,
     userRole: apiPost.user_id?.role || apiPost.userRole || "Student • Pragya Yog School",
-    userAvatar: apiPost.userAvatar || "https://api.dicebear.com/7.x/avataaars/svg?seed=Gyan",
+    userAvatar: userAvatar,
     content: apiPost.content,
     image: apiPost.image,
     timestamp: apiPost.createdAt ? new Date(apiPost.createdAt).toLocaleDateString() : "Just now",
     likes: apiPost.likes || 0,
     isLiked: false,
-    comments: (apiPost.comments || []).map((c: any) => ({
-      id: c._id || c.id,
-      userId: c.user_id?._id || c.user_id || "user1",
-      userName: c.user_id?.name || c.userName || "User",
-      userAvatar: c.userAvatar || "https://api.dicebear.com/7.x/avataaars/svg?seed=User",
-      content: c.comment_text || c.content || "",
-      timestamp: c.createdAt ? new Date(c.createdAt).toLocaleDateString() : "Just now",
-      likes: c.likes || 0,
-      isLiked: false
-    })),
+    comments: (apiPost.comments || []).map((c: any) => {
+      const cAuthor = c.user_id?.name || c.userName || "User";
+      let cAvatar = c.userAvatar || "https://api.dicebear.com/7.x/avataaars/svg?seed=User";
+      if (cAuthor === currentUser && currentUserImage) {
+        cAvatar = currentUserImage;
+      }
+      return {
+        id: c._id || c.id,
+        userId: c.user_id?._id || c.user_id || "user1",
+        userName: cAuthor,
+        userAvatar: cAvatar,
+        content: c.comment_text || c.content || "",
+        timestamp: c.createdAt ? new Date(c.createdAt).toLocaleDateString() : "Just now",
+        likes: c.likes || 0,
+        isLiked: false
+      };
+    }),
     shares: apiPost.shares || 0
   };
 };

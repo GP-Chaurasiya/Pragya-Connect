@@ -2,82 +2,83 @@ const events = [
 
 {
     id: 1,
-    title: "Yog Therapy – Realigned Your Body",
-    category: "Yog Therapy",
-    month: "January",
-    date: "2026-01-10",
+    title: "International Yoga Workshop",
+    category: "Yoga",
+    month: "July",
+    date: "2026-07-15",
     time: "10:00 AM",
-    venue: "Pragya Yog School",
+    venue: "Meditation Hall",
     price: "$3,150",
-    image: "assets/events/yog-therapy.jpg",
-    description: "A therapeutic yoga program focused on spinal alignment and holistic healing."
+    image: "assets/gallery_group.png",
+    description: "A transformative international yoga workshop uniting practitioners from around the world to deepen alignment, breathwork, and mindful awareness."
 },
 
 {
     id: 2,
-    title: "Professional 1-1 Spinal Health Consultation with Shoaib",
-    category: "Yog Therapy",
-    month: "January",
-    date: "2026-01-18",
-    time: "11:00 AM",
-    venue: "Consultation Room",
+    title: "AI & Innovation Seminar",
+    category: "Seminar",
+    month: "July",
+    date: "2026-07-18",
+    time: "11:30 AM",
+    venue: "Conference Hall",
     price: "$1,200",
-    image: "assets/events/spinal-health.jpg"
+    image: "assets/gallery_studio_1.png",
+    description: "Explore the intersection of artificial intelligence and holistic wellness. Join thought leaders for a deep-dive into mindful innovation."
 },
 
 {
     id: 3,
-    title: "Inversion Intensive Training 2026",
-    category: "Intensive Training",
-    month: "January",
-    date: "2026-01-25",
+    title: "Coding Bootcamp",
+    category: "Workshop",
+    month: "July",
+    date: "2026-07-21",
     time: "09:00 AM",
-    venue: "Main Yoga Hall",
+    venue: "Innovation Lab",
     price: "$4,500",
-    image: "assets/events/inversion.jpg"
+    image: "assets/gallery_studio_2.png",
+    description: "An intensive hands-on coding bootcamp designed to accelerate your skills in modern web development and problem-solving."
 },
 
 {
     id: 4,
-    title: "Celebrate the Year of the Horse with the Meditative Art of Calligraphy",
-    category: "Pragya Events",
-    month: "February",
-    date: "2026-02-08",
-    time: "02:00 PM",
-    venue: "Creative Studio",
+    title: "Cultural Evening",
+    category: "Cultural",
+    month: "July",
+    date: "2026-07-25",
+    time: "06:00 PM",
+    venue: "Open Amphitheatre",
     price: "$388",
-    originalPrice: "$485",
-    offer: true,
-    image: "assets/events/calligraphy.jpg"
+    image: "assets/gallery_mountain.png",
+    description: "Celebrate the rich tapestry of cultures through music, dance, and art at our open-air amphitheatre under the evening sky."
 },
 
 {
     id: 5,
-    title: "20-Hr CET Hands-on Adjustment",
-    category: "Teacher Training",
-    month: "February",
-    date: "2026-02-20",
-    time: "09:00 AM",
-    venue: "Training Hall",
+    title: "Sports Championship",
+    category: "Sports",
+    month: "July",
+    date: "2026-07-28",
+    time: "08:00 AM",
+    venue: "Sports Ground",
     price: "$8,725",
-    image: "assets/events/cet-adjustment.jpg"
+    image: "assets/gallery_group.png",
+    description: "A thrilling multi-sport championship event bringing together athletes for a day of competition, teamwork, and community spirit."
 },
 
 {
     id: 6,
-    title: "Holi Celebration",
-    category: "Pragya Events",
-    month: "March",
-    date: "2026-03-14",
-    time: "04:00 PM",
-    venue: "Campus Ground",
+    title: "Entrepreneurship Summit",
+    category: "Talk",
+    month: "July",
+    date: "2026-07-30",
+    time: "02:00 PM",
+    venue: "Main Auditorium",
     price: "$400-$500",
-    image: "assets/events/holi.jpg"
+    image: "assets/welcome_banner.png",
+    description: "Connect with visionary entrepreneurs and industry leaders. Gain insights, forge partnerships, and ignite your entrepreneurial journey."
 },
 
-{
-    id: 7,
-    title: "Spring Rejuvenation Retreat: Yog & Ski in Niseko, Japan",
+
     category: "Retreat",
     month: "March",
     date: "2026-03-22",

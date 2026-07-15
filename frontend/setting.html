@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pragya Connect - Dashboard</title>
+    <title>Pragya Connect - Settings</title>
     <!-- Google Fonts: Plus Jakarta Sans for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -616,121 +616,331 @@ background:#EAF3F4;
 
 }
 
-/* SETTINGS PAGE */
+/* SETTINGS PAGE LAYOUT */
 
-.settings-container{
-    display:flex;
-    flex-direction:column;
-    gap:25px;
+.settings-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 780px;
+    padding-bottom: 40px;
 }
 
-.settings-card{
-    background:#fff;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:var(--shadow-md);
+/* Settings Left Sidebar */
+.settings-nav {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 24px;
 }
 
-.settings-card h2{
-    font-size:22px;
-    margin-bottom:20px;
-    color:var(--primary);
+.settings-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+    width: 100%;
+    transition: var(--transition);
 }
 
-.setting-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 0;
-    border-bottom:1px solid var(--border);
+.settings-nav-item svg, .settings-nav-item i {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
 
-.setting-row:last-child{
-    border-bottom:none;
+.settings-nav-item:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
 }
 
-.setting-info h4{
-    font-size:16px;
-    margin-bottom:4px;
+.settings-nav-item.active {
+    background-color: var(--primary);
+    color: #FFFFFF;
 }
 
-.setting-info p{
-    color:var(--text-muted);
-    font-size:14px;
+.settings-nav-item.logout-btn {
+    margin-top: auto;
+    color: #EB5757;
 }
 
-.btn{
-    padding:10px 20px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
+.settings-nav-item.logout-btn:hover {
+    background-color: #FDF0F0;
+    color: #c0392b;
 }
 
-.btn-primary{
-    background:var(--primary);
-    color:#fff;
+/* Settings Right Content Area */
+.settings-content {
+    min-width: 0;
 }
 
-.btn-primary:hover{
-    background:var(--primary-hover);
+.settings-tab {
+    display: none;
+    animation: fadeInTab 0.25s ease;
 }
 
-.btn-danger{
-    background:#EB5757;
-    color:#fff;
+.settings-tab.active {
+    display: block;
 }
 
-.btn-danger:hover{
-    background:#c0392b;
+@keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.switch{
-    position:relative;
-    display:inline-block;
-    width:55px;
-    height:28px;
+.settings-section-header {
+    margin-bottom: 12px;
+    margin-top: 28px;
 }
 
-.switch input{
-    display:none;
+.settings-section-header:first-child {
+    margin-top: 0;
 }
 
-.slider{
-    position:absolute;
-    cursor:pointer;
-    inset:0;
-    background:#ccc;
-    transition:.4s;
-    border-radius:30px;
+.settings-section-header h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-heading);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.slider:before{
-    position:absolute;
-    content:"";
-    width:22px;
-    height:22px;
-    left:3px;
-    bottom:3px;
-    background:white;
-    transition:.4s;
-    border-radius:50%;
+.settings-section-header h2 svg,
+.settings-section-header h2 i {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+    flex-shrink: 0;
 }
 
-input:checked + .slider{
-    background:var(--primary);
+.settings-section-header p {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-left: 30px;
 }
 
-input:checked + .slider:before{
-    transform:translateX(27px);
+/* Settings Card */
+.settings-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 8px 24px 24px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
 }
 
-.setting-select{
-    padding:10px 15px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    font-size:14px;
+/* Profile Preview Block */
+.profile-preview {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0 16px;
+}
+
+.profile-avatar-big {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-meta h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-heading);
+    margin-bottom: 4px;
+}
+
+.profile-meta span {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* Setting Row */
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    gap: 16px;
+}
+
+.setting-row:first-child {
+    padding-top: 20px;
+}
+
+.setting-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.setting-info h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-main);
+}
+
+.setting-info p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.setting-info p.text-danger {
+    color: #EB5757;
+}
+
+.setting-divider {
+    height: 1px;
+    background-color: var(--border);
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: #EB5757;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #CBD5E0;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    width: 22px;
+    height: 22px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .slider {
+    background: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.setting-select {
+    padding: 10px 15px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    font-size: 14px;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.setting-select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Responsive: stack on mobile */
+@media (max-width: 768px) {
+    .settings-page {
+        grid-template-columns: 1fr;
+    }
+    .settings-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        position: static;
+    }
+    .settings-nav-item {
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+    .settings-nav-item span {
+        display: none;
+    }
 }
     </style>
 </head>
@@ -860,389 +1070,342 @@ input:checked + .slider:before{
                 </div>
             </header>
 
-            <div class="settings-container">
+            <!-- Settings Content -->
+            <div class="settings-column">
 
-    <div class="settings-card">
+                <!-- Profile Section -->
+                <div class="settings-section-header">
+                    <h2><i data-lucide="user-circle"></i> Profile</h2>
+                    <p>Manage your personal information and public profile</p>
+                </div>
+                <div class="settings-card">
+                    <div class="profile-preview">
+                        <div class="profile-avatar-big" id="settingsAvatarPreview">GP</div>
+                        <div class="profile-meta">
+                            <h3 id="previewUserName">Gyan Prakash</h3>
+                            <span id="previewUserRole">Student • Pragya Yog School HK</span>
+                        </div>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Edit Profile</h4>
+                            <p>Update your name, bio, and profile photo.</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="location.href='Profile.html'">
+                            <i data-lucide="user"></i> Edit Profile
+                        </button>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Language</h4>
+                            <p>Select your preferred display language.</p>
+                        </div>
+                        <select class="setting-select" id="language">
+                            <option value="English">English</option>
+                            <option value="Hindi">हिन्दी (Hindi)</option>
+                            <option value="Cantonese">廣東話 (Cantonese)</option>
+                            <option value="Mandarin">普通話 (Mandarin)</option>
+                        </select>
+                    </div>
+                </div>
 
-        <h2>⚙️ Settings</h2>
+                <!-- Notifications Section -->
+                <div class="settings-section-header">
+                    <h2><i data-lucide="bell"></i> Notifications</h2>
+                    <p>Control when and how you receive alerts</p>
+                </div>
+                <div class="settings-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Email Notifications</h4>
+                            <p>Receive event updates, announcements, and activity digests via email.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="emailNotify">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Message Notifications</h4>
+                            <p>Get push alerts for new direct messages and replies.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="messageNotify">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Event Reminders</h4>
+                            <p>Receive reminders before registered events begin.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="eventReminders" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Community Activity</h4>
+                            <p>Get notified when someone likes or comments on your posts.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="communityNotify" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
 
-        <!-- Account -->
+                <!-- Appearance Section -->
+                <div class="settings-section-header">
+                    <h2><i data-lucide="palette"></i> Appearance</h2>
+                    <p>Customize how Pragya Connect looks on your device</p>
+                </div>
+                <div class="settings-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Dark Mode</h4>
+                            <p>Enable a darker color palette for reduced eye strain at night.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="darkMode">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Compact Sidebar</h4>
+                            <p>Show only icons in the navigation sidebar to save screen space.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="compactSidebar">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
 
-        <div class="setting-row">
+                <!-- Privacy Section -->
+                <div class="settings-section-header">
+                    <h2><i data-lucide="shield"></i> Privacy &amp; Visibility</h2>
+                    <p>Manage who can see your profile and activity</p>
+                </div>
+                <div class="settings-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Public Profile</h4>
+                            <p>Allow other students and teachers to view your full profile.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="publicProfile">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Show Online Status</h4>
+                            <p>Let others see when you are active on the platform.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="showOnlineStatus" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Allow Direct Messages</h4>
+                            <p>Permit all members to send you direct messages.</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="allowDMs" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
 
-            <div class="setting-info">
-                <h4>Account</h4>
-                <p>Edit your personal profile information.</p>
+                <!-- Security Section -->
+                <div class="settings-section-header">
+                    <h2><i data-lucide="lock"></i> Security</h2>
+                    <p>Keep your account safe and secure</p>
+                </div>
+                <div class="settings-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Change Password</h4>
+                            <p>Update your account login password regularly for security.</p>
+                        </div>
+                        <button class="btn btn-primary" id="changePasswordBtn">
+                            <i data-lucide="lock"></i> Change Password
+                        </button>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Two-Factor Authentication</h4>
+                            <p>Add an extra layer of security to your account.</p>
+                        </div>
+                        <button class="btn btn-outline">Enable 2FA</button>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Active Sessions</h4>
+                            <p>View and sign out from devices connected to your account.</p>
+                        </div>
+                        <button class="btn btn-outline">View Sessions</button>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Logout</h4>
+                            <p>Sign out from your Pragya Connect account.</p>
+                        </div>
+                        <button class="btn btn-danger" onclick="logoutConfirm()">
+                            <i data-lucide="log-out"></i> Logout
+                        </button>
+                    </div>
+                    <div class="setting-divider"></div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h4>Delete Account</h4>
+                            <p class="text-danger">Permanently remove your account and all data. This cannot be undone.</p>
+                        </div>
+                        <button class="btn btn-danger" onclick="confirmDeleteAccount()">Delete Account</button>
+                    </div>
+                </div>
+
             </div>
-
-            <button class="btn btn-primary"
-            onclick="location.href='../Profile.html'">
-
-                Edit Profile
-
-            </button>
-
         </div>
-
-        <!-- Notifications -->
-
-        <div class="setting-row">
-
-            <div class="setting-info">
-                <h4>Email Notifications</h4>
-                <p>Receive event updates via email.</p>
-            </div>
-
-            <label class="switch">
-                <input type="checkbox" id="emailNotify">
-                <span class="slider"></span>
-            </label>
-
+    </div>
         </div>
-
-        <div class="setting-row">
-
-            <div class="setting-info">
-                <h4>Message Notifications</h4>
-                <p>Receive new message alerts.</p>
-            </div>
-
-            <label class="switch">
-                <input type="checkbox" id="messageNotify">
-                <span class="slider"></span>
-            </label>
-
-        </div>
-
-        <!-- Dark Mode -->
-
-        <div class="setting-row">
-
-            <div class="setting-info">
-                <h4>Dark Mode</h4>
-                <p>Enable dark appearance.</p>
-            </div>
-
-            <label class="switch">
-                <input type="checkbox" id="darkMode">
-                <span class="slider"></span>
-            </label>
-
-        </div>
-
-        <!-- Language -->
-
-        <div class="setting-row">
-
-            <div class="setting-info">
-                <h4>Language</h4>
-                <p>Select your preferred language.</p>
-            </div>
-
-            <select class="setting-select" id="language">
-
-                <option>English</option>
-                <option>Hindi</option>
-
-            </select>
-
-        </div>
-
-        <!-- Privacy -->
-
-        <div class="setting-row">
-
-            <div class="setting-info">
-                <h4>Public Profile</h4>
-                <p>Allow other students to see your profile.</p>
-            </div>
-
-            <label class="switch">
-                <input type="checkbox" id="publicProfile">
-                <span class="slider"></span>
-            </label>
-
-        </div>
-
-        <!-- Security -->
-
-        <div class="setting-row">
-
-            <div class="setting-info">
-                <h4>Security</h4>
-                <p>Change your account password.</p>
-            </div>
-
-            <button class="btn btn-primary">
-
-                Change Password
-
-            </button>
-
-        </div>
-
-        <!-- Logout -->
-
-        <div class="setting-row">
-
-            <div class="setting-info">
-                <h4>Logout</h4>
-                <p>Sign out from your account.</p>
-            </div>
-
-            <button class="btn btn-danger" onclick="logout('index.html')">
-
-                Logout
-
-            </button>
-
-        </div>
-
     </div>
 
-</div>
-</body>
-</html>
-
 <script src="assets/js/app-service.js"></script>
-<script src="events\js\search.js"></script>
+<script src="common.js"></script>
+<script>
+    // =============================
+    // LOAD PROFILE PREVIEW
+    // =============================
+    const savedName = localStorage.getItem("userName") || "Gyan Prakash";
+    const savedRole = localStorage.getItem("userRole") || "Student";
+    const savedInitials = localStorage.getItem("userInitials") || "GP";
+    const savedImage = localStorage.getItem("profileImage");
 
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+    const previewName = document.getElementById("previewUserName");
+    const previewRole = document.getElementById("previewUserRole");
+    const previewAvatar = document.getElementById("settingsAvatarPreview");
 
-        // Load user name from localStorage and update top bar
-        function loadUserName() {
-            const savedUserName = localStorage.getItem("userName");
-            if (savedUserName) {
-                const topBarName = document.querySelector('.user-name');
-                const dropdownName = document.querySelector('.dropdown-name');
-                if (topBarName) {
-                    topBarName.innerText = savedUserName;
-                }
-                if (dropdownName) {
-                    dropdownName.innerText = savedUserName;
-                }
-                
-                // Update hero banner name with first name
-                const firstName = savedUserName.split(' ')[0];
-                const heroBannerName = document.getElementById('heroBannerName');
-                if (heroBannerName) {
-                    heroBannerName.innerText = firstName + '!';
-                }
-            }
+    if (previewName) previewName.textContent = savedName;
+    if (previewRole) previewRole.textContent = savedRole + " • Pragya Yog School HK";
+    if (previewAvatar) {
+        if (savedImage) {
+            previewAvatar.style.backgroundImage = `url(${savedImage})`;
+            previewAvatar.style.backgroundSize = "cover";
+            previewAvatar.style.backgroundPosition = "center";
+            previewAvatar.textContent = "";
+        } else {
+            previewAvatar.textContent = savedInitials;
         }
-
-        // Load user role from localStorage and update top bar
-        function loadUserRole() {
-            const savedUserRole = localStorage.getItem("userRole");
-            if (savedUserRole) {
-                const topBarRole = document.querySelector('.user-role');
-                const dropdownRole = document.querySelector('.dropdown-role');
-                if (topBarRole) {
-                    topBarRole.innerText = savedUserRole;
-                }
-                if (dropdownRole) {
-                    dropdownRole.innerText = savedUserRole;
-                }
-            }
-        }
-
-            // Load avatar initials from localStorage
-            function loadAvatarInitials() {
-                const savedInitials = localStorage.getItem("userInitials");
-                if (savedInitials) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    if (topBarAvatar) {
-                        topBarAvatar.textContent = savedInitials;
-                    }
-                    if (dropdownAvatar) {
-                        dropdownAvatar.textContent = savedInitials;
-                    }
-                }
-            }
-
-            // Load profile image to top bar avatars
-            function loadProfileImageToTopBar() {
-                const savedImage = localStorage.getItem("profileImage");
-                if (savedImage) {
-                    const topBarAvatar = document.querySelector('.user-avatar-circle');
-                    const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                    
-                    if (topBarAvatar) {
-                        topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                        topBarAvatar.style.backgroundSize = 'cover';
-                        topBarAvatar.style.backgroundPosition = 'center';
-                        topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                        topBarAvatar.textContent = '';
-                    }
-                    
-                    if (dropdownAvatar) {
-                        dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                        dropdownAvatar.style.backgroundSize = 'cover';
-                        dropdownAvatar.style.backgroundPosition = 'center';
-                        dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                        dropdownAvatar.textContent = '';
-                    }
-                }
-            }
-
-            // Call load functions on page load
-            loadUserName();
-            loadUserRole();
-            loadAvatarInitials();
-            loadProfileImageToTopBar();
-
-        // =========================
-// Sidebar Toggle
-// =========================
-
-const sidebar = document.querySelector(".sidebar");
-const toggle = document.getElementById("sidebarToggle");
-
-// Open / Close Sidebar
-toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    document.body.classList.toggle("sidebar-collapsed");
-});
-
-// Close when clicking outside
-document.addEventListener("click", function (e) {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !sidebar.contains(e.target) &&
-        !toggle.contains(e.target)
-    ) {
-        document.body.classList.add("sidebar-collapsed");
     }
 
-});
+    // =============================
+    // INITIALIZE TOGGLE VALUES
+    // =============================
+    document.getElementById("emailNotify").checked = JSON.parse(localStorage.getItem("emailNotify")) || false;
+    document.getElementById("messageNotify").checked = JSON.parse(localStorage.getItem("messageNotify")) || false;
+    document.getElementById("eventReminders").checked = JSON.parse(localStorage.getItem("eventReminders") ?? "true");
+    document.getElementById("communityNotify").checked = JSON.parse(localStorage.getItem("communityNotify") ?? "true");
+    document.getElementById("darkMode").checked = localStorage.getItem("darkMode") === "true";
+    document.getElementById("compactSidebar").checked = JSON.parse(localStorage.getItem("compactSidebar")) || false;
+    document.getElementById("publicProfile").checked = JSON.parse(localStorage.getItem("publicProfile")) || false;
+    document.getElementById("showOnlineStatus").checked = JSON.parse(localStorage.getItem("showOnlineStatus") ?? "true");
+    document.getElementById("allowDMs").checked = JSON.parse(localStorage.getItem("allowDMs") ?? "true");
+    document.getElementById("language").value = localStorage.getItem("language") || "English";
 
-// Track whether the mouse is over the sidebar
-let isSidebarHovered = false;
-
-sidebar.addEventListener("mouseenter", () => {
-    isSidebarHovered = true;
-});
-
-sidebar.addEventListener("mouseleave", () => {
-    isSidebarHovered = false;
-});
-
-// Close on touch devices
-window.addEventListener("touchmove", function () {
-
-    if (!document.body.classList.contains("sidebar-collapsed")) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close when ESC key is pressed
-document.addEventListener("keydown", function (e) {
-
-    if (e.key === "Escape") {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// User Dropdown Menu Functions
-        function toggleUserMenu() {
-            const dropdown = document.getElementById('userDropdown');
-            const trigger = document.getElementById('userMenuTrigger');
-            
-            if (dropdown.classList.contains('active')) {
-                closeUserMenu();
-            } else {
-                dropdown.classList.add('active');
-            }
-        }
-
-        function closeUserMenu() {
-            const dropdown = document.getElementById('userDropdown');
-            dropdown.classList.remove('active');
-        }
-
-        // User Menu Trigger Click Handler
-        const userMenuTrigger = document.getElementById('userMenuTrigger');
-        if (userMenuTrigger) {
-            userMenuTrigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleUserMenu();
+    // =============================
+    // PERSIST TOGGLE SETTINGS
+    // =============================
+    ["emailNotify", "messageNotify", "eventReminders", "communityNotify",
+     "compactSidebar", "publicProfile", "showOnlineStatus", "allowDMs"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("change", function() {
+                localStorage.setItem(id, this.checked);
             });
         }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            const dropdown = document.getElementById('userDropdown');
-            const trigger = document.getElementById('userMenuTrigger');
-            
-            if (dropdown && !dropdown.contains(e.target) && !trigger.contains(e.target)) {
-                closeUserMenu();
-            }
-        });
-
-        // Prevent dropdown from closing when clicking inside it
-        const userDropdown = document.getElementById('userDropdown');
-        if (userDropdown) {
-            userDropdown.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-        }
-
-        // Load saved settings
-
-document.getElementById("emailNotify").checked =
-JSON.parse(localStorage.getItem("emailNotify")) || false;
-
-document.getElementById("messageNotify").checked =
-JSON.parse(localStorage.getItem("messageNotify")) || false;
-
-document.getElementById("darkMode").checked =
-JSON.parse(localStorage.getItem("darkMode")) || false;
-
-document.getElementById("publicProfile").checked =
-JSON.parse(localStorage.getItem("publicProfile")) || false;
-
-document.getElementById("language").value =
-localStorage.getItem("language") || "English";
-
-
-// Save settings automatically
-
-["emailNotify","messageNotify","darkMode","publicProfile"]
-.forEach(id=>{
-
-    document.getElementById(id).addEventListener("change",function(){
-
-        localStorage.setItem(id,this.checked);
-
     });
 
-});
+    // Dark Mode Toggle
+    document.getElementById("darkMode").addEventListener("change", function() {
+        if (window.AppService) {
+            AppService.setDarkMode(this.checked);
+        } else {
+            localStorage.setItem("darkMode", this.checked ? "true" : "false");
+            document.body.classList.toggle("dark-mode", this.checked);
+            document.documentElement.classList.toggle("dark", this.checked);
+        }
+    });
 
-document.getElementById("language")
-.addEventListener("change",function(){
+    // Language Select
+    document.getElementById("language").addEventListener("change", function() {
+        localStorage.setItem("language", this.value);
+    });
 
-    localStorage.setItem("language",this.value);
-
-});
-
-
-// Logout
-
-function logout(){
-
-    if(confirm("Are you sure you want to logout?")){
-
-        localStorage.clear();
-
-        window.location.href="index.html";
-
+    // =============================
+    // CHANGE PASSWORD
+    // =============================
+    const changePasswordBtn = document.getElementById("changePasswordBtn");
+    if (changePasswordBtn) {
+        changePasswordBtn.addEventListener("click", () => {
+            const current = prompt("Enter your current password:");
+            if (current === null) return;
+            const newPass = prompt("Enter your new password (min. 8 characters):");
+            if (!newPass || newPass.trim().length < 8) {
+                alert("Password must be at least 8 characters. Change not saved.");
+                return;
+            }
+            const confirm = prompt("Confirm new password:");
+            if (confirm !== newPass) {
+                alert("Passwords do not match. Please try again.");
+                return;
+            }
+            alert("✅ Password changed successfully! Please use your new password on next login.");
+        });
     }
 
-}
+    // =============================
+    // LOGOUT CONFIRMATION
+    // =============================
+    function logoutConfirm() {
+        if (confirm("Are you sure you want to logout?")) {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    }
+
+    // =============================
+    // DELETE ACCOUNT CONFIRMATION
+    // =============================
+    function confirmDeleteAccount() {
+        const confirmed = prompt('Type "DELETE" to permanently delete your account:');
+        if (confirmed === "DELETE") {
+            if (confirm("This action CANNOT be undone. All your data will be permanently removed.")) {
+                localStorage.clear();
+                alert("Your account has been deleted.");
+                window.location.href = "index.html";
+            }
+        } else if (confirmed !== null) {
+            alert("Account deletion cancelled. Text did not match.");
+        }
+    }
 </script>
+</body>
+</html>

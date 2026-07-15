@@ -1664,6 +1664,7 @@ background:#EAF3F4;
             <button class="filter-btn" style="padding: 8px 16px; border: 1px solid var(--border); background-color: var(--bg-body); color: var(--text-muted); border-radius: 20px; font-weight: 600; cursor: pointer;" onclick="filterResources('yoga')">Yoga</button>
             <button class="filter-btn" style="padding: 8px 16px; border: 1px solid var(--border); background-color: var(--bg-body); color: var(--text-muted); border-radius: 20px; font-weight: 600; cursor: pointer;" onclick="filterResources('meditation')">Meditation</button>
             <button class="filter-btn" style="padding: 8px 16px; border: 1px solid var(--border); background-color: var(--bg-body); color: var(--text-muted); border-radius: 20px; font-weight: 600; cursor: pointer;" onclick="filterResources('adjustment')">Adjustment</button>
+            <button class="filter-btn" style="padding: 8px 16px; border: 1px solid var(--border); background-color: var(--bg-body); color: var(--text-muted); border-radius: 20px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px;" onclick="filterResources('bookmarks')"><i data-lucide="bookmark" style="width: 14px; height: 14px;"></i> Saved</button>
         </div>
 
         <!-- Featured Resources -->
@@ -1883,13 +1884,32 @@ background:#EAF3F4;
     let currentFilter = "all";
     let searchQuery = "";
 
+    function getBookmarks() {
+        return JSON.parse(localStorage.getItem("bookmarked_resources") || "[]");
+    }
+
+    window.toggleBookmark = (id) => {
+        let bookmarks = getBookmarks();
+        if (bookmarks.includes(id)) {
+            bookmarks = bookmarks.filter(bId => bId !== id);
+        } else {
+            bookmarks.push(id);
+        }
+        localStorage.setItem("bookmarked_resources", JSON.stringify(bookmarks));
+        renderResources();
+    }
+
     function renderResources() {
         const container = document.getElementById("resourcesContainer");
         if (!container) return;
         container.innerHTML = "";
 
+        const bookmarks = getBookmarks();
+
         const filtered = resources.filter(r => {
-            const matchesCategory = currentFilter === "all" || r.category.toLowerCase() === currentFilter.toLowerCase();
+            const matchesCategory = currentFilter === "all" || 
+                                   (currentFilter === "bookmarks" && bookmarks.includes(r.id)) ||
+                                   (currentFilter !== "bookmarks" && r.category.toLowerCase() === currentFilter.toLowerCase());
             const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase()) || r.description.toLowerCase().includes(searchQuery.toLowerCase());
             return matchesCategory && matchesSearch;
         });
@@ -1910,6 +1930,9 @@ background:#EAF3F4;
             if (r.type === "Video") iconName = "video";
             else if (r.type === "PPT") iconName = "presentation";
             
+            const isBookmarked = bookmarks.includes(r.id);
+            const bookmarkIconColor = isBookmarked ? 'color: var(--accent); fill: var(--accent);' : 'color: var(--text-muted);';
+            
             const itemHTML = `
                 <div class="activity-item" style="display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border);">
                     <div style="display: flex; gap: 15px; align-items: center; flex: 1;">
@@ -1922,7 +1945,10 @@ background:#EAF3F4;
                             <span class="time" style="display: block; font-size: 11px; color: var(--text-muted); margin-top: 3px;">${r.timeText} • ${r.size}</span>
                         </div>
                     </div>
-                    <div style="display: flex; gap: 8px;">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <button class="bookmark-btn" onclick="toggleBookmark(${r.id})" style="background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 6px;" aria-label="Bookmark resource">
+                            <i data-lucide="bookmark" style="${bookmarkIconColor} width: 20px; height: 20px;"></i>
+                        </button>
                         <button class="connect-btn" onclick="previewResource('${r.title}')" style="background-color: var(--bg-body); border: 1px solid var(--border); color: var(--text-main); padding: 6px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 600;">Preview</button>
                         <button class="post-submit-btn" onclick="downloadResource('${r.title}')" style="background-color: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 600;">Download</button>
                     </div>
@@ -1937,8 +1963,8 @@ background:#EAF3F4;
     window.filterResources = (category) => {
         currentFilter = category;
         document.querySelectorAll(".filter-btn-group button").forEach(btn => {
-            const text = btn.textContent.trim().toLowerCase();
-            if (text === category) {
+            const onclickAttr = btn.getAttribute("onclick");
+            if (onclickAttr && onclickAttr.includes(`'${category}'`)) {
                 btn.classList.add("active");
                 btn.style.backgroundColor = "var(--primary-light)";
                 btn.style.color = "var(--primary)";

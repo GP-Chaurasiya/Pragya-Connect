@@ -1098,8 +1098,8 @@ arrow.addEventListener("click", () => {
     const chatListContainer = document.getElementById("chatListContainer");
     const messagesContainer = document.querySelector(".messages");
     const searchChatInput = document.getElementById("searchChatInput");
-    const input = document.querySelector(".chat-input input");
-    const sendBtn = document.querySelector(".chat-input button:last-child");
+    const input = document.querySelector(".chat-input input[type='text']");
+    const sendBtn = document.querySelector(".chat-input .send-btn");
     const attachBtn = document.getElementById("attachBtn");
     const fileInput = document.getElementById("fileInput");
 
@@ -1148,18 +1148,41 @@ arrow.addEventListener("click", () => {
         }
     }
 
-    // Select Active Conversation
-    async function selectConversation(name, image, isOnline) {
+    // Select Active Conversation — exposed globally for inline onclick
+    window.selectConversation = async function selectConversation(name, image, isOnline) {
         activePartner = name;
         
-        // Mark messages as read
+        // Mark messages as read — try API first, always update localStorage too
         const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
         if (window.AppService) {
+            // Try API (won't throw even if offline — apiCall returns null)
             await AppService.apiCall("/messages/read", {
                 method: "PUT",
                 body: JSON.stringify({ sender: name, recipient: currentUser })
             });
-            // Update badges
+
+            // Always mark in localStorage regardless of API result
+            let localMsgs = JSON.parse(localStorage.getItem("local_messages") || "[]");
+            let changed = false;
+            localMsgs = localMsgs.map(m => {
+                if (m.sender === name && m.recipient === currentUser && !m.is_read) {
+                    changed = true;
+                    return { ...m, is_read: true };
+                }
+                return m;
+            });
+            if (changed) {
+                localStorage.setItem("local_messages", JSON.stringify(localMsgs));
+            }
+
+            // Immediately zero-out the badge on the conversation row in the sidebar
+            const convRow = document.querySelector(`.conversation[data-name="${name}"]`);
+            if (convRow) {
+                const dot = convRow.querySelector(".badge");
+                if (dot) dot.style.display = "none";
+            }
+
+            // Refresh global nav + topbar badges
             AppService.updateGlobalBadges();
         }
 
@@ -1280,6 +1303,10 @@ arrow.addEventListener("click", () => {
     // Send Message Trigger
     async function handleSend() {
         const text = input.value.trim();
+        if (!activePartner) {
+            alert("Please select a conversation first.");
+            return;
+        }
         if (!text && fileInput.files.length === 0) return;
 
         const attachments = [];
@@ -1310,7 +1337,7 @@ arrow.addEventListener("click", () => {
         }
     }
 
-    // Simulate Fake Reply with Typing Indicator
+    // Simulate Smart Reply with Typing Indicator
     function simulateFakeReply() {
         const typingDiv = document.createElement("div");
         typingDiv.className = "message received typing-indicator-msg";
@@ -1326,21 +1353,59 @@ arrow.addEventListener("click", () => {
         messagesContainer.appendChild(typingDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
+        // Vary the reply delay to feel more human (1.5s – 3s)
+        const delay = 1500 + Math.floor(Math.random() * 1500);
+
         setTimeout(async () => {
-            // Remove indicator
             document.querySelectorAll(".typing-indicator-msg").forEach(el => el.remove());
 
-            // Add reply to DB/LocalStorage
-            const replies = [
-                "Thank you for your message! 😊 Let''s discuss this in detail tomorrow.",
-                "Understood. Please review the shared guides on our Resources page.",
-                "Hi! I am currently in a session, will get back to you shortly. 🙏",
-                "Great progress! Keep practicing consistency.",
-                "Let''s schedule a quick call to clear your doubts."
-            ];
-            const randomReply = replies[Math.floor(Math.random() * replies.length)];
-            
-            // Send reply from active partner to current user
+            // Pick reply pool based on time of day
+            const hour = new Date().getHours();
+            let pool;
+
+            if (hour < 12) {
+                // Morning
+                pool = [
+                    "Good morning! 🌅 I've noted your message and will get back to you shortly.",
+                    "Namaste 🙏 Received your message. Let's connect after the morning session.",
+                    "Good morning! Please have patience — I'll respond in detail after practice.",
+                    "Morning! Give me a moment to finish the current class and I'll reply fully.",
+                    "I've seen your message. Please check the Resources page for related guides while you wait."
+                ];
+            } else if (hour < 17) {
+                // Afternoon
+                pool = [
+                    "Thank you for reaching out! I'm reviewing your message now.",
+                    "Got it! I'll get back to you with a detailed response after the afternoon session.",
+                    "Received 🙏 Please refer to the shared materials on the Resources page for now.",
+                    "I appreciate your message. Let's schedule a quick call if needed — I'm usually available at 5 PM.",
+                    "Message received. I'll respond soon — great question by the way! Keep exploring.",
+                    "Good progress! Keep practicing and I'll give you more guidance shortly."
+                ];
+            } else {
+                // Evening / Night
+                pool = [
+                    "I've received your message. 🙏 I'll follow up first thing tomorrow morning.",
+                    "Thank you! Evening sessions are ongoing — will respond in detail tonight or early morning.",
+                    "Namaste! Got your message. Please rest well and we can discuss tomorrow.",
+                    "Received your message. Let's connect tomorrow — rest is part of the practice too! 🌙",
+                    "Thank you for writing. I'll get back to you by tomorrow morning at the latest."
+                ];
+            }
+
+            // Additionally, pick a personalised prefix based on teacher role
+            const teacher = window.teachers ? window.teachers.find(t => t.name === activePartner) : null;
+            let prefix = "";
+            if (teacher) {
+                if (teacher.role === "Founder") prefix = "As the Founder, I want to personally assure you — ";
+                else if (teacher.role === "Master Teacher") prefix = "From my experience as a Master Teacher — ";
+                else if (teacher.role === "Yoga Instructor") prefix = "As your instructor — ";
+            }
+
+            const baseReply = pool[Math.floor(Math.random() * pool.length)];
+            const randomReply = prefix ? prefix + baseReply.charAt(0).toLowerCase() + baseReply.slice(1) : baseReply;
+
+            // Save reply
             const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
             const replyMsg = {
                 sender: activePartner,
@@ -1353,8 +1418,6 @@ arrow.addEventListener("click", () => {
                     method: "POST",
                     body: JSON.stringify(replyMsg)
                 });
-                
-                // Add notification
                 await AppService.apiCall("/notifications/create", {
                     method: "POST",
                     body: JSON.stringify({
@@ -1374,7 +1437,6 @@ arrow.addEventListener("click", () => {
                 });
                 localStorage.setItem("local_messages", JSON.stringify(localMsgs));
 
-                // Local notification
                 const localNotifs = JSON.parse(localStorage.getItem("local_notifications") || "[]");
                 localNotifs.push({
                     _id: "notif_" + Date.now(),
@@ -1392,7 +1454,7 @@ arrow.addEventListener("click", () => {
             loadConversations();
             AppService.updateGlobalBadges();
 
-        }, 1500);
+        }, delay);
     }
 
     // Toggle Pin Message

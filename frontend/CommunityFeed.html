@@ -946,159 +946,19 @@ background:#EAF3F4;
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="assets/js/app-service.js"></script>
-    <script src="events\js\search.js"></script>
+    <script src="common.js"></script>
     <script>
-        lucide.createIcons();
-        
-        // =========================
-// Sidebar Toggle
-// =========================
-
-const sidebar = document.querySelector(".sidebar");
-const toggle = document.getElementById("sidebarToggle");
-
-// Open / Close Sidebar
-toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    document.body.classList.toggle("sidebar-collapsed");
-});
-
-// Close when clicking outside
-document.addEventListener("click", function (e) {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !sidebar.contains(e.target) &&
-        !toggle.contains(e.target)
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Track whether the mouse is over the sidebar
-let isSidebarHovered = false;
-
-sidebar.addEventListener("mouseenter", () => {
-    isSidebarHovered = true;
-});
-
-sidebar.addEventListener("mouseleave", () => {
-    isSidebarHovered = false;
-});
-
-// Close on touch devices
-window.addEventListener("touchmove", function () {
-
-    if (!document.body.classList.contains("sidebar-collapsed")) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close when ESC key is pressed
-document.addEventListener("keydown", function (e) {
-
-    if (e.key === "Escape") {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-        
-        // User dropdown toggle
-        const userMenuTrigger = document.getElementById('userMenuTrigger');
-        const userDropdown = document.getElementById('userDropdown');
-        
-        if (userMenuTrigger && userDropdown) {
-            userMenuTrigger.addEventListener('click', (e) => {
-                e.stopPropagation();
-                userDropdown.classList.toggle('active');
-            });
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', () => {
-                userDropdown.classList.remove('active');
+        const eventsToggle = document.getElementById("eventsToggle");
+        const eventsParent = document.querySelector(".has-submenu");
+        if (eventsToggle && eventsParent) {
+            eventsToggle.addEventListener("click", function (e) {
+                e.preventDefault();
+                eventsParent.classList.toggle("open");
             });
         }
-
-        // Load user name from localStorage and update top bar
-        function loadUserName() {
-            const savedUserName = localStorage.getItem("userName");
-            if (savedUserName) {
-                const topBarName = document.querySelector('.user-name');
-                const dropdownName = document.querySelector('.dropdown-name');
-                if (topBarName) {
-                    topBarName.innerText = savedUserName;
-                }
-                if (dropdownName) {
-                    dropdownName.innerText = savedUserName;
-                }
-            }
-        }
-
-        // Load user role from localStorage and update top bar
-        function loadUserRole() {
-            const savedUserRole = localStorage.getItem("userRole");
-            if (savedUserRole) {
-                const topBarRole = document.querySelector('.user-role');
-                const dropdownRole = document.querySelector('.dropdown-role');
-                if (topBarRole) {
-                    topBarRole.innerText = savedUserRole;
-                }
-                if (dropdownRole) {
-                    dropdownRole.innerText = savedUserRole;
-                }
-            }
-        }
-
-        // Load avatar initials from localStorage
-        function loadAvatarInitials() {
-            const savedInitials = localStorage.getItem("userInitials");
-            if (savedInitials) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                if (topBarAvatar) {
-                    topBarAvatar.textContent = savedInitials;
-                }
-                if (dropdownAvatar) {
-                    dropdownAvatar.textContent = savedInitials;
-                }
-            }
-        }
-
-        // Load profile image to top bar avatars
-        function loadProfileImageToTopBar() {
-            const savedImage = localStorage.getItem("profileImage");
-            if (savedImage) {
-                const topBarAvatar = document.querySelector('.user-avatar-circle');
-                const dropdownAvatar = document.querySelector('.dropdown-avatar');
-                
-                if (topBarAvatar) {
-                    topBarAvatar.style.backgroundImage = `url(${savedImage})`;
-                    topBarAvatar.style.backgroundSize = 'cover';
-                    topBarAvatar.style.backgroundPosition = 'center';
-                    topBarAvatar.style.backgroundRepeat = 'no-repeat';
-                    topBarAvatar.textContent = '';
-                }
-                
-                if (dropdownAvatar) {
-                    dropdownAvatar.style.backgroundImage = `url(${savedImage})`;
-                    dropdownAvatar.style.backgroundSize = 'cover';
-                    dropdownAvatar.style.backgroundPosition = 'center';
-                    dropdownAvatar.style.backgroundRepeat = 'no-repeat';
-                    dropdownAvatar.textContent = '';
-                }
-            }
-        }
-
-        // Call load functions on page load
-        loadUserName();
-        loadUserRole();
-        loadAvatarInitials();
-        loadProfileImageToTopBar();
     </script>
     <!-- Load the built React app -->
-    <script type="module" src="community-feed/dist/assets/index-BNEfpeqm.js"></script>
-    <link rel="stylesheet" href="community-feed/dist/assets/index-C-rGuRfn.css">
+    <script type="module" src="community-feed/dist/assets/index-DIANvyH0.js"></script>
+    <link rel="stylesheet" href="community-feed/dist/assets/index-DNmwVYpC.css">
 </body>
 </html>

@@ -120,13 +120,45 @@ export function PostCard({
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-10"
               >
-                <button className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm text-gray-700">
+                <button 
+                  onClick={() => {
+                    const saved = JSON.parse(localStorage.getItem("saved_posts") || "[]");
+                    if (!saved.includes(post.id)) {
+                      saved.push(post.id);
+                      localStorage.setItem("saved_posts", JSON.stringify(saved));
+                      alert("Post saved successfully!");
+                    } else {
+                      alert("Post is already saved!");
+                    }
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm text-gray-700"
+                >
                   Save post
                 </button>
-                <button className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm text-gray-700">
+                <button 
+                  onClick={() => {
+                    const hidden = JSON.parse(localStorage.getItem("hidden_posts") || "[]");
+                    hidden.push(post.id);
+                    localStorage.setItem("hidden_posts", JSON.stringify(hidden));
+                    alert("Post hidden.");
+                    setShowMenu(false);
+                    window.dispatchEvent(new Event("postsUpdated"));
+                  }}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm text-gray-700"
+                >
                   Hide post
                 </button>
-                <button className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm text-red-600">
+                <button 
+                  onClick={() => {
+                    const reason = prompt("Enter reason for reporting this post:");
+                    if (reason !== null && reason.trim() !== "") {
+                      alert("Thank you. Our moderators will review this post shortly.");
+                    }
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-50 text-sm text-red-600"
+                >
                   Report
                 </button>
               </motion.div>

@@ -1929,10 +1929,7 @@ body.sidebar-collapsed .footer-bottom{
                     
                     <!-- User Avatar trigger -->
                     <div class="user-menu-trigger" id="userMenuTrigger">
-                        <div class="user-avatar-circle">
-                            <img id="avatarImg" style="display:none;">
-                            <span id="avatarText">GP</span>
-                        </div>
+                        <div class="user-avatar-circle">GP</div>
                         <div class="user-details">
                             <span class="user-name">Gyan Prakash</span>
                             <span class="user-role">Student</span>
@@ -2003,10 +2000,7 @@ body.sidebar-collapsed .footer-bottom{
                     <!-- Create Post Widget -->
                     <section class="dashboard-card create-post-card">
                         <div class="create-post-input-row">
-                            <div class="avatar" id="avatar">
-                                <img id="avatarImg" style="display:none;">
-                                <span id="avatarText">GP</span>
-                            </div>
+                            <div class="avatar" id="dashboardPostAvatar">GP</div>
                             <input type="text" class="create-post-field" placeholder="What's on your mind?">
                         </div>
                         <div class="create-post-actions-row">
@@ -2338,27 +2332,6 @@ body.sidebar-collapsed .footer-bottom{
 <script src="common.js"></script>
 <script src="events/js/search.js"></script>
 <script>
-const user = JSON.parse(localStorage.getItem("currentUser"));
-
-const img = document.getElementById("avatarImg");
-const text = document.getElementById("avatarText");
-
-if (user) {
-    if (user.profileImage) {
-        img.src = user.profileImage;
-        img.style.display = "block";
-        text.style.display = "none";
-    } else if (user.name) {
-        text.textContent = user.name
-            .split(" ")
-            .map(n => n[0])
-            .join("")
-            .substring(0, 2)
-            .toUpperCase();
-    }
-}
-</script>
-<script>
 
     // Dashboard Specific Dynamic Rendering Logic
 
@@ -2384,6 +2357,9 @@ if (user) {
             return;
         }
 
+        const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
+        const currentUserImage = localStorage.getItem("profileImage");
+
         latestPosts.forEach(post => {
             const authorName = post.user_id?.name || post.userName || "Gyan Prakash";
             const authorRole = post.user_id?.role || post.userRole || "Student";
@@ -2398,11 +2374,22 @@ if (user) {
                 mediaHTML = `<img src="${image}" alt="Post attachment" class="post-illustration">`;
             }
 
+            // Determine avatar display
+            const isCurrentUser = authorName === currentUser;
+            const initials = authorName.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+            let avatarHTML = `<div class="avatar">${initials}</div>`;
+
+            if (isCurrentUser && currentUserImage) {
+                avatarHTML = `<div class="avatar" style="background-image: url(${currentUserImage}); background-size: cover; background-position: center; font-size: 0; color: transparent;"></div>`;
+            } else if (post.userAvatar) {
+                avatarHTML = `<div class="avatar" style="background-image: url(${post.userAvatar}); background-size: cover; background-position: center; font-size: 0; color: transparent;"></div>`;
+            }
+
             const postHTML = `
                 <article class="dashboard-card feed-post" data-id="${post._id}">
                     <div class="post-header">
                        <div class="post-author-info">
-                           <div class="avatar">${authorName.charAt(0)}</div>
+                           ${avatarHTML}
                            <div class="author-meta">
                                <span class="author-name">${authorName}</span>
                                <span class="post-time">${timeText} • <i data-lucide="globe"></i></span>
@@ -2448,12 +2435,29 @@ if (user) {
     }
 
     function renderPostComments(comments) {
+        const currentUser = localStorage.getItem("userName") || "Gyan Prakash";
+        const currentUserImage = localStorage.getItem("profileImage");
+
         return comments.map(c => {
             const cName = c.user_id?.name || c.userName || "User";
             const cText = c.comment_text || c.content || "";
+            const isCurrentUser = cName === currentUser;
+            const initials = cName.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+
+            let avatarStyle = "";
+            let initialsOrImg = initials;
+
+            if (isCurrentUser && currentUserImage) {
+                avatarStyle = `background-image: url(${currentUserImage}); background-size: cover; background-position: center; color: transparent;`;
+                initialsOrImg = "";
+            } else if (c.userAvatar) {
+                avatarStyle = `background-image: url(${c.userAvatar}); background-size: cover; background-position: center; color: transparent;`;
+                initialsOrImg = "";
+            }
+
             return `
                 <div class="comment-item" style="display: flex; gap: 8px; font-size: 13px;">
-                    <div class="avatar" style="width: 24px; height: 24px; font-size: 11px; display: flex; align-items: center; justify-content: center; background-color: var(--primary-light); color: var(--primary); border-radius: 50%; font-weight: 700; flex-shrink: 0;">${cName.charAt(0)}</div>
+                    <div class="avatar" style="width: 24px; height: 24px; font-size: 11px; display: flex; align-items: center; justify-content: center; background-color: var(--primary-light); color: var(--primary); border-radius: 50%; font-weight: 700; flex-shrink: 0; ${avatarStyle}">${initialsOrImg}</div>
                     <div class="comment-body" style="background-color: var(--bg-body); padding: 8px 12px; border-radius: 12px; flex: 1;">
                         <span style="font-weight: 700; display: block; margin-bottom: 2px; color: var(--text-main);">${cName}</span>
                         <span style="color: var(--text-main);">${cText}</span>
