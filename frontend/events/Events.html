@@ -750,6 +750,17 @@ margin-bottom:15px;
 .culture{background:#f7e9ff;color:#8a2be2;}
 .sports{background:#ffe7e7;color:#e53935;}
 
+/* pyshk.com category classes */
+.yog-therapy{background:#e8f5e9;color:#2e7d32;}
+.intensive-training{background:#fff3e0;color:#e65100;}
+.abc-workshop{background:#e3f2fd;color:#1565c0;}
+.teacher-training{background:#f3e5f5;color:#6a1b9a;}
+.kids-program{background:#fce4ec;color:#c62828;}
+.retreat{background:#e0f7fa;color:#00695c;}
+.pragya-events{background:#fff8e1;color:#f57f17;}
+
+
+
 .event-content h3{
 margin-bottom:15px;
 }
@@ -974,158 +985,99 @@ background:#EAF3F4;
 <!-- Search & Filter -->
 <section class="events-toolbar">
 
-    <div class="filters">
-        <button class="active">All</button>
-        <button>Yoga</button>
-        <button>Workshop</button>
-        <button>Seminar</button>
-        <button>Sports</button>
-        <button>Cultural</button>
+    <div class="filters" id="filterButtons">
+        <button class="active" data-filter="All">All</button>
+        <button data-filter="Yog Therapy">Yog Therapy</button>
+        <button data-filter="Intensive Training">Intensive</button>
+        <button data-filter="ABC Workshop">ABC Workshop</button>
+        <button data-filter="Teacher Training">Training</button>
+        <button data-filter="Kids Program">Kids</button>
+        <button data-filter="Retreat">Retreat</button>
+        <button data-filter="Pragya Events">Events</button>
+        <button data-filter="Workshop">Workshop</button>
     </div>
 
 </section>
 
 <!-- Events Grid -->
 
-<section class="events-grid">
-
-    <div class="event-card" data-id="1">
-        <img src="assets/gallery_group.png">
-
-        <div class="event-content">
-            <span class="category yoga">Yoga</span>
-
-            <h3>International Yoga Workshop</h3>
-
-            <p><i data-lucide="calendar"></i> 15 July 2026</p>
-
-            <p><i data-lucide="clock"></i> 10:00 AM</p>
-
-            <p><i data-lucide="map-pin"></i> Meditation Hall</p>
-
-            <div class="card-footer">
-                <button class="details-btn" onclick="openDetails(this)">View Details
-</button>
-
-<button class="register-btn" onclick="registerEvent(this)">
-    Register
-</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="event-card" data-id="2">
-        <img src="assets/gallery_studio_1.png">
-
-        <div class="event-content">
-            <span class="category seminar">Seminar</span>
-
-            <h3>AI & Innovation Seminar</h3>
-
-            <p><i data-lucide="calendar"></i>18 July 2026</p>
-
-            <p><i data-lucide="clock"></i>11:30 AM</p>
-
-            <p><i data-lucide="map-pin"></i>Conference Hall</p>
-
-            <div class="card-footer">
-                <button class="details-btn" onclick="openDetails(this)">View Details</button>
-                <button class="register-btn" onclick="registerEvent(this)">Register</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="event-card" data-id="3">
-        <img src="assets/gallery_studio_2.png">
-
-        <div class="event-content">
-            <span class="category workshop">Workshop</span>
-
-            <h3>Coding Bootcamp</h3>
-
-            <p><i data-lucide="calendar"></i>21 July 2026</p>
-
-            <p><i data-lucide="clock"></i>09:00 AM</p>
-
-            <p><i data-lucide="map-pin"></i>Innovation Lab</p>
-
-            <div class="card-footer">
-                <button class="details-btn" onclick="openDetails(this)">View Details</button>
-                <button class="register-btn" onclick="registerEvent(this)">Register</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="event-card" data-id="4">
-        <img src="assets/gallery_mountain.png">
-
-        <div class="event-content">
-            <span class="category culture">Cultural</span>
-
-            <h3>Cultural Evening</h3>
-
-            <p><i data-lucide="calendar"></i>25 July 2026</p>
-
-            <p><i data-lucide="clock"></i>06:00 PM</p>
-
-            <p><i data-lucide="map-pin"></i>Open Amphitheatre</p>
-
-            <div class="card-footer">
-                <button class="details-btn" onclick="openDetails(this)">View Details</button>
-                <button class="register-btn" onclick="registerEvent(this)">Register</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="event-card" data-id="5">
-        <img src="assets/gallery_group.png">
-
-        <div class="event-content">
-            <span class="category sports">Sports</span>
-
-            <h3>Sports Championship</h3>
-
-            <p><i data-lucide="calendar"></i>28 July 2026</p>
-
-            <p><i data-lucide="clock"></i>08:00 AM</p>
-
-            <p><i data-lucide="map-pin"></i>Sports Ground</p>
-
-            <div class="card-footer">
-                <button class="details-btn" onclick="openDetails(this)">View Details</button>
-                <button class="register-btn" onclick="registerEvent(this)">Register</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="event-card" data-id="6">
-        <img src="assets/welcome_banner.png">
-
-        <div class="event-content">
-            <span class="category seminar">Talk</span>
-
-            <h3>Entrepreneurship Summit</h3>
-
-            <p><i data-lucide="calendar"></i>30 July 2026</p>
-
-            <p><i data-lucide="clock"></i>02:00 PM</p>
-
-            <p><i data-lucide="map-pin"></i>Main Auditorium</p>
-
-            <div class="card-footer">
-                <button class="details-btn" onclick="openDetails(this)">View Details</button>
-                <button class="register-btn" onclick="registerEvent(this)">Register</button>
-            </div>
-        </div>
-    </div>
-
+<section class="events-grid" id="eventsGrid">
+<!-- Cards injected by JS -->
 </section>
-        </body>
+
+        </div><!-- /.main-content -->
+    </div><!-- /.dashboard-container -->
 
 <script src="js/data.js"></script>
 <script src="js/search.js"></script>
 
 <script>
+    function renderEvents(filter) {
+        console.log('renderEvents called with filter:', filter);
+        const grid = document.getElementById('eventsGrid');
+        if (!grid) {
+            console.error('eventsGrid element not found in DOM!');
+            return;
+        }
+        if (typeof events === 'undefined') {
+            console.error('events array is undefined in Events.html!');
+            return;
+        }
+        console.log('events count to render:', events.length);
+
+        const filtered = filter && filter !== 'All'
+            ? events.filter(e => e.category === filter)
+            : events;
+
+        console.log('filtered events count:', filtered.length);
+
+        grid.innerHTML = filtered.map(e => {
+            const d = new Date(e.date);
+
+            const dateStr = isNaN(d) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            const catClass = (e.category || '').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            return `
+            <div class="event-card" data-id="${e.id}">
+                <img src="${e.image || 'assets/gallery_group.png'}" alt="${e.title}" loading="lazy" onerror="this.src='assets/gallery_group.png'">
+                <div class="event-content">
+                    <span class="category ${catClass}">${e.category}</span>
+                    <h3>${e.title}</h3>
+                    ${dateStr ? `<p><i data-lucide="calendar"></i> ${dateStr}</p>` : ''}
+                    ${e.time ? `<p><i data-lucide="clock"></i> ${e.time}</p>` : ''}
+                    ${e.venue ? `<p><i data-lucide="map-pin"></i> ${e.venue}</p>` : ''}
+                    ${e.price ? `<p><i data-lucide="tag"></i> ${e.price}</p>` : ''}
+                    <div class="card-footer">
+                        <button class="details-btn" onclick="openDetails(this)">View Details</button>
+                        <button class="register-btn" onclick="registerEvent(this)">Register</button>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+
+        lucide.createIcons();
+    }
+
+    // =========================
+    // Filter Buttons
+    // =========================
+    function initEvents() {
+        renderEvents('All');
+        document.querySelectorAll('#filterButtons button').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('#filterButtons button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderEvents(this.dataset.filter);
+            });
+        });
+    }
+
+    // Run immediately — scripts are after DOM so DOMContentLoaded may have already fired
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEvents);
+    } else {
+        initEvents();
+    }
+
     lucide.createIcons();
 
     // =========================
@@ -1340,3 +1292,6 @@ function registerEvent(button) {
 
 }
 </script>
+
+</body>
+</html>

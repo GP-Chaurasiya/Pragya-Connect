@@ -2587,29 +2587,36 @@ body.sidebar-collapsed .footer-bottom{
 
     // Render Upcoming Events from data.js
     function renderUpcomingEvents() {
-        if (!window.events) return;
-        const today = new Date("2026-07-07");
+        if (typeof events === 'undefined') return;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
         const upcoming = events
-            .filter(e => new Date(e.date) >= today)
+            .filter(e => e.date && new Date(e.date) >= today)
             .sort((a, b) => new Date(a.date) - new Date(b.date));
 
         const eventsList = document.querySelector(".events-list");
         if (eventsList) {
             eventsList.innerHTML = "";
-            upcoming.slice(0, 3).forEach(e => {
+            if (upcoming.length === 0) {
+                eventsList.innerHTML = `<p style="color:var(--text-muted); font-size:13px; text-align:center; padding:20px 0;">No upcoming events.</p>`;
+                return;
+            }
+            upcoming.slice(0, 4).forEach(e => {
                 const evDate = new Date(e.date);
                 const month = evDate.toLocaleString('default', { month: 'short' });
                 const day = evDate.getDate();
+                const imgSrc = e.image || 'events/assets/gallery_group.png';
                 eventsList.innerHTML += `
-                    <div class="event-item" onclick="window.location.href='events/EventDetails.html?id=${e.id}'" style="cursor: pointer; display: flex; gap: 15px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border);">
-                        <div class="event-date-badge" style="background-color: var(--primary-light); color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 12px; font-weight: 700; flex-shrink: 0;">
-                            <div class="month" style="font-size: 10px; text-transform: uppercase;">${month}</div>
-                            <div class="day" style="font-size: 18px; line-height: 1.1;">${day}</div>
+                    <div class="event-item" onclick="window.location.href='events/Events.html'" style="cursor: pointer; display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border);">
+                        <img src="${imgSrc}" alt="${e.title}" onerror="this.src='events/assets/gallery_group.png'" style="width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;">
+                        <div class="event-info" style="flex: 1; min-width:0;">
+                            <span class="event-title" style="font-weight: 700; display: block; color: var(--text-main); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${e.title}</span>
+                            <span class="event-time" style="font-size: 11px; color: var(--text-muted);">${month} ${day}${e.time ? ' • ' + e.time : ''}${e.venue ? ' • ' + e.venue : ''}</span>
                         </div>
-                        <div class="event-info" style="flex: 1;">
-                            <span class="event-title" style="font-weight: 700; display: block; color: var(--text-main);">${e.title}</span>
-                            <span class="event-time" style="font-size: 12px; color: var(--text-muted);">${e.time} • ${e.venue}</span>
+                        <div class="event-date-badge" style="background-color: var(--primary-light); color: var(--primary); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; font-weight: 700; flex-shrink: 0;">
+                            <div class="month" style="font-size: 9px; text-transform: uppercase;">${month}</div>
+                            <div class="day" style="font-size: 16px; line-height: 1.1;">${day}</div>
                         </div>
                     </div>
                 `;
@@ -2617,11 +2624,13 @@ body.sidebar-collapsed .footer-bottom{
         }
     }
 
-    // Initialize Dashboard
-    document.addEventListener("DOMContentLoaded", () => {
+    // Initialize Dashboard — scripts are synchronous at bottom of page,
+    // so DOMContentLoaded may have already fired. Use readyState check.
+    function initDashboard() {
         renderDashboardFeed();
         renderMentorSuggestions();
         renderUpcomingEvents();
+
 
         // Bind Create Post click
         const createPostBtn = document.querySelector(".create-post-card .post-submit-btn");
@@ -2635,7 +2644,14 @@ body.sidebar-collapsed .footer-bottom{
                 renderDashboardFeed();
             });
         }
-    });
+    }
+
+    // Run immediately — scripts at bottom so DOMContentLoaded may have already fired
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    } else {
+        initDashboard();
+    }
 
     // Buttons
 const imageBtn = document.getElementById("imageBtn");

@@ -1276,25 +1276,16 @@ select{
             }
 
             data.forEach((item) => {
-                // Map the same banner images used in Events.html, keyed by eventId
-                const eventBannerMap = {
-                    1: 'assets/gallery_group.png',
-                    2: 'assets/gallery_studio_1.png',
-                    3: 'assets/gallery_studio_2.png',
-                    4: 'assets/gallery_mountain.png',
-                    5: 'assets/gallery_group.png',
-                    6: 'assets/welcome_banner.png'
-                };
-
+                // Banner comes directly from data.js event image — no hardcoded map needed
                 const eid = parseInt(item.eventId) || null;
 
-                // Match event from data.js for category + description
+                // Match event from data.js for category + description + image
                 const ev = (typeof events !== 'undefined' && eid)
                     ? events.find(e => e.id === eid)
                     : null;
 
-                // Use the exact same image as Events.html; fall back to data.js image or gradient
-                const banner   = eventBannerMap[eid] || (ev && ev.image) || null;
+                // Use the live poster image from data.js
+                const banner   = (ev && ev.image) || null;
                 const category = ev && ev.category ? ev.category : 'Event';
                 const shortDesc = ev && ev.description
                     ? ev.description
