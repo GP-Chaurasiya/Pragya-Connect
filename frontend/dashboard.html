@@ -2164,9 +2164,9 @@ body.sidebar-collapsed .footer-bottom{
                 
                 <div class="topbar-actions">
                     <!-- Notification Bell Button -->
-                    <button class="icon-btn-badge" aria-label="Notifications">
+                    <button class="icon-btn-badge" id="notificationBell" aria-label="Notifications" onclick="toggleNotificationPanel(event)">
                         <i data-lucide="bell"></i>
-                        <span class="badge-dot">5</span>
+                        <span class="badge-dot" id="notificationCount">0</span>
                     </button>
                     
                     <!-- Messages Bubble Button -->
@@ -2212,6 +2212,12 @@ body.sidebar-collapsed .footer-bottom{
                                 <a href="help-support.html" class="dropdown-item">
                                     <i data-lucide="help-circle"></i>
                                     <span>Help & Support</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="admin/dashboard.html" class="dropdown-item">
+                                    <i data-lucide="shield-check"></i>
+                                    <span>Admin Portal</span>
                                 </a>
                             </li>
                         </ul>
@@ -2268,7 +2274,41 @@ body.sidebar-collapsed .footer-bottom{
 
                 <!-- Right column panel -->
                 <div class="right-column">
-                    
+
+                    <!-- Mentor Suggestions Card -->
+                    <section class="dashboard-card">
+                        <div class="section-header">
+                            <div class="section-title-wrap">
+                                <i data-lucide="graduation-cap" style="color: var(--primary)"></i>
+                                <h3 class="section-title">Mentor Suggestions</h3>
+                            </div>
+                            <a href="mentors.html" class="view-all-link">View All</a>
+                        </div>
+
+                        <div class="mentors-list" id="mentorSuggestions">
+                            <!-- Mentor 1 -->
+                            <div class="mentor-item">
+                                <div class="mentor-profile-info">
+                                    <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=150&h=150" alt="Dr. Sharma" class="mentor-avatar">
+                                    <div class="mentor-text">
+                                        <span class="mentor-name">Dr. Sharma</span>
+                                        <span class="mentor-title">Meditation Expert</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Mentor 2 -->
+                            <div class="mentor-item">
+                                <div class="mentor-profile-info">
+                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" alt="Anjali Singh" class="mentor-avatar">
+                                    <div class="mentor-text">
+                                        <span class="mentor-name">Anjali Singh</span>
+                                        <span class="mentor-title">Yoga Mentor</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     <!-- Upcoming Events Card -->
                     <section class="dashboard-card">
                         <div class="section-header">
@@ -2318,41 +2358,7 @@ body.sidebar-collapsed .footer-bottom{
                             </div>
                         </div>
                     </section>
-
-                    <!-- Mentor Suggestions Card -->
-                    <section class="dashboard-card">
-                        <div class="section-header">
-                            <div class="section-title-wrap">
-                                <i data-lucide="graduation-cap" style="color: var(--primary)"></i>
-                                <h3 class="section-title">Mentor Suggestions</h3>
-                            </div>
-                            <a href="mentors.html" class="view-all-link">View All</a>
-                        </div>
-
-                        <div class="mentors-list" id="mentorSuggestions">
-                            <!-- Mentor 1 -->
-                            <div class="mentor-item">
-                                <div class="mentor-profile-info">
-                                    <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=150&h=150" alt="Dr. Sharma" class="mentor-avatar">
-                                    <div class="mentor-text">
-                                        <span class="mentor-name">Dr. Sharma</span>
-                                        <span class="mentor-title">Meditation Expert</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mentor 2 -->
-                            <div class="mentor-item">
-                                <div class="mentor-profile-info">
-                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" alt="Anjali Singh" class="mentor-avatar">
-                                    <div class="mentor-text">
-                                        <span class="mentor-name">Anjali Singh</span>
-                                        <span class="mentor-title">Yoga Mentor</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
+                    
                     <!-- Two Split Cards: Resources & Announcements -->
                     <div class="bottom-split-row">
                         <!-- Resources Card -->
@@ -2669,6 +2675,7 @@ body.sidebar-collapsed .footer-bottom{
 <script src="events/js/data.js"></script>
 <script src="events/js/mentor.js"></script>
 <script src="assets/js/app-service.js"></script>
+<script src="assets/js/admin-sync.js"></script>
 <script src="common.js"></script>
 <script src="events/js/search.js"></script>
 <script>
@@ -3372,6 +3379,38 @@ async function getUpcomingEvent() {
 };
 
 }
+
+// ── Admin ↔ Platform Sync ──────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    AdminSync.init({
+        popup:           true,
+        promoBanner:     true,
+        notifBadge:      true,
+        dashboardEvents: null, // no dedicated upcoming events widget on dashboard
+    });
+
+    // Sync admin mentors into the sidebar mentor suggestions widget
+    const adminMentors = AdminSync.getMentors();
+    if (adminMentors.length) {
+        const container = document.getElementById('mentorSuggestions');
+        if (container) {
+            const items = adminMentors.slice(0, 3).map(m => {
+                const initials = (m.name || '').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                return `
+                <div class="mentor-item" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
+                    <div class="mentor-profile-info" style="display:flex;gap:10px;align-items:center;">
+                        <div style="width:38px;height:38px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${initials}</div>
+                        <div>
+                            <span class="mentor-name" style="font-weight:600;color:var(--text-main);display:block;font-size:14px;">${m.name}${m.featured ? ' <span style="color:var(--accent);font-size:10px;">★</span>' : ''}</span>
+                            <span class="mentor-title" style="font-size:11px;color:var(--text-muted);">${m.expertise || ''}</span>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            container.innerHTML = items;
+        }
+    }
+});
 </script>
 </body>
 </html>

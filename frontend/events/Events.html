@@ -1010,6 +1010,7 @@ background:#EAF3F4;
 
 <script src="js/data.js"></script>
 <script src="js/search.js"></script>
+<script src="../assets/js/admin-sync.js"></script>
 
 <script>
     function renderEvents(filter) {
@@ -1291,6 +1292,46 @@ function registerEvent(button) {
         `Register.html?id=${eventId}`;
 
 }
+
+// ── Admin ↔ Platform Sync: Append Admin Events ───────────────
+(function injectAdminEvents() {
+    const adminEvents = AdminSync.getActiveEvents();
+    if (!adminEvents.length) return;
+
+    const grid = document.getElementById('eventsGrid');
+    if (!grid) return;
+
+    const cards = adminEvents.map(ev => {
+        const dateStr = ev.date
+            ? new Date(ev.date + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+            : '';
+        return `
+        <div class="event-card admin-event" data-id="admin_${ev.id}" style="border: 2px solid var(--accent, #D9AE29);">
+            <div style="background: linear-gradient(135deg, #00381F, #00522E); min-height: 140px; display:flex; align-items:center; justify-content:center; padding:20px;">
+                <div style="text-align:center; color:#fff;">
+                    <div style="font-size:36px; margin-bottom:8px;">&#127941;</div>
+                    <div style="font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; opacity:.8;">Pragya Event</div>
+                </div>
+            </div>
+            <div class="event-content">
+                <span class="category" style="background:var(--accent-light,#FFF8E6);color:var(--accent,#D9AE29);">${ev.featured ? '★ Featured' : 'Pragya Events'}</span>
+                <h3>${ev.title}</h3>
+                ${dateStr ? `<p><i data-lucide="calendar"></i> ${dateStr}</p>` : ''}
+                <div class="card-footer">
+                    ${ev.regLink ? `<a href="${ev.regLink}" target="_blank" class="details-btn" style="background:var(--accent,#D9AE29);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;text-decoration:none;">Register Now</a>` : '<button class="details-btn" disabled>Coming Soon</button>'}
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+
+    grid.insertAdjacentHTML('afterbegin', cards);
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+})();
+
+// Show admin event popup on events page
+document.addEventListener('DOMContentLoaded', () => {
+    AdminSync.init({ popup: false, promoBanner: true, notifBadge: true });
+});
 </script>
 
 </body>

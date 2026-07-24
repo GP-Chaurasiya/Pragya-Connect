@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <!-- Lucide Icons Library -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -1176,13 +1179,13 @@ DS
 
 <div class="share-buttons">
 
-<button>Facebook</button>
+<button onclick="shareEvent('facebook')"><i class="fab fa-facebook-f"></i> Facebook</button>
 
-<button>LinkedIn</button>
+<button onclick="shareEvent('linkedin')"><i class="fab fa-linkedin-in"></i> LinkedIn</button>
 
-<button>WhatsApp</button>
+<button onclick="shareEvent('whatsapp')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
 
-<button>Copy Link</button>
+<button onclick="shareEvent('copy')"><i class="fas fa-link"></i> Copy Link</button>
 
 </div>
 
@@ -1195,6 +1198,40 @@ DS
 
 <script>
     lucide.createIcons();
+
+    function shareEvent(platform) {
+        const url = window.location.href;
+        const title = document.title || 'Pragya Connect Event';
+        const text = 'Check out this event at Pragya Yog School: ';
+
+        if (platform === 'facebook') {
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank');
+        } else if (platform === 'linkedin') {
+            window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url), '_blank');
+        } else if (platform === 'whatsapp') {
+            window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text + url), '_blank');
+        } else if (platform === 'copy') {
+            if (navigator.share) {
+                navigator.share({ title: title, text: text, url: url }).catch(() => {});
+            } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('✨ Event link copied to clipboard!');
+                }).catch(() => fallbackCopy(url));
+            } else {
+                fallbackCopy(url);
+            }
+        }
+    }
+
+    function fallbackCopy(text) {
+        const input = document.createElement('input');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+        alert('✨ Event link copied to clipboard!');
+    }
 
     // =========================
 // Sidebar Toggle

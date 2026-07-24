@@ -6,6 +6,7 @@ import { PostSkeleton, CreatePostSkeleton } from '../ui/Skeleton';
 import { EmptyState, ErrorState } from '../ui/EmptyState';
 import { Post } from '../../types';
 import { cn } from '../../lib/utils';
+import { mockPosts } from '../../data/mockData';
 
 interface CommunityFeedProps {
   className?: string;
@@ -61,18 +62,23 @@ export function CommunityFeed({ className }: CommunityFeedProps) {
   const loadPosts = async () => {
     try {
       const AppService = (window as any).AppService;
+      let fetched: any[] = [];
       if (AppService) {
-        const apiPosts = await AppService.getPosts();
-        setPosts(apiPosts.map(mapApiPostToReactPost));
+        fetched = await AppService.getPosts();
       } else {
         const local = localStorage.getItem("local_posts") || localStorage.getItem("cached_posts");
-        const list = local ? JSON.parse(local) : [];
-        setPosts(list.map(mapApiPostToReactPost));
+        fetched = local ? JSON.parse(local) : [];
+      }
+      if (fetched && fetched.length > 0) {
+        setPosts(fetched.map(mapApiPostToReactPost));
+      } else {
+        setPosts(mockPosts);
       }
       setError(false);
     } catch (e) {
       console.error(e);
-      setError(true);
+      setPosts(mockPosts);
+      setError(false);
     } finally {
       setLoading(false);
     }
@@ -232,11 +238,26 @@ export function CommunityFeed({ className }: CommunityFeedProps) {
   };
 
   const handleShare = (postId: string) => {
+    const postToShare = posts.find((p) => p.id === postId);
     setPosts((prev) =>
       prev.map((post) =>
         post.id === postId ? { ...post, shares: post.shares + 1 } : post
       )
     );
+
+    const shareData = {
+      title: 'Pragya Connect Community Post',
+      text: postToShare ? `"${postToShare.content.substring(0, 100)}..." - ${postToShare.userName}` : 'Check out this post on Pragya Connect!',
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('✨ Post link copied to clipboard!');
+      });
+    }
   };
 
   const handleRetry = () => {

@@ -946,6 +946,7 @@ background:#EAF3F4;
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="assets/js/app-service.js"></script>
+    <script src="assets/js/admin-sync.js"></script>
     <script src="common.js"></script>
     <script>
         const eventsToggle = document.getElementById("eventsToggle");
@@ -956,9 +957,13 @@ background:#EAF3F4;
                 eventsParent.classList.toggle("open");
             });
         }
+        // ─ Admin ↔ Platform Sync
+        document.addEventListener('DOMContentLoaded', () => {
+            AdminSync.init({ popup: true, promoBanner: true, notifBadge: true });
+        });
     </script>
     <!-- Load the built React app -->
-    <script type="module" src="community-feed/dist/assets/index-DIANvyH0.js"></script>
-    <link rel="stylesheet" href="community-feed/dist/assets/index-DNmwVYpC.css">
+    <script type="module" src="community-feed/dist/assets/index.js"></script>
+    <link rel="stylesheet" href="community-feed/dist/assets/index.css">
 </body>
 </html>

@@ -1071,6 +1071,7 @@ select{
     </div>
 
     <script src="assets/js/app-service.js"></script>
+    <script src="assets/js/admin-sync.js"></script>
     <script src="common.js"></script>
     <script>
         let currentFilter = 'all';
@@ -1162,6 +1163,8 @@ select{
 
         document.addEventListener('DOMContentLoaded', () => {
             renderNotifications();
+            // Show event popup + promo banner
+            AdminSync.init({ popup: true, promoBanner: true, notifBadge: false });
         });
     </script>
 </body>

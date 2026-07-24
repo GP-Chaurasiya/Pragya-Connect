@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events Management — Pragya Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="admin.css">
+  <style>
+    .popup-preview-box { background: var(--bg-card); border: 2px dashed var(--primary); border-radius: var(--radius-lg); padding: 24px; max-width: 440px; margin-top: 24px; box-shadow: var(--shadow-md); }
+    .popup-preview-title { font-size: 18px; font-weight: 800; color: var(--primary); text-align: center; margin-bottom: 12px; }
+    .popup-preview-poster { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 14px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 600; }
+  </style>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-brand">
+      <img src="../assets/logo.png" alt="Pragya Logo">
+      <div class="admin-brand-text"><h2>Pragya Admin</h2><span>Control Panel</span></div>
+    </div>
+    <ul class="admin-nav">
+      <li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+      <li><a href="users.html"><i data-lucide="users"></i> Users</a></li>
+      <li><a href="community.html"><i data-lucide="message-square"></i> Community</a></li>
+      <li class="active"><a href="events.html"><i data-lucide="calendar"></i> Events</a></li>
+      <li><a href="promotions.html"><i data-lucide="megaphone"></i> Promotions</a></li>
+      <li><a href="mentors.html"><i data-lucide="graduation-cap"></i> Mentors</a></li>
+      <li><a href="resources.html"><i data-lucide="book-open"></i> Resources</a></li>
+      <li><a href="notifications.html"><i data-lucide="bell"></i> Notifications</a></li>
+      <li><a href="analytics.html"><i data-lucide="bar-chart-2"></i> Analytics</a></li>
+      <li><a href="settings.html"><i data-lucide="settings"></i> Settings</a></li>
+    </ul>
+    <div class="admin-sidebar-footer">
+      <a href="../dashboard.html" class="platform-link"><i data-lucide="external-link"></i> Platform</a>
+      <a href="#" onclick="adminLogout()" class="logout-link"><i data-lucide="log-out"></i> Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <button class="admin-topbar-toggle" id="sidebarToggle"><i data-lucide="menu"></i></button>
+        <span class="admin-page-title">Events Management & Auto Popup</span>
+      </div>
+      <div class="admin-topbar-right">
+        <div class="admin-search"><i data-lucide="search"></i><input type="text" placeholder="Search events..."></div>
+        <button class="admin-topbar-icon-btn"><i data-lucide="bell"></i><span class="admin-notif-dot"></span></button>
+        <div class="admin-user-menu" id="adminUserTrigger">
+          <div class="admin-avatar">SA</div>
+          <div class="admin-user-info">
+            <strong class="admin-user-name">Super Admin</strong>
+            <span class="admin-user-role">superadmin</span>
+          </div>
+          <i data-lucide="chevron-down"></i>
+          <div class="admin-dropdown" id="adminUserDropdown">
+            <a href="../dashboard.html"><i data-lucide="external-link"></i> Return to Platform</a>
+            <a href="settings.html"><i data-lucide="settings"></i> Settings</a>
+            <a href="#" class="danger" onclick="adminLogout()"><i data-lucide="log-out"></i> Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <div class="page-header">
+        <div class="page-header-left">
+          <h1>Events & Login Popup Feature</h1>
+          <p>Create workshops, retreats, and manage automatic login popup announcements.</p>
+        </div>
+        <div class="page-header-actions">
+          <button class="btn btn-primary" onclick="openModal('eventModal'); resetEventForm();"><i data-lucide="calendar-plus"></i> Add Event</button>
+        </div>
+      </div>
+
+      <!-- Stats Strip -->
+      <div class="stats-strip">
+        <div class="stats-strip-item"><h3 id="stEvTotal">0</h3><p>Total Events</p></div>
+        <div class="stats-strip-item"><h3 id="stEvActive" style="color:var(--success);">0</h3><p>Active</p></div>
+        <div class="stats-strip-item"><h3 id="stEvPopup" style="color:var(--accent);">0</h3><p>Auto-Popup Enabled</p></div>
+        <div class="stats-strip-item"><h3 id="stEvExpired" style="color:var(--danger);">0</h3><p>Expired/Archived</p></div>
+      </div>
+
+      <!-- Table Card -->
+      <div class="card">
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Event Title</th>
+                <th>Event Date</th>
+                <th>Publish Date</th>
+                <th>Expiry Date</th>
+                <th>Auto Popup</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="eventsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Live Popup Preview -->
+      <div style="margin-top:28px;">
+        <h3 style="font-size:16px;font-weight:700;color:var(--text-heading);margin-bottom:8px;display:flex;align-items:center;gap:8px;"><i data-lucide="smartphone" style="width:18px;height:18px;color:var(--primary);"></i> Auto-Popup Live Preview</h3>
+        <p style="font-size:13px;color:var(--text-muted);">This is how the active event will appear to users on login when Auto Popup is enabled.</p>
+        <div class="popup-preview-box" id="popupPreview">
+          <div style="text-align:right;"><span style="cursor:pointer;font-weight:bold;color:var(--text-muted);">&times; Close</span></div>
+          <div class="popup-preview-title" id="prevTitle">Yoga Retreat 2026</div>
+          <div class="popup-preview-poster" id="prevPoster">Yoga Retreat Poster</div>
+          <p id="prevDesc" style="font-size:13px;color:var(--text-main);margin-bottom:14px;text-align:center;">Join us this Sunday in Central Hong Kong for an immersive meditation & asana retreat.</p>
+          <button class="btn btn-accent" style="width:100%;justify-content:center;">Register Now</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Event Modal -->
+<div class="modal-overlay" id="eventModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h3 class="modal-title" id="eventModalTitle">Add Event</h3>
+      <button class="modal-close" onclick="closeModal('eventModal')"><i data-lucide="x"></i></button>
+    </div>
+    <form id="eventForm" onsubmit="saveEvent(event)">
+      <div class="modal-body">
+        <input type="hidden" id="eventId">
+        <div class="form-group">
+          <label>Event Title</label>
+          <input type="text" id="evTitle" class="form-control" placeholder="e.g. Yoga Retreat 2026" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="evDesc" class="form-control" placeholder="Event details and instructions..."></textarea>
+        </div>
+        <div class="form-grid col-3">
+          <div class="form-group">
+            <label>Event Date</label>
+            <input type="date" id="evDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Publish Date</label>
+            <input type="date" id="evPublish" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input type="date" id="evExpiry" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Registration Link</label>
+          <input type="url" id="evRegLink" class="form-control" placeholder="https://forms.gle/sample">
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="toggle-wrap">
+              <div class="toggle-switch">
+                <input type="checkbox" id="evFeatured">
+                <span class="toggle-slider"></span>
+              </div>
+              <span class="toggle-label">Featured Event</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="toggle-wrap">
+              <div class="toggle-switch">
+                <input type="checkbox" id="evPopup" checked>
+                <span class="toggle-slider"></span>
+              </div>
+              <span class="toggle-label">Auto Popup Toggle</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="toggle-wrap">
+              <div class="toggle-switch">
+                <input type="checkbox" id="evAutoHide" checked>
+                <span class="toggle-slider"></span>
+              </div>
+              <span class="toggle-label">Auto Hide when Expired = TRUE</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeModal('eventModal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save Event</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast-container"></div>
+<script src="admin-common.js"></script>
+<script>
+adminRoleGuard();
+
+const defaultEvents = [
+  { id: '1', title: 'Yoga Retreat 2026', desc: 'Join us this Sunday for a refreshing day of mindfulness and Hatha yoga.', date: '2026-08-15', publish: '2026-07-01', expiry: '2026-08-16', regLink: 'https://pyshk.com/register', popup: true, featured: true, autoHide: true },
+  { id: '2', title: 'Pranayama Masterclass', desc: 'Deep dive into breathwork with Dr. Akhilesh.', date: '2026-08-28', publish: '2026-07-10', expiry: '2026-08-29', regLink: '', popup: false, featured: false, autoHide: true }
+];
+
+function getEvents() {
+  let evs = lsGet('admin_events', null);
+  if (!evs) {
+    evs = defaultEvents;
+    lsSet('admin_events', evs);
+  }
+  return evs;
+}
+
+function computeStatus(ev) {
+  const today = new Date().toISOString().split('T')[0];
+  if (ev.expiry < today) return ev.autoHide ? 'Archived' : 'Expired';
+  if (ev.publish > today) return 'Scheduled';
+  return 'Active';
+}
+
+function renderEvents() {
+  const events = getEvents();
+  const today = new Date().toISOString().split('T')[0];
+
+  document.getElementById('stEvTotal').textContent = events.length;
+  document.getElementById('stEvActive').textContent = events.filter(e => computeStatus(e) === 'Active').length;
+  document.getElementById('stEvPopup').textContent = events.filter(e => e.popup && computeStatus(e) === 'Active').length;
+  document.getElementById('stEvExpired').textContent = events.filter(e => computeStatus(e) === 'Expired' || computeStatus(e) === 'Archived').length;
+
+  const tbody = document.getElementById('eventsTableBody');
+  tbody.innerHTML = events.map(e => {
+    const status = computeStatus(e);
+    const badgeMap = { Active: 'badge-success', Scheduled: 'badge-info', Expired: 'badge-danger', Archived: 'badge-muted' };
+
+    return `
+      <tr>
+        <td><strong>${e.title}</strong>${e.featured ? ' <i data-lucide="star" style="width:12px;height:12px;color:var(--accent);fill:var(--accent);"></i>' : ''}</td>
+        <td>${e.date}</td>
+        <td>${e.publish}</td>
+        <td>${e.expiry}</td>
+        <td>
+          <div class="toggle-switch">
+            <input type="checkbox" ${e.popup ? 'checked' : ''} onchange="togglePopup('${e.id}')">
+            <span class="toggle-slider"></span>
+          </div>
+        </td>
+        <td><span class="badge ${badgeMap[status]}">${status}</span></td>
+        <td style="text-align:right;">
+          <div class="action-btns" style="justify-content:flex-end;">
+            <button class="btn-icon" onclick="previewPopup('${e.id}')" title="Preview Popup"><i data-lucide="eye"></i></button>
+            <button class="btn-icon" onclick="editEvent('${e.id}')" title="Edit Event"><i data-lucide="pencil"></i></button>
+            <button class="btn-icon danger" onclick="deleteEvent('${e.id}')" title="Delete"><i data-lucide="trash-2"></i></button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+  lucide.createIcons();
+
+  const activePopup = events.find(e => e.popup && computeStatus(e) === 'Active') || events[0];
+  if (activePopup) {
+    document.getElementById('prevTitle').textContent = activePopup.title;
+    document.getElementById('prevDesc').textContent = activePopup.desc;
+    lsSet('activePopupEvent', activePopup);
+  }
+}
+
+function togglePopup(id) {
+  let evs = getEvents();
+  evs = evs.map(e => e.id === id ? { ...e, popup: !e.popup } : e);
+  lsSet('admin_events', evs);
+  showToast('Auto popup status updated');
+  renderEvents();
+}
+
+function previewPopup(id) {
+  const evs = getEvents();
+  const e = evs.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('prevTitle').textContent = e.title;
+  document.getElementById('prevDesc').textContent = e.desc;
+  showToast(`Previewing: ${e.title}`, 'info');
+}
+
+function resetEventForm() {
+  document.getElementById('eventId').value = '';
+  document.getElementById('evTitle').value = '';
+  document.getElementById('evDesc').value = '';
+  document.getElementById('evDate').value = '';
+  document.getElementById('evPublish').value = new Date().toISOString().split('T')[0];
+  document.getElementById('evExpiry').value = '';
+  document.getElementById('evRegLink').value = '';
+  document.getElementById('evFeatured').checked = false;
+  document.getElementById('evPopup').checked = true;
+  document.getElementById('evAutoHide').checked = true;
+  document.getElementById('eventModalTitle').textContent = 'Add Event';
+}
+
+function editEvent(id) {
+  const evs = getEvents();
+  const e = evs.find(x => x.id === id);
+  if (!e) return;
+  document.getElementById('eventId').value = e.id;
+  document.getElementById('evTitle').value = e.title;
+  document.getElementById('evDesc').value = e.desc;
+  document.getElementById('evDate').value = e.date;
+  document.getElementById('evPublish').value = e.publish;
+  document.getElementById('evExpiry').value = e.expiry;
+  document.getElementById('evRegLink').value = e.regLink || '';
+  document.getElementById('evFeatured').checked = !!e.featured;
+  document.getElementById('evPopup').checked = !!e.popup;
+  document.getElementById('evAutoHide').checked = e.autoHide !== false;
+  document.getElementById('eventModalTitle').textContent = 'Edit Event';
+  openModal('eventModal');
+}
+
+function saveEvent(e) {
+  e.preventDefault();
+  const id = document.getElementById('eventId').value;
+  const title = document.getElementById('evTitle').value.trim();
+  const desc = document.getElementById('evDesc').value.trim();
+  const date = document.getElementById('evDate').value;
+  const publish = document.getElementById('evPublish').value;
+  const expiry = document.getElementById('evExpiry').value;
+  const regLink = document.getElementById('evRegLink').value.trim();
+  const featured = document.getElementById('evFeatured').checked;
+  const popup = document.getElementById('evPopup').checked;
+  const autoHide = document.getElementById('evAutoHide').checked;
+
+  let evs = getEvents();
+  if (id) {
+    evs = evs.map(x => x.id === id ? { ...x, title, desc, date, publish, expiry, regLink, featured, popup, autoHide } : x);
+    showToast('Event updated');
+  } else {
+    evs.unshift({ id: Date.now().toString(), title, desc, date, publish, expiry, regLink, featured, popup, autoHide });
+    showToast('Event added');
+  }
+  lsSet('admin_events', evs);
+  closeModal('eventModal');
+  renderEvents();
+}
+
+function deleteEvent(id) {
+  confirmDelete('Delete this event?', () => {
+    let evs = getEvents();
+    evs = evs.filter(e => e.id !== id);
+    lsSet('admin_events', evs);
+    showToast('Event deleted', 'error');
+    renderEvents();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderEvents();
+});
+</script>
+</body>
+</html>

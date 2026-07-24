@@ -32,6 +32,7 @@
     --olive: #9D9D48;
     --terracotta: #944426;
     --burgundy: #620513;
+    --red-dark: 
 
     /* Backgrounds */
     --bg-body: #F5EFE5;
@@ -1870,6 +1871,7 @@ background:#EAF3F4;
 </div>
 
 <script src="assets/js/app-service.js"></script>
+<script src="assets/js/admin-sync.js"></script>
 <script src="common.js"></script>
 <script>
     // Resources Library Logic
@@ -1881,134 +1883,257 @@ background:#EAF3F4;
         { id: 4, title: "Workshop Presentation.ppt", description: "PPT Slides for session adjustment", type: "PDF", size: "5 MB", category: "Adjustment", timeText: "Updated 2 days ago" }
     ];
 
-    let currentFilter = "all";
-    let searchQuery = "";
+    let currentFilter = 'all';
+let searchQuery = '';
 
-    function getBookmarks() {
-        return JSON.parse(localStorage.getItem("bookmarked_resources") || "[]");
+function getBookmarks() {
+    return JSON.parse(localStorage.getItem('bookmarked_resources') || '[]');
+}
+
+// Toggle bookmark
+window.toggleBookmark = function(id) {
+    let bookmarks = getBookmarks();
+
+    if (bookmarks.includes(id)) {
+        bookmarks = bookmarks.filter(bId => bId !== id);
+    } else {
+        bookmarks.push(id);
     }
 
-    window.toggleBookmark = (id) => {
-        let bookmarks = getBookmarks();
-        if (bookmarks.includes(id)) {
-            bookmarks = bookmarks.filter(bId => bId !== id);
-        } else {
-            bookmarks.push(id);
-        }
-        localStorage.setItem("bookmarked_resources", JSON.stringify(bookmarks));
-        renderResources();
-    }
+    localStorage.setItem('bookmarked_resources', JSON.stringify(bookmarks));
+    renderResources();
+};
 
-    function renderResources() {
-        const container = document.getElementById("resourcesContainer");
-        if (!container) return;
-        container.innerHTML = "";
+// Filter resources
+window.filterResources = function(category) {
+    currentFilter = category;
 
-        const bookmarks = getBookmarks();
-
-        const filtered = resources.filter(r => {
-            const matchesCategory = currentFilter === "all" || 
-                                   (currentFilter === "bookmarks" && bookmarks.includes(r.id)) ||
-                                   (currentFilter !== "bookmarks" && r.category.toLowerCase() === currentFilter.toLowerCase());
-            const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase()) || r.description.toLowerCase().includes(searchQuery.toLowerCase());
-            return matchesCategory && matchesSearch;
-        });
-
-        if (filtered.length === 0) {
-            container.innerHTML = `
-                <div style="text-align: center; padding: 40px; color: var(--text-muted);">
-                    <i data-lucide="folder-search" style="width: 48px; height: 48px; margin-bottom: 12px; display: inline-block;"></i>
-                    <p>No resources found matching your criteria.</p>
-                </div>
-            `;
-            lucide.createIcons();
-            return;
-        }
-
-        filtered.forEach(r => {
-            let iconName = "file-text";
-            if (r.type === "Video") iconName = "video";
-            else if (r.type === "PPT") iconName = "presentation";
-            
-            const isBookmarked = bookmarks.includes(r.id);
-            const bookmarkIconColor = isBookmarked ? 'color: var(--accent); fill: var(--accent);' : 'color: var(--text-muted);';
-            
-            const itemHTML = `
-                <div class="activity-item" style="display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border);">
-                    <div style="display: flex; gap: 15px; align-items: center; flex: 1;">
-                        <div class="activity-icon-circle ${r.type === 'Video' ? 'accent-icon' : 'primary-icon'}" style="width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background-color: var(--primary-light); color: var(--primary);">
-                            <i data-lucide="${iconName}"></i>
-                        </div>
-                        <div class="activity-details" style="flex:1;">
-                            <strong style="color: var(--text-main); display: block;">${r.title}</strong>
-                            <span style="font-size: 13px; color: var(--text-muted);">${r.description}</span>
-                            <span class="time" style="display: block; font-size: 11px; color: var(--text-muted); margin-top: 3px;">${r.timeText} • ${r.size}</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 8px; align-items: center;">
-                        <button class="bookmark-btn" onclick="toggleBookmark(${r.id})" style="background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 6px;" aria-label="Bookmark resource">
-                            <i data-lucide="bookmark" style="${bookmarkIconColor} width: 20px; height: 20px;"></i>
-                        </button>
-                        <button class="connect-btn" onclick="previewResource('${r.title}')" style="background-color: var(--bg-body); border: 1px solid var(--border); color: var(--text-main); padding: 6px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 600;">Preview</button>
-                        <button class="post-submit-btn" onclick="downloadResource('${r.title}')" style="background-color: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; font-weight: 600;">Download</button>
-                    </div>
-                </div>
-            `;
-            container.innerHTML += itemHTML;
-        });
-
-        lucide.createIcons();
-    }
-
-    window.filterResources = (category) => {
-        currentFilter = category;
-        document.querySelectorAll(".filter-btn-group button").forEach(btn => {
-            const onclickAttr = btn.getAttribute("onclick");
-            if (onclickAttr && onclickAttr.includes(`'${category}'`)) {
-                btn.classList.add("active");
-                btn.style.backgroundColor = "var(--primary-light)";
-                btn.style.color = "var(--primary)";
-            } else {
-                btn.classList.remove("active");
-                btn.style.backgroundColor = "var(--bg-body)";
-                btn.style.color = "var(--text-muted)";
-            }
-        });
-        renderResources();
-    };
-
-    window.previewResource = (title) => {
-        alert(`Opening preview for ${title}...`);
-    };
-
-    window.downloadResource = (title) => {
-        alert(`Downloading ${title} (${(Math.random() * 5 + 1).toFixed(1)} MB)...`);
-        
-        const recentList = document.querySelector(".right-column .events-list");
-        if (recentList) {
-            const newItem = document.createElement("div");
-            newItem.className = "event-item";
-            newItem.innerHTML = `
-                <div class="event-info">
-                    <span class="event-title" style="font-weight: 700; color: var(--text-main);">${title}</span>
-                    <span class="event-time" style="font-size: 12px; color: var(--text-muted);">Downloaded Just now</span>
-                </div>
-            `;
-            recentList.insertBefore(newItem, recentList.firstChild);
-        }
-    };
-
-    document.addEventListener("DOMContentLoaded", () => {
-        renderResources();
-
-        const searchInput = document.querySelector(".search-input");
-        if (searchInput) {
-            searchInput.addEventListener("keyup", function() {
-                searchQuery = this.value;
-                renderResources();
-            });
-        }
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.backgroundColor = 'var(--bg-body)';
+        btn.style.color = 'var(--text-muted)';
     });
+
+    event.target.classList.add('active');
+    event.target.style.backgroundColor = 'var(--primary-light)';
+    event.target.style.color = 'var(--primary)';
+
+    renderResources();
+};
+
+// PREVIEW IN SAME PAGE
+// PREVIEW IN SAME PAGE
+window.previewResource = function(fileName) {
+
+    const fileMap = {
+        'Yoga Basics.pdf': 'assets/resources/Yoga%20Basics.pdf',
+        'Breathing Exercises': 'assets/resources/Breathing%20Exercises.mp4',
+        'Meditation Guide.pdf': 'assets/resources/Meditation%20Guide.pdf',
+        'Workshop Presentation.ppt': 'assets/resources/Workshop%20Presentation.ppt'
+    };
+
+    const filePath = fileMap[fileName];
+
+    if (filePath) {
+        // Open in SAME PAGE
+        window.location.href = filePath;
+    } else {
+        alert('Preview file not found: ' + fileName);
+    }
+};
+
+// DOWNLOAD
+window.downloadResource = function(fileName) {
+
+    const fileMap = {
+        'Yoga Basics.pdf': 'assets/resources/Yoga%20Basics.pdf',
+        'Breathing Exercises': 'assets/resources/Breathing%20Exercises.mp4',
+        'Meditation Guide.pdf': 'assets/resources/Meditation%20Guide.pdf',
+        'Workshop Presentation.ppt': 'assets/resources/Workshop%20Presentation.ppt'
+    };
+
+    const filePath = fileMap[fileName];
+
+    if (!filePath) {
+        alert('Download file not found');
+        return;
+    }
+
+    const link = document.createElement('a');
+    link.href = filePath;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
+// Render resources
+function renderResources() {
+
+    const container = document.getElementById('resourcesContainer');
+    const bookmarks = getBookmarks();
+
+    let filtered = resources.filter(resource => {
+
+        const matchesSearch =
+            resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            resource.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const matchesFilter =
+            currentFilter === 'all' ||
+            (currentFilter === 'bookmarks' && bookmarks.includes(resource.id)) ||
+            resource.category.toLowerCase() === currentFilter.toLowerCase();
+
+        return matchesSearch && matchesFilter;
+    });
+
+    container.innerHTML = '';
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div class='event-item' style='justify-content:center; text-align:center;'>
+                <div>
+                    <i data-lucide='folder-search' style='width:42px;height:42px;color:var(--text-muted);margin-bottom:10px;'></i>
+                    <p style='color:var(--text-muted);font-weight:600;'>No resources found</p>
+                </div>
+            </div>
+        `;
+        lucide.createIcons();
+        return;
+    }
+
+    filtered.forEach(resource => {
+
+        container.innerHTML += `
+            <div class='event-item' style='flex-direction:column; align-items:flex-start; gap:14px;'>
+
+                <div style='display:flex; justify-content:space-between; align-items:flex-start; width:100%; gap:16px;'>
+
+                    <div class='event-info' style='flex:1;'>
+
+                        <div style='display:flex; align-items:center; gap:10px; margin-bottom:6px;'>
+
+                            <div class='activity-icon-circle ${resource.type === 'Video' ? 'accent-icon' : 'primary-icon'}'
+                                 style='width:48px;height:48px;border-radius:14px;'>
+
+                                <i data-lucide='${resource.type === 'Video' ? 'play-circle' : 'file-text'}'></i>
+
+                            </div>
+
+                            <div>
+                                <div class='event-title'>${resource.title}</div>
+                                <div class='event-time'>${resource.description}</div>
+                            </div>
+
+                        </div>
+
+                        <div style='display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;'>
+
+                            <span class='badge' style='background:var(--primary-light); color:var(--primary);'>
+                                ${resource.category}
+                            </span>
+
+                            <span class='badge' style='background:var(--bg-body); color:var(--text-main);'>
+                                ${resource.type}
+                            </span>
+
+                            <span class='badge' style='background:var(--bg-body); color:var(--text-main);'>
+                                ${resource.size}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <button class='trigger-btn'
+                            onclick='toggleBookmark(${resource.id})'
+                            style='padding:10px; border-radius:12px;'>
+
+                        <i data-lucide='${bookmarks.includes(resource.id) ? 'bookmark-check' : 'bookmark'}'></i>
+
+                    </button>
+
+                </div>
+
+                <div style='width:100%; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding-top:10px; border-top:1px solid var(--border);'>
+
+                    <span class='event-time'>${resource.timeText}</span>
+
+                    <div style='display:flex; gap:10px; flex-wrap:wrap;'>
+
+                        <!-- PREVIEW OPENS IN SAME PAGE -->
+                        <button class='trigger-btn'
+                                onclick='previewResource("${resource.title}")'>
+
+                            <i data-lucide='eye'></i>
+                            Preview
+
+                        </button>
+
+                        <!-- DOWNLOAD -->
+                        <button class='post-submit-btn'
+                                onclick='downloadResource("${resource.title}")'>
+
+                            <i data-lucide='download'></i>
+                            Download
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+    });
+
+    lucide.createIcons();
+}
+
+// Initial render
+renderResources();
+
+// Search functionality
+document.querySelector('.search-input').addEventListener('input', function(e) {
+    searchQuery = e.target.value;
+    renderResources();
+});
+
+// Initialize Lucide icons
+lucide.createIcons();
+
+// ── Admin ↔ Platform Sync ───────────────────────────────────
+// Prepend admin-managed resources to the top of resourcesContainer
+const adminResources = AdminSync.getResources();
+if (adminResources.length) {
+    const container = document.getElementById('resourcesContainer');
+    if (container) {
+        const typeIcon = { PDF: 'fa-file-pdf', Video: 'fa-video', PPT: 'fa-file-powerpoint', DOC: 'fa-file-word', Link: 'fa-link' };
+        const block = document.createElement('div');
+        block.className = 'admin-synced-resources-block';
+        block.style.cssText = 'margin-bottom:20px;padding-bottom:8px;border-bottom:2px solid var(--primary-light);';
+        block.innerHTML = `
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+                <i class="fas fa-shield-alt" style="font-size:12px;"></i> Admin Published Resources
+            </div>
+            ${adminResources.map(r => `
+            <div style="display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);">
+                <div style="width:44px;height:44px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--primary);font-size:16px;">
+                    <i class="fas ${typeIcon[r.type] || 'fa-file'}"></i>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:14px;font-weight:600;color:var(--text-heading);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${r.title}</div>
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${r.category || ''} &bull; ${r.type || ''}</div>
+                </div>
+                ${r.url ? `<a href="${r.url}" target="_blank" rel="noopener" style="font-size:11px;font-weight:700;color:#fff;background:var(--primary);padding:6px 12px;border-radius:8px;text-decoration:none;flex-shrink:0;">Open</a>` : ''}
+            </div>`).join('')}
+        `;
+        container.prepend(block);
+    }
+}
+
+// Show event popup + promo banner
+AdminSync.init({ popup: true, promoBanner: true, notifBadge: true });
 </script>
 </body>
 </html>

@@ -1747,6 +1747,7 @@ body{
 
 <script src="events/js/mentor.js"></script>
 <script src="assets/js/app-service.js"></script>
+<script src="assets/js/admin-sync.js"></script>
 <script src="events/js/search.js"></script>
 
     <script>
@@ -2136,6 +2137,34 @@ document.querySelector('.filter-btn[data-filter="All"]').classList.add("active")
 
 renderFeaturedMentor("All");
 renderMentors("All");
+
+    // ── Admin ↔ Platform Sync ───────────────────────────────────
+    // Prepend admin-managed mentors to the mentorGrid
+    const adminMentors = AdminSync.getMentors();
+    if (adminMentors.length) {
+        const grid = document.getElementById('mentorGrid');
+        if (grid) {
+            const cards = adminMentors.map(m => {
+                const initials = (m.name || '').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                const skills = Array.isArray(m.skills) ? m.skills : (m.skills || '').split(',').map(s => s.trim()).filter(Boolean);
+                return `
+                <div class="mentor-card dashboard-card admin-synced-mentor" style="position:relative;">
+                    <div style="width:80px;height:80px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">${initials}</div>
+                    ${m.featured ? '<span style="position:absolute;top:12px;right:12px;background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;">&#9733; Featured</span>' : ''}
+                    <div class="mentor-content">
+                        <span style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;">${m.expertise || 'Mentor'}</span>
+                        <h3 style="font-size:17px;font-weight:800;color:var(--text-heading);margin:6px 0 8px;">${m.name}</h3>
+                        ${m.bio ? `<p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;line-height:1.5;">${m.bio}</p>` : ''}
+                        ${skills.length ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">${skills.map(s => `<span style="background:var(--bg-body);color:var(--text-main);font-size:10px;padding:2px 8px;border-radius:99px;font-weight:600;">${s}</span>`).join('')}</div>` : ''}
+                    </div>
+                </div>`;
+            }).join('');
+            grid.insertAdjacentHTML('afterbegin', cards);
+        }
+    }
+
+    // Show event popup + promo banner
+    AdminSync.init({ popup: true, promoBanner: true, notifBadge: true });
     </script>
 </body>
 </html>

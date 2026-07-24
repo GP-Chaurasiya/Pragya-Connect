@@ -1328,8 +1328,9 @@ select{
                         <span><strong>Venue:</strong> ${item.venue || "TBD"}</span>
                     </div>
 
-                    <div class="card-actions" style="margin-top: 16px;">
-                        <button class="action-btn btn-danger" style="padding: 8px 12px; font-size: 0.8rem;" onclick="triggerCancelDirectly('${item.id}')"><i data-lucide="trash-2"></i> Cancel Registration</button>
+                    <div class="card-actions" style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="action-btn" style="padding: 8px 12px; font-size: 0.8rem; background: var(--primary-light); color: var(--primary); border: 1px solid var(--border); border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;" onclick="activeReg = registrations.find(r => r.id === '${item.id}'); shareEvent('native');"><i data-lucide="share-2"></i> Share Event</button>
+                        <button class="action-btn btn-danger" style="padding: 8px 12px; font-size: 0.8rem;" onclick="triggerCancelDirectly('${item.id}')"><i data-lucide="trash-2"></i> Cancel</button>
                     </div>
                 `;
                 container.appendChild(card);

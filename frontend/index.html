@@ -293,12 +293,30 @@ function togglePassword() {
     pass.type = pass.type === "password" ? "text" : "password";
 }
 
-// Login Logic
+// Admin Credentials List
+const ADMIN_CREDENTIALS = [
+  { email: 'admin@pyshk.com',   password: 'admin123',    role: 'superadmin',      name: 'Super Admin'     },
+  { email: 'events@pyshk.com',  password: 'events123',   role: 'event_manager',   name: 'Event Manager'   },
+  { email: 'content@pyshk.com', password: 'content123',  role: 'content_manager', name: 'Content Manager' },
+  { email: 'mentor@pyshk.com',  password: 'mentor123',   role: 'mentor_manager',  name: 'Mentor Manager'  },
+];
+
+// Unified Login Logic (Handles both Regular User & Admin Login)
 document.getElementById("loginForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
+
+    // Check if entered credentials match Admin account
+    const admin = ADMIN_CREDENTIALS.find(a => a.email.toLowerCase() === email.toLowerCase() && a.password === password);
+    if (admin) {
+        sessionStorage.setItem("adminRole", admin.role);
+        sessionStorage.setItem("adminName", admin.name);
+        alert("Admin Login Successful!");
+        window.location.href = "admin/dashboard.html";
+        return;
+    }
 
     try {
         const response = await fetch(`${BASE_URL}/api/auth/login`, {
