@@ -149,17 +149,42 @@ function exportTableToCSV(tableId, filename = 'export.csv') {
 function initTabs(container) {
     if (typeof container === 'string') container = document.querySelector(container);
     if (!container) return;
-    const btns   = container.querySelectorAll('.tab-btn');
-    const panels = container.querySelectorAll('.tab-panel');
+
+    const btns = Array.from(container.querySelectorAll('.tab-btn'));
+    if (!btns.length) return;
+
+    // Panels may be INSIDE the tab-nav container OR siblings in the parent element
+    let panels = Array.from(container.querySelectorAll('.tab-panel'));
+    if (!panels.length && container.parentElement) {
+        panels = Array.from(container.parentElement.querySelectorAll('.tab-panel'));
+    }
+
+    // Hide all panels first; show only the one matching the active button
+    function activateTab(index) {
+        btns.forEach(b => b.classList.remove('active'));
+        panels.forEach(p => {
+            p.classList.remove('active');
+            p.style.display = 'none';
+        });
+        btns[index].classList.add('active');
+        if (panels[index]) {
+            panels[index].classList.add('active');
+            panels[index].style.display = '';
+        }
+        // Re-init lucide icons so newly visible panels render icons
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
     btns.forEach((btn, i) => {
-        btn.addEventListener('click', () => {
-            btns.forEach(b => b.classList.remove('active'));
-            panels.forEach(p => p.classList.remove('active'));
-            btn.classList.add('active');
-            if (panels[i]) panels[i].classList.add('active');
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            activateTab(i);
         });
     });
-    if (btns[0]) btns[0].click();
+
+    // Activate the initially active button (or first one)
+    const initialIdx = btns.findIndex(b => b.classList.contains('active'));
+    activateTab(initialIdx >= 0 ? initialIdx : 0);
 }
 
 // --- IMAGE PREVIEW ---
