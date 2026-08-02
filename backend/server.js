@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const dotenv = require("dotenv");
-const cors = require("cors");
 const connectDB = require("./config/db");
 
 // Import Routes
@@ -15,6 +14,7 @@ const mentorRoutes = require("./routes/mentorRoutes");
 const resourceRoutes = require("./routes/resourceRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 // Load Environment Variables
 dotenv.config();
@@ -28,7 +28,6 @@ const app = express();
 app.use(cors());
 
 // Middleware
-app.use(cors());
 app.use(express.json());
 
 // Serve Frontend Static Files
@@ -44,6 +43,7 @@ app.use("/api/mentors", mentorRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Fallback for landing page
 app.get("/", (req, res) => {
