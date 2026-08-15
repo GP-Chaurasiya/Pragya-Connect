@@ -3099,13 +3099,22 @@ async function getUpcomingEvent() {
 }
 
 // ── Admin ↔ Platform Sync ──────────────────────────
+
+ <script src="admin-sync.js"></script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
     AdminSync.init({
         popup:           true,
         promoBanner:     true,
         notifBadge:      true,
-        dashboardEvents: null, // no dedicated upcoming events widget on dashboard
+        dashboardEvents: null,
     });
+    const adminMentors = AdminSync.getMentors();
+    if (adminMentors.length) {
+        // ... ye sab jaisa tha waisa hi rehne do
+    }
+});
+</script>
 
     // Sync admin mentors into the sidebar mentor suggestions widget
     const adminMentors = AdminSync.getMentors();
