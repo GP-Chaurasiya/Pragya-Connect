@@ -3132,6 +3132,17 @@ async function getUpcomingEvent() {
     }
 });
 </script>
-    <script src="js/admin-sync.js"></script>
+    <script src="admin-sync.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    AdminSync.init({
+        popup: true,
+        promoBanner: true,
+        notifBadge: true,
+        dashboardEvents: null
+    });
+});
+</script>
 </body>
 </html>
