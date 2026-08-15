@@ -596,14 +596,4 @@ const AdminSync = {
 window.AdminSync = AdminSync;
 
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("✅ AdminSync started");
-
-    AdminSync.init({
-        popup: true,
-        promoBanner: false,
-        notifBadge: true
-    });
-
-});
+ 
