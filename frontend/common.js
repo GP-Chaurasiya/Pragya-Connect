@@ -1,77 +1,74 @@
 // Common Sidebar and Header Functions
-lucide.createIcons();
-
-    // =========================
-// Sidebar Toggle
-// =========================
-
-const sidebar = document.querySelector(".sidebar");
-const toggle = document.getElementById("sidebarToggle");
-
-// Open / Close Sidebar
-toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    document.body.classList.toggle("sidebar-collapsed");
-});
-
-// Close when clicking outside
-document.addEventListener("click", function (e) {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !sidebar.contains(e.target) &&
-        !toggle.contains(e.target)
-    ) {
-        document.body.classList.add("sidebar-collapsed");
+(function () {
+    if (window.lucide) {
+        lucide.createIcons();
     }
 
-});
+    const sidebar = document.querySelector(".sidebar");
+    const toggle = document.getElementById("sidebarToggle");
 
-// Track whether the mouse is over the sidebar
-let isSidebarHovered = false;
+    if (sidebar && toggle) {
+        toggle.addEventListener("click", function (e) {
+            e.stopPropagation();
+            document.body.classList.toggle("sidebar-collapsed");
+        });
 
-sidebar.addEventListener("mouseenter", () => {
-    isSidebarHovered = true;
-});
+        document.addEventListener("click", function (e) {
+            if (
+                !document.body.classList.contains("sidebar-collapsed") &&
+                !sidebar.contains(e.target) &&
+                !toggle.contains(e.target)
+            ) {
+                document.body.classList.add("sidebar-collapsed");
+            }
+        });
 
-sidebar.addEventListener("mouseleave", () => {
-    isSidebarHovered = false;
-});
+        let isSidebarHovered = false;
 
-// Close on touch devices
-window.addEventListener("touchmove", function () {
+        sidebar.addEventListener("mouseenter", () => {
+            isSidebarHovered = true;
+        });
 
-    if (!document.body.classList.contains("sidebar-collapsed")) {
-        document.body.classList.add("sidebar-collapsed");
+        sidebar.addEventListener("mouseleave", () => {
+            isSidebarHovered = false;
+        });
+
+        const collapseSidebar = () => {
+            if (
+                !document.body.classList.contains("sidebar-collapsed") &&
+                !isSidebarHovered
+            ) {
+                document.body.classList.add("sidebar-collapsed");
+            }
+        };
+
+        window.addEventListener("scroll", collapseSidebar);
+        window.addEventListener("wheel", collapseSidebar);
+        window.addEventListener("touchmove", collapseSidebar);
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                document.body.classList.add("sidebar-collapsed");
+            }
+        });
     }
 
-});
+    const trigger = document.getElementById("userMenuTrigger");
+    const dropdown = document.getElementById("userDropdown");
 
-// Close when ESC key is pressed
-document.addEventListener("keydown", function (e) {
+    if (trigger && dropdown) {
+        trigger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle("active");
+        });
 
-    if (e.key === "Escape") {
-        document.body.classList.add("sidebar-collapsed");
+        document.addEventListener("click", (e) => {
+            if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove("active");
+            }
+        });
     }
-
-});
-
-// User Dropdown Menu
-const trigger = document.getElementById("userMenuTrigger");
-const dropdown = document.getElementById("userDropdown");
-
-if (trigger && dropdown) {
-    trigger.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (e) => {
-        if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
-            dropdown.classList.remove("active");
-        }
-    });
-}
+})();
 
 // Load user name from localStorage
 function loadUserName() {

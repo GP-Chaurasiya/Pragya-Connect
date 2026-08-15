@@ -1950,12 +1950,16 @@ document.addEventListener("keydown", function (e) {
 
 const mentorGrid = document.getElementById("mentorGrid");
 
+function hasMentorImage(mentor) {
+    return Boolean(mentor && typeof mentor.image === "string" && mentor.image.trim());
+}
+
 function renderMentors(filter = "All") {
 
     mentorGrid.innerHTML = "";
 
     const filteredTeachers = teachers.filter(teacher =>
-        filter === "All" || teacher.category === filter
+        hasMentorImage(teacher) && (filter === "All" || teacher.category === filter)
     );
 
     filteredTeachers.forEach(teacher => {
@@ -1964,7 +1968,7 @@ function renderMentors(filter = "All") {
             <div class="mentor-card dashboard-card"
                  data-category="${teacher.category}">
 
-                <img src="${teacher.image}" alt="${teacher.name}">
+                <img src="${teacher.image}" alt="${teacher.name}" onerror="this.closest('.mentor-card').remove()">
 
                 <div class="mentor-content">
 
@@ -2002,7 +2006,7 @@ function renderMentors(filter = "All") {
     mentorGrid.style.display = "grid";
 
     const filteredTeachers = teachers.filter(teacher =>
-        filter === "All" || teacher.category === filter
+        hasMentorImage(teacher) && (filter === "All" || teacher.category === filter)
     );
 
     filteredTeachers.forEach(teacher => {
@@ -2010,7 +2014,7 @@ function renderMentors(filter = "All") {
         mentorGrid.innerHTML += `
             <div class="mentor-card dashboard-card">
 
-                <img src="${teacher.image}" alt="${teacher.name}">
+                <img src="${teacher.image}" alt="${teacher.name}" onerror="this.closest('.mentor-card').remove()">
 
                 <div class="mentor-content">
                     <span>${teacher.role}</span>
@@ -2061,7 +2065,7 @@ function renderFeaturedMentor(category = "All") {
 
     featuredSection.style.display = "grid";
 
-    const featured = teachers.find(t => t.category === "Founder");
+    const featured = teachers.find(t => t.category === "Founder" && hasMentorImage(t));
 
     if (!featured) return;
 
@@ -2096,12 +2100,12 @@ function renderMentors(filter = "All") {
     if (filter === "All") {
         // Show all mentors except Founder
         filteredTeachers = teachers.filter(
-            teacher => teacher.category !== "Founder"
+            teacher => teacher.category !== "Founder" && hasMentorImage(teacher)
         );
     } else {
         // Show only selected category
         filteredTeachers = teachers.filter(
-            teacher => teacher.category === filter
+            teacher => teacher.category === filter && hasMentorImage(teacher)
         );
     }
 
@@ -2109,7 +2113,7 @@ function renderMentors(filter = "All") {
 
         mentorGrid.innerHTML += `
             <div class="mentor-card dashboard-card">
-                <img src="${teacher.image}" alt="${teacher.name}">
+                <img src="${teacher.image}" alt="${teacher.name}" onerror="this.closest('.mentor-card').remove()">
 
                 <div class="mentor-content">
                     <span>${teacher.role}</span>
@@ -2139,17 +2143,16 @@ renderFeaturedMentor("All");
 renderMentors("All");
 
     // ── Admin ↔ Platform Sync ───────────────────────────────────
-    // Prepend admin-managed mentors to the mentorGrid
-    const adminMentors = AdminSync.getMentors();
+    // Prepend only admin-managed mentors that include a real image.
+    const adminMentors = JSON.parse(localStorage.getItem('admin_mentors') || '[]').filter(hasMentorImage);
     if (adminMentors.length) {
         const grid = document.getElementById('mentorGrid');
         if (grid) {
             const cards = adminMentors.map(m => {
-                const initials = (m.name || '').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
                 const skills = Array.isArray(m.skills) ? m.skills : (m.skills || '').split(',').map(s => s.trim()).filter(Boolean);
                 return `
                 <div class="mentor-card dashboard-card admin-synced-mentor" style="position:relative;">
-                    <div style="width:80px;height:80px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:24px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">${initials}</div>
+                    <img src="${m.image}" alt="${m.name || 'Mentor'}" onerror="this.closest('.mentor-card').remove()">
                     ${m.featured ? '<span style="position:absolute;top:12px;right:12px;background:var(--accent-light);color:var(--accent);font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;">&#9733; Featured</span>' : ''}
                     <div class="mentor-content">
                         <span style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;">${m.expertise || 'Mentor'}</span>

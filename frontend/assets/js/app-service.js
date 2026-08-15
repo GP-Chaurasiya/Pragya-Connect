@@ -89,7 +89,10 @@ const AppService = {
                 method: "POST",
                 body: JSON.stringify(postData)
             });
-            if (res) return res;
+            if (res) {
+                window.dispatchEvent(new Event("postsUpdated"));
+                return res;
+            }
         }
 
         let localPosts = JSON.parse(localStorage.getItem("local_posts")) || [];
@@ -119,14 +122,14 @@ const AppService = {
 
         let localPosts = JSON.parse(localStorage.getItem("local_posts")) || [];
         localPosts = localPosts.map(p => {
-            if (p._id === postId) {
+            if (p._id === postId || p.id === postId) {
                 return { ...p, likes: (p.likes || 0) + 1 };
             }
             return p;
         });
         localStorage.setItem("local_posts", JSON.stringify(localPosts));
-        return { likes: (localPosts.find(p => p._id === postId)?.likes || 0) };
         window.dispatchEvent(new Event("postsUpdated"));
+        return { likes: (localPosts.find(p => p._id === postId || p.id === postId)?.likes || 0) };
     },
 
     async addComment(postId, commentText) {

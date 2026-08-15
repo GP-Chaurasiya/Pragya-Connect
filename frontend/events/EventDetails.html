@@ -1192,8 +1192,9 @@ DS
 </section>
 
 </body>
-<script src="js/eventDetails.js"></script>
 <script src="js/data.js"></script>
+<script src="../assets/js/app-service.js"></script>
+<script src="js/eventDetails.js"></script>
 <script src="js/search.js"></script>
 
 <script>
@@ -1215,7 +1216,7 @@ DS
                 navigator.share({ title: title, text: text, url: url }).catch(() => {});
             } else if (navigator.clipboard) {
                 navigator.clipboard.writeText(url).then(() => {
-                    alert('✨ Event link copied to clipboard!');
+                    alert('Event link copied to clipboard!');
                 }).catch(() => fallbackCopy(url));
             } else {
                 fallbackCopy(url);
@@ -1230,7 +1231,7 @@ DS
         input.select();
         document.execCommand('copy');
         document.body.removeChild(input);
-        alert('✨ Event link copied to clipboard!');
+        alert('Event link copied to clipboard!');
     }
 
     // =========================

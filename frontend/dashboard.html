@@ -491,6 +491,8 @@ select{
             box-shadow:0 12px 30px rgba(0,0,0,.15);
             z-index:999999;
             opacity:0;
+            visibility:hidden;
+            pointer-events:none;
             transform:translateY(-10px);
             transition:.25s;
         }
@@ -999,12 +1001,16 @@ select{
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
         }
 
         .section-title-wrap {
             display: flex;
             align-items: center;
             gap: 8px;
+            min-width: 0;
         }
 
         .section-title-wrap i, .section-title-wrap svg {
@@ -1025,6 +1031,9 @@ select{
             font-weight: 700;
             text-decoration: none;
             transition: var(--transition);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 3;
         }
 
         .view-all-link:hover {
@@ -1036,6 +1045,14 @@ select{
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
+        }
+
+        .right-column .recent-activity-card {
+            grid-column: auto;
+        }
+
+        .right-column .recent-activity-card .activity-grid {
+            grid-template-columns: 1fr;
         }
 
         .activity-item {
@@ -1103,7 +1120,7 @@ select{
         .right-column {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 16px;
             min-width: 0;
         }
 
@@ -1120,6 +1137,8 @@ select{
             gap: 16px;
             align-items: center;
             padding: 4px 0;
+            color: inherit;
+            text-decoration: none;
         }
 
         .event-date-badge {
@@ -2128,10 +2147,10 @@ body.sidebar-collapsed .footer-bottom{
                     <a href="resources.html"><i data-lucide="book-open"></i> <span>Resources</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="message-square"></i> <span>Messages</span><span class="badge">3</span></a>
+                    <a href="message.html"><i data-lucide="message-square"></i> <span>Messages</span><span class="badge">3</span></a>
                 </li>
                 <li class="nav-item">
-                    <a href="#"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
+                    <a href="notifications.html"><i data-lucide="bell"></i> <span>Notifications</span><span class="badge">5</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="Profile.html"><i data-lucide="user"></i> <span>Profile</span></a>
@@ -2213,12 +2232,6 @@ body.sidebar-collapsed .footer-bottom{
                                     <span>Help & Support</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="admin/dashboard.html" class="dropdown-item">
-                                    <i data-lucide="shield-check"></i>
-                                    <span>Admin Portal</span>
-                                </a>
-                            </li>
                         </ul>
                         <div class="dropdown-divider"></div>
                         <ul class="dropdown-menu">
@@ -2264,6 +2277,10 @@ body.sidebar-collapsed .footer-bottom{
                             </div>
                             <button class="post-submit-btn">Post</button>
                         </div>
+                        <input type="file" id="imageInput" accept="image/*" multiple hidden>
+                        <input type="file" id="videoInput" accept="video/*" hidden>
+                        <input type="file" id="documentInput" accept=".pdf,.doc,.docx,.txt,.ppt,.pptx" hidden>
+                        <div id="preview" class="post-media-preview"></div>
                     </section>
 
                     <!-- Dynamic Feed Container -->
@@ -2281,31 +2298,10 @@ body.sidebar-collapsed .footer-bottom{
                                 <i data-lucide="graduation-cap" style="color: var(--primary)"></i>
                                 <h3 class="section-title">Mentor Suggestions</h3>
                             </div>
-                            <a href="mentors.html" class="view-all-link">View All</a>
+                            <a href="./mentors.html" class="view-all-link" id="mentorSuggestionsViewAll">View All</a>
                         </div>
 
-                        <div class="mentors-list" id="mentorSuggestions">
-                            <!-- Mentor 1 -->
-                            <div class="mentor-item">
-                                <div class="mentor-profile-info">
-                                    <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=150&h=150" alt="Dr. Sharma" class="mentor-avatar">
-                                    <div class="mentor-text">
-                                        <span class="mentor-name">Dr. Sharma</span>
-                                        <span class="mentor-title">Meditation Expert</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mentor 2 -->
-                            <div class="mentor-item">
-                                <div class="mentor-profile-info">
-                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" alt="Anjali Singh" class="mentor-avatar">
-                                    <div class="mentor-text">
-                                        <span class="mentor-name">Anjali Singh</span>
-                                        <span class="mentor-title">Yoga Mentor</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="mentors-list" id="mentorSuggestions"></div>
                     </section>
 
                     <!-- Upcoming Events Card -->
@@ -2315,46 +2311,10 @@ body.sidebar-collapsed .footer-bottom{
                                 <i data-lucide="calendar" style="color: var(--primary);"></i>
                                 <h3 class="section-title">Upcoming Events</h3>
                             </div>
-                            <a href="events\Calender.html" class="view-all-link">View All</a>
+                            <a href="events/Calender.html" class="view-all-link">View All</a>
                         </div>
                         
-                        <div class="events-list">
-                            <!-- Event 1 -->
-                            <div class="event-item">
-                                <div class="event-date-badge">
-                                    <div class="month">May</div>
-                                    <div class="day">22</div>
-                                </div>
-                                <div class="event-info">
-                                    <span class="event-title">Morning Yoga</span>
-                                    <span class="event-time">Tomorrow, 7:00 AM</span>
-                                    <span class="event-attendees"><i data-lucide="users"></i> 24 Going</span>
-                                </div>
-                            </div>
-                            <!-- Event 2 -->
-                            <div class="event-item">
-                                <div class="event-date-badge">
-                                    <div class="month">May</div>
-                                    <div class="day">24</div>
-                                </div>
-                                <div class="event-info">
-                                    <span class="event-title">Mentor Session</span>
-                                    <span class="event-time">Friday, 4:00 PM</span>
-                                    <span class="event-attendees"><i data-lucide="users"></i> 18 Going</span>
-                                </div>
-                            </div>
-                            <!-- Event 3 -->
-                            <div class="event-item">
-                                <div class="event-date-badge">
-                                    <div class="month">May</div>
-                                    <div class="day">26</div>
-                                </div>
-                                <div class="event-info">
-                                    <span class="event-title">Community Meetup</span>
-                                    <span class="event-time">Sunday, 10:00 AM</span>
-                                    <span class="event-attendees"><i data-lucide="users"></i> 30 Going</span>
-                                </div>
-                            </div>
+                        <div class="events-list" id="dashboardUpcomingEvents">
                         </div>
                     </section>
                     
@@ -2364,7 +2324,7 @@ body.sidebar-collapsed .footer-bottom{
                         <section class="dashboard-card split-card">
                             <div class="section-header" style="margin-bottom: 12px;">
                                 <span class="section-title" style="font-size: 13.5px; font-weight: 700;">Latest Resources</span>
-                                <a href="#" class="view-all-link" style="font-size: 11px;">View All</a>
+                                <a href="resources.html" class="view-all-link" style="font-size: 11px;">View All</a>
                             </div>
 
                             <div class="resources-list">
@@ -2437,16 +2397,14 @@ body.sidebar-collapsed .footer-bottom{
                         </section>
                     </div>
 
-                </div>
-
-                <!-- Recent Activity Section -->
-                <section class="dashboard-card recent-activity-card">
+                    <!-- Recent Activity Section -->
+                    <section class="dashboard-card recent-activity-card">
                     <div class="section-header">
                         <div class="section-title-wrap">
                             <i data-lucide="activity"></i>
                             <h3 class="section-title">Recent Activity</h3>
                         </div>
-                        <a href="#" class="view-all-link">View All</a>
+                        <a href="Profile.html" class="view-all-link">View All</a>
                     </div>
 
                     <div class="activity-grid">
@@ -2492,6 +2450,8 @@ body.sidebar-collapsed .footer-bottom{
                         </div>
                     </div>
                 </section>
+
+                </div>
 
             </main>
         </div>
@@ -2571,8 +2531,47 @@ body.sidebar-collapsed .footer-bottom{
     </div>
 </div>  
 
+<div class="event-popup-overlay" id="eventPopupOverlay" aria-hidden="true">
+    <div class="event-popup" role="dialog" aria-modal="true" aria-labelledby="eventTitle">
+        <button class="event-popup-close" id="closeEventPopup" type="button" aria-label="Close event popup">&times;</button>
+        <div class="event-popup-body">
+            <div class="event-poster">
+                <img id="eventPoster" src="" alt="Upcoming event poster">
+            </div>
+            <div class="event-details">
+                <span class="event-badge">Upcoming Event</span>
+                <h2 id="eventTitle"></h2>
+                <div class="event-meta">
+                    <div class="meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span id="eventDate"></span>
+                    </div>
+                    <div class="meta-item">
+                        <i data-lucide="map-pin"></i>
+                        <span id="eventVenue"></span>
+                    </div>
+                </div>
+                <p id="eventDescription"></p>
+                <div class="event-actions">
+                    <a class="btn-register" id="registerBtn" href="#">Register</a>
+                    <a class="btn-details" id="detailsBtn" href="#">Details</a>
+                </div>
+                <label class="dont-show">
+                    <input type="checkbox" id="dontShowToday">
+                    <span>Don't show again today</span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
     
-<script src="events\js\search.js"></script>
+<script src="common.js"></script>
+<script src="assets/js/app-service.js"></script>
+<script src="assets/js/admin-sync.js"></script>
+<script src="events/js/data.js"></script>
+<script src="events/js/mentor.js"></script>
+<script src="events/js/search.js"></script>
 
     <script>
         // Initialize Lucide Icons
@@ -2661,85 +2660,25 @@ body.sidebar-collapsed .footer-bottom{
             loadAvatarInitials();
             loadProfileImageToTopBar();
 
-        // =========================
-// Sidebar Toggle
-// =========================
-
-const sidebar = document.querySelector(".sidebar");
-const toggle = document.getElementById("sidebarToggle");
-
-// Open / Close Sidebar
-toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    document.body.classList.toggle("sidebar-collapsed");
-});
-
-// Close when clicking outside
-document.addEventListener("click", function (e) {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !sidebar.contains(e.target) &&
-        !toggle.contains(e.target)
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Track whether the mouse is over the sidebar
-let isSidebarHovered = false;
-
-sidebar.addEventListener("mouseenter", () => {
-    isSidebarHovered = true;
-});
-
-sidebar.addEventListener("mouseleave", () => {
-    isSidebarHovered = false;
-});
-
-// Close sidebar on scroll ONLY if the mouse is NOT over the sidebar
-window.addEventListener("scroll", () => {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close sidebar on mouse wheel ONLY if the mouse is NOT over the sidebar
-window.addEventListener("wheel", () => {
-
-    if (
-        !document.body.classList.contains("sidebar-collapsed") &&
-        !isSidebarHovered
-    ) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
-// Close on touch devices
-window.addEventListener("touchmove", function () {
-
-    if (!document.body.classList.contains("sidebar-collapsed")) {
-        document.body.classList.add("sidebar-collapsed");
-    }
-
-});
-
 // Open File Picker
-imageBtn.addEventListener("click", () => imageInput.click());
-videoBtn.addEventListener("click", () => videoInput.click());
-documentBtn.addEventListener("click", () => documentInput.click());
+const imageBtn = document.getElementById("imageBtn");
+const videoBtn = document.getElementById("videoBtn");
+const documentBtn = document.getElementById("documentBtn");
+const imageInput = document.getElementById("imageInput");
+const videoInput = document.getElementById("videoInput");
+const documentInput = document.getElementById("documentInput");
+const preview = document.getElementById("preview");
+let dashboardPostImage = null;
+
+imageBtn?.addEventListener("click", () => imageInput?.click());
+videoBtn?.addEventListener("click", () => videoInput?.click());
+documentBtn?.addEventListener("click", () => documentInput?.click());
 
 // Image Preview
-imageInput.addEventListener("change", function () {
+imageInput?.addEventListener("change", function () {
 
     preview.innerHTML = "";
+    dashboardPostImage = null;
 
     [...this.files].forEach(file => {
 
@@ -2755,12 +2694,22 @@ imageInput.addEventListener("change", function () {
         preview.appendChild(img);
     });
 
+    const firstImage = this.files[0];
+    if (firstImage) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            dashboardPostImage = reader.result;
+        };
+        reader.readAsDataURL(firstImage);
+    }
+
 });
 
 // Video Preview
-videoInput.addEventListener("change", function () {
+videoInput?.addEventListener("change", function () {
 
     preview.innerHTML = "";
+    dashboardPostImage = null;
 
     const file = this.files[0];
     if (!file) return;
@@ -2777,9 +2726,10 @@ videoInput.addEventListener("change", function () {
 });
 
 // Document Preview
-documentInput.addEventListener("change", function () {
+documentInput?.addEventListener("change", function () {
 
     preview.innerHTML = "";
+    dashboardPostImage = null;
 
     const file = this.files[0];
     if (!file) return;
@@ -2804,6 +2754,200 @@ documentInput.addEventListener("change", function () {
     preview.appendChild(card);
 
 });
+
+function formatDashboardPostTime(createdAt) {
+    if (!createdAt) return "Just now";
+
+    const then = new Date(createdAt).getTime();
+    const diff = Date.now() - then;
+    const minute = 60 * 1000;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+
+    if (diff < minute) return "Just now";
+    if (diff < hour) return `${Math.floor(diff / minute)} min ago`;
+    if (diff < day) return `${Math.floor(diff / hour)} hr ago`;
+    return new Date(createdAt).toLocaleDateString();
+}
+
+function getDashboardPostAuthor(post) {
+    const userObject = typeof post.user_id === "object" && post.user_id ? post.user_id : {};
+    return {
+        name: userObject.name || post.userName || "Gyan Prakash",
+        role: userObject.role || post.userRole || "Student",
+        avatar: post.userAvatar || localStorage.getItem("profileImage") || null
+    };
+}
+
+function renderDashboardPostCard(post) {
+    const author = getDashboardPostAuthor(post);
+    const initials = author.name
+        .split(" ")
+        .map(part => part[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2) || "GP";
+    const avatar = author.avatar
+        ? `<img src="${author.avatar}" alt="${author.name}" class="avatar" style="object-fit:cover;">`
+        : `<div class="avatar">${initials}</div>`;
+    const postId = post._id || post.id;
+
+    return `
+        <article class="dashboard-card post-card" data-post-id="${postId}">
+            <div class="post-header">
+                <div class="post-author-info">
+                    ${avatar}
+                    <div class="author-meta">
+                        <span class="author-name">${author.name}</span>
+                        <span class="post-time"><i data-lucide="clock"></i>${formatDashboardPostTime(post.createdAt)}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-body-full">
+                ${post.content ? `<p>${post.content}</p>` : ""}
+                ${post.image ? `<img src="${post.image}" alt="Post image" class="gallery-img" style="aspect-ratio:auto;max-height:280px;">` : ""}
+            </div>
+            <div class="post-actions-row">
+                <button class="action-btn" type="button" onclick="likeDashboardPost('${postId}')">
+                    <i data-lucide="heart"></i>${post.likes || 0}
+                </button>
+                <a class="action-btn" href="CommunityFeed.html">
+                    <i data-lucide="message-circle"></i>${(post.comments || []).length}
+                </a>
+                <a class="action-btn" href="CommunityFeed.html">
+                    <i data-lucide="share-2"></i>Share
+                </a>
+            </div>
+        </article>
+    `;
+}
+
+async function renderDashboardFeed() {
+    const feed = document.getElementById("dashboardFeed");
+    if (!feed || !window.AppService) return;
+
+    const posts = await AppService.getPosts();
+    feed.innerHTML = posts
+        .slice(0, 5)
+        .map(renderDashboardPostCard)
+        .join("");
+
+    if (window.lucide) lucide.createIcons();
+}
+
+async function createDashboardPost() {
+    const input = document.querySelector(".create-post-field");
+    const content = input?.value.trim() || "";
+
+    if (!content && !dashboardPostImage) return;
+    if (!window.AppService) return;
+
+    await AppService.createPost(content, dashboardPostImage);
+
+    if (input) input.value = "";
+    if (preview) preview.innerHTML = "";
+    if (imageInput) imageInput.value = "";
+    if (videoInput) videoInput.value = "";
+    if (documentInput) documentInput.value = "";
+    dashboardPostImage = null;
+    renderDashboardFeed();
+}
+
+window.likeDashboardPost = async function likeDashboardPost(postId) {
+    if (!window.AppService) return;
+    await AppService.likePost(postId);
+    renderDashboardFeed();
+};
+
+document.querySelector(".create-post-card .post-submit-btn")?.addEventListener("click", createDashboardPost);
+document.querySelector(".create-post-field")?.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        createDashboardPost();
+    }
+});
+window.addEventListener("postsUpdated", renderDashboardFeed);
+window.addEventListener("storage", event => {
+    if (event.key === "local_posts" || event.key === "cached_posts") {
+        renderDashboardFeed();
+    }
+});
+document.addEventListener("DOMContentLoaded", renderDashboardFeed);
+
+// ===============================
+// Upcoming Events from Calendar
+// ===============================
+
+function escapeDashboardHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function getDashboardUpcomingEvents(limit = 3) {
+    const eventList = Array.isArray(window.events) ? window.events : [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return eventList
+        .filter(event => {
+            const eventDate = new Date(event.date);
+            eventDate.setHours(0, 0, 0, 0);
+            return !Number.isNaN(eventDate.getTime()) && eventDate >= today;
+        })
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .slice(0, limit);
+}
+
+function renderDashboardUpcomingEvents() {
+    const container = document.getElementById("dashboardUpcomingEvents");
+    if (!container) return;
+
+    const upcomingEvents = getDashboardUpcomingEvents(3);
+
+    if (!upcomingEvents.length) {
+        container.innerHTML = `
+            <div class="event-item">
+                <div class="event-info">
+                    <span class="event-title">No upcoming events</span>
+                    <span class="event-time">Check the calendar for updates</span>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = upcomingEvents.map(event => {
+        const eventDate = new Date(event.date);
+        const month = eventDate.toLocaleString("en-US", { month: "short" });
+        const day = String(eventDate.getDate()).padStart(2, "0");
+        const detailUrl = `events/EventDetails.html?id=${encodeURIComponent(event.id)}`;
+        const title = escapeDashboardHtml(event.title);
+        const time = escapeDashboardHtml(event.time || "Time to be announced");
+        const venue = escapeDashboardHtml(event.venue || "Venue to be announced");
+
+        return `
+            <a class="event-item" href="${detailUrl}">
+                <div class="event-date-badge">
+                    <div class="month">${month}</div>
+                    <div class="day">${day}</div>
+                </div>
+                <div class="event-info">
+                    <span class="event-title">${title}</span>
+                    <span class="event-time">${time}</span>
+                    <span class="event-attendees"><i data-lucide="map-pin"></i>${venue}</span>
+                </div>
+            </a>
+        `;
+    }).join("");
+
+    if (window.lucide) lucide.createIcons();
+}
+
+document.addEventListener("DOMContentLoaded", renderDashboardUpcomingEvents);
 
 // ===============================
 // Mentor Recommendation System
@@ -2877,7 +3021,17 @@ function calculateMatch(user, mentor) {
 
 function getRecommendedMentors(user) {
 
-    return teachers
+    const mentorList = Array.isArray(window.teachers) ? window.teachers : [];
+
+    if (!user) {
+        return mentorList
+            .filter(teacher => teacher.image && teacher.image.trim())
+            .slice(0, 5);
+    }
+
+    return mentorList
+
+        .filter(teacher => teacher.image && teacher.image.trim())
 
         .map(teacher => ({
 
@@ -2901,9 +3055,7 @@ function getRecommendedMentors(user) {
 
 function renderRecommendedMentors() {
 
-    const currentUser = JSON.parse(localStorage.getItem("profile"));
-
-    if (!currentUser) return;
+    const currentUser = JSON.parse(localStorage.getItem("profile") || "null");
 
     const mentors = getRecommendedMentors(currentUser);
 
@@ -2923,7 +3075,9 @@ function renderRecommendedMentors() {
 
                 <img
                     src="${mentor.image}"
-                    class="mentor-avatar">
+                    alt="${mentor.name}"
+                    class="mentor-avatar"
+                    onerror="this.closest('.mentor-item').remove()">
 
                 <div>
 
@@ -2956,6 +3110,14 @@ function renderRecommendedMentors() {
 document.addEventListener("DOMContentLoaded", () => {
 
     renderRecommendedMentors();
+
+    const mentorSuggestionsViewAll = document.getElementById("mentorSuggestionsViewAll");
+    if (mentorSuggestionsViewAll) {
+        mentorSuggestionsViewAll.addEventListener("click", event => {
+            event.preventDefault();
+            window.location.href = "./mentors.html";
+        });
+    }
 
 });
 </script>
@@ -2992,17 +3154,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Fill popup
     console.log("Poster URL:", event.poster);
-    document.getElementById("eventPoster").src = event.poster;
-    document.getElementById("eventTitle").textContent = event.title;
-    document.getElementById("eventDate").textContent = event.date;
-    document.getElementById("eventVenue").textContent = event.venue;
-    document.getElementById("eventDescription").textContent = event.description;
-    document.getElementById("registerBtn").href = event.register;
-    document.getElementById("detailsBtn").href = event.details;
+    const poster = document.getElementById("eventPoster");
+    if (poster) {
+        poster.src = event.poster;
+        poster.alt = event.title;
+    }
+    const title = document.getElementById("eventTitle");
+    const date = document.getElementById("eventDate");
+    const venue = document.getElementById("eventVenue");
+    const description = document.getElementById("eventDescription");
+    const registerBtn = document.getElementById("registerBtn");
+    const detailsBtn = document.getElementById("detailsBtn");
+
+    if (title) title.textContent = event.title;
+    if (date) date.textContent = event.date;
+    if (venue) venue.textContent = event.venue;
+    if (description) description.textContent = event.description;
+    if (registerBtn) registerBtn.href = event.register;
+    if (detailsBtn) detailsBtn.href = event.details;
 
     // Show popup after dashboard loads
     setTimeout(() => {
         overlay.classList.add("show");
+        overlay.setAttribute("aria-hidden", "false");
+        if (window.lucide) lucide.createIcons();
     }, 500);
 
     // Close popup
@@ -3016,8 +3191,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         overlay.classList.remove("show");
+        overlay.setAttribute("aria-hidden", "true");
     }
-    closeBtn.addEventListener("click", closePopup);
+    if (closeBtn) closeBtn.addEventListener("click", closePopup);
 
     overlay.addEventListener("click", function (e) {
 
@@ -3053,6 +3229,7 @@ async function getUpcomingEvent() {
         .filter(event => {
 
             const eventDate = new Date(event.date);
+            eventDate.setHours(0,0,0,0);
 
             return eventDate >= today;
 
@@ -3090,9 +3267,9 @@ async function getUpcomingEvent() {
 
     description: event.description,
 
-    register: `event.html?id=${event.id}`,
+    register: `events/EventDetails.html?id=${encodeURIComponent(event.id)}`,
 
-    details: `event.html?id=${event.id}`
+    details: `events/EventDetails.html?id=${encodeURIComponent(event.id)}`
 
 };
 
@@ -3109,19 +3286,19 @@ async function getUpcomingEvent() {
         dashboardEvents: null, // no dedicated upcoming events widget on dashboard
     });
 
-    // Sync admin mentors into the sidebar mentor suggestions widget
-    const adminMentors = AdminSync.getMentors();
+    // Sync only admin mentors that include a real image into the suggestions widget.
+    const adminMentors = JSON.parse(localStorage.getItem('admin_mentors') || '[]')
+        .filter(m => m.image && m.image.trim());
     if (adminMentors.length) {
         const container = document.getElementById('mentorSuggestions');
         if (container) {
             const items = adminMentors.slice(0, 3).map(m => {
-                const initials = (m.name || '').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
                 return `
                 <div class="mentor-item" style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);">
                     <div class="mentor-profile-info" style="display:flex;gap:10px;align-items:center;">
-                        <div style="width:38px;height:38px;border-radius:50%;background:var(--primary-light);color:var(--primary);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${initials}</div>
+                        <img src="${m.image}" alt="${m.name || 'Mentor'}" class="mentor-avatar" style="width:38px;height:38px;flex-shrink:0;" onerror="this.closest('.mentor-item').remove()">
                         <div>
-                            <span class="mentor-name" style="font-weight:600;color:var(--text-main);display:block;font-size:14px;">${m.name}${m.featured ? ' <span style="color:var(--accent);font-size:10px;">★</span>' : ''}</span>
+                            <span class="mentor-name" style="font-weight:600;color:var(--text-main);display:block;font-size:14px;">${m.name}${m.featured ? ' <span style="color:var(--accent);font-size:10px;">Featured</span>' : ''}</span>
                             <span class="mentor-title" style="font-size:11px;color:var(--text-muted);">${m.expertise || ''}</span>
                         </div>
                     </div>

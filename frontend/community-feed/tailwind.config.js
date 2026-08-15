@@ -7,6 +7,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Neue Montreal"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        serif: ['"BN Cringe Serif"', 'Georgia', 'serif'],
+      },
       colors: {
         primary: {
           50: '#EAF3F4',
