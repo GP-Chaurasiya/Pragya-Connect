@@ -286,6 +286,29 @@ const AdminSync = {
         ];
     },
 
+
+    searchAll(query) {
+        if (!query || query.length < 2) return [];
+        const q = query.toLowerCase();
+        const mentors = this.getMentors().filter(m => m.name.toLowerCase().includes(q))
+            .map(m => ({ type: 'Mentor', title: m.name, sub: m.expertise, link: 'mentors.html' }));
+        const events = this.getUpcomingEvents().filter(e => e.title.toLowerCase().includes(q))
+            .map(e => ({ type: 'Event', title: e.title, sub: e.date, link: 'events.html' }));
+        const posts = this.getCommunityPosts().filter(p => (p.content || '').toLowerCase().includes(q))
+            .map(p => ({ type: 'Post', title: (p.content||'').slice(0,50)+'...', sub: '', link: 'community.html' }));
+        return [...mentors, ...events, ...posts].slice(0, 6);
+    },
+
+    shareOnWhatsApp(title, date, link) {
+        let message = `Check out "${title}" on Pragya Connect!`;
+        if (date) message += `\nDate: ${date}`;
+        if (link) message += `\nRegister here: ${link}`;
+        else message += `\nMore info: https://pragya-connect.vercel.app`;
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+    },
+    
+
     getUserById(id) {
         return this.getUsers().find(u => u.id === id || u._id === id) || null;
     },
