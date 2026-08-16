@@ -484,3 +484,25 @@ body.sidebar-open .sidebar-backdrop { opacity: 1; pointer-events: all; }
   .btn { padding: 9px 14px; font-size: 13px; }
   .tab-btn { padding: 8px 12px; font-size: 12px; }
 }
+
+
+.whatsapp-share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background-color: #25D366;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: var(--transition);
+}
+.whatsapp-share-btn:hover {
+    background-color: #1EBE5A;
+    transform: translateY(-2px);
+}
+.whatsapp-share-btn i, .whatsapp-share-btn svg { width: 16px; height: 16px; }
