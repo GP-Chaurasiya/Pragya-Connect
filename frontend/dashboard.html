@@ -2177,8 +2177,9 @@ body.sidebar-collapsed .footer-bottom{
                     
                     <div class="search-container">
                         <i data-lucide="search"></i>
-                        <input type="text" id="globalSearch" class="search-input" placeholder="Search...">
-                        <div id="searchResults" style="position:absolute; background:#fff; width:100%; z-index:999; border-radius:12px; box-shadow:var(--shadow-md);"></div>
+                        <input type="text" class="search-input" placeholder="Search mentors, events...">
+                    
+                        
                     </div>
                 </div>
                 
@@ -3310,21 +3311,7 @@ async function getUpcomingEvent() {
     }
 });
 
-//search
-    const searchInput = document.getElementById('globalSearch');
-const resultsBox = document.getElementById('searchResults');
-if (searchInput) {
-    searchInput.addEventListener('input', () => {
-        const results = AdminSync.searchAll(searchInput.value);
-        resultsBox.innerHTML = results.length ? results.map(r => `
-            <div style="padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="location.href='${r.link}'">
-                <span style="font-size:10px;color:var(--accent);font-weight:700;">${r.type}</span>
-                <div style="font-size:13px;font-weight:600;">${r.title}</div>
-            </div>
-        `).join('') : '';
-    });
-}
-    
+
 </script>
   
 </body>
